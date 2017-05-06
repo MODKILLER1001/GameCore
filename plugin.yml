@@ -1,7 +1,7 @@
 main: warvale.core.plugin.Main
 name: CTFCore
 version: 1.1.2
-author: Pixelific
+author: Pixelific, Aerh, Draem, Laep
 description: A CTF plugin.
 commands:
   ctf:
