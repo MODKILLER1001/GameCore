@@ -30,7 +30,7 @@ public class KitItems implements CommandExecutor {
 
             if (Main.getRedTeam().getEntries().contains(sender.getName()) || Main.getBlueTeam().getEntries().contains(sender.getName())) {
                 if (args.length == 1) {
-                    switch (args[0]) {
+                    switch (args[0].toLowerCase()) {
                         case "soldier":
                         		
                         		sender.getInventory().clear();
@@ -129,7 +129,7 @@ public class KitItems implements CommandExecutor {
 	                            
                             break;
                         default:
-                            sender.sendMessage(ChatColor.GRAY + "Kit name isn't valid! Available kits: <Soldier> <Hunter>");
+                            sender.sendMessage(ChatColor.GRAY + "Kit name isn't valid! Available kits: Soldier, Hunter");
                             break;
                     }
                 } else {

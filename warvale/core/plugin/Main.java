@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
         redTeam.unregister();
         spectatorTeam.unregister();
 
-        Bukkit.broadcastMessage("RELOADING");
+        Bukkit.broadcastMessage(ChatColor.DARK_RED + "CTF " + ChatColor.GRAY + "Reloading plugin...");
     }
   
   	public static Team getBlueTeam() {
