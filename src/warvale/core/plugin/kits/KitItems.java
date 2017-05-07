@@ -30,7 +30,7 @@ public class KitItems implements CommandExecutor {
 
             if (Main.getRedTeam().getEntries().contains(sender.getName()) || Main.getBlueTeam().getEntries().contains(sender.getName())) {
                 if (args.length == 1) {
-                    switch (args[0].toLowerCase()) {
+                	switch (args[0].toLowerCase()) {
                         case "soldier":
                         		
                         		sender.getInventory().clear();
