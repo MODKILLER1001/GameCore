@@ -20,6 +20,10 @@ public class JoinServer implements Listener {
         event.getPlayer().sendMessage(ChatColor.GRAY + "Welcome back to " + ChatColor.DARK_RED + "Warvale!");
         Main.getSpectatorTeam().addEntry(event.getPlayer().getName());
         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1));
+        
+        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        	event.getPlayer().setAllowFlight(true);
+        }
     }
 }
 

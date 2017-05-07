@@ -33,6 +33,7 @@ public class Join implements CommandExecutor {
             	  			sender.sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
             	  		    for (PotionEffect effect : sender.getActivePotionEffects())
             	  		        sender.removePotionEffect(effect.getType());
+            	  		    	sender.setAllowFlight(false);
             	  			return true;
                         }
 					case "red":
@@ -49,6 +50,7 @@ public class Join implements CommandExecutor {
             	  			sender.sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
             	  		    for (PotionEffect effect : sender.getActivePotionEffects())
             	  		        sender.removePotionEffect(effect.getType());
+            	  		    	sender.setAllowFlight(false);
                   			return true;
           				}
                   		
@@ -62,6 +64,7 @@ public class Join implements CommandExecutor {
             	  			sender.sendMessage(ChatColor.GRAY + "You left the game and became a spectator.");
             	    		sender.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1));
             	  			sender.getInventory().clear();
+            	  			sender.setAllowFlight(true);
                   			return true;
           				}
 					default:

@@ -41,11 +41,12 @@ public class Main extends JavaPlugin {
     	blueTeam.setAllowFriendlyFire(false);
     	spectatorTeam.setAllowFriendlyFire(false);
     	spectatorTeam.setCanSeeFriendlyInvisibles(true);
-      	
+    	
         blueTeam.setPrefix(ChatColor.DARK_AQUA.toString());
     	redTeam.setPrefix(ChatColor.RED.toString());
     	spectatorTeam.setPrefix(ChatColor.GRAY.toString());
-    			
+    	
+    	
     }
    
     @Override
@@ -54,7 +55,7 @@ public class Main extends JavaPlugin {
         redTeam.unregister();
         spectatorTeam.unregister();
 
-        Bukkit.broadcastMessage(ChatColor.DARK_RED + "CTF " + ChatColor.GRAY + "Reloading plugin...");
+        Bukkit.broadcastMessage("RELOADING");
     }
   
   	public static Team getBlueTeam() {
