@@ -1,1 +1,2 @@
-Core of the mini-game 
+Gamecore
+Core of the mini-game for warvale
