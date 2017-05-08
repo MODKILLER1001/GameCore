@@ -23,7 +23,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
     	
-    	new warvale.core.plugin.JoinServer(this);
+    	new JoinServer(this);
     	new WorldEvent(this);
     	getCommand("join").setExecutor(new Join());
     	getCommand("leave").setExecutor(new Leave());
