@@ -21,6 +21,7 @@ public class Leave implements CommandExecutor {
 	        		sender.sendMessage(ChatColor.GRAY + "Left the game on team " + ChatColor.RED + "red");
 	    	    	sender.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1));
 	    	    	sender.getInventory().clear();
+	    	    	sender.setAllowFlight(true);
 	        	}
 	        	
 	        	else if (Main.getBlueTeam().getEntries().contains(sender.getName())) {
@@ -28,6 +29,7 @@ public class Leave implements CommandExecutor {
 	        		sender.sendMessage(ChatColor.GRAY + "Left the game on team " + ChatColor.DARK_AQUA + "blue");
 	    	    	sender.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1));
 	    	    	sender.getInventory().clear();
+	    	    	sender.setAllowFlight(true);
 	        	}
 	        	
 	        	else

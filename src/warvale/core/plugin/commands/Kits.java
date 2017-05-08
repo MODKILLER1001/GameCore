@@ -9,7 +9,7 @@ public class Kits implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("kits")) {
-            sender.sendMessage(ChatColor.GRAY + "Available kits: <Soldier> <Hunter>");
+            sender.sendMessage(ChatColor.GRAY + "Available kits: Soldier, Hunter");
             return true;
         }
         return false;

@@ -14,12 +14,12 @@ public class StartAuto implements CommandExecutor {
     int task;
     Integer startCountdown = 10;
 
-
     public StartAuto(Main plugin) {
         this.plugin = plugin;
     }
-
+    
     public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
+
         if (cs instanceof Player) {
             Player sender = (Player) cs;
             if (command.getName().equalsIgnoreCase("start")) {
@@ -31,7 +31,7 @@ public class StartAuto implements CommandExecutor {
                         startCountdown--;
 
                         if (startCountdown <= 0) {
-                            startCountdown = 10;
+                        	startCountdown = 10;
                             Bukkit.getScheduler().cancelTask(task);
                             Bukkit.broadcastMessage(ChatColor.GRAY + "The game has begun on <map>!");
                         }
