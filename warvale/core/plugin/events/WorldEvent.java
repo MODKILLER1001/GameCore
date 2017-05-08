@@ -36,17 +36,12 @@ public class WorldEvent implements Listener {
             event.setCancelled(true);
             event.getBlock().breakNaturally(new ItemStack(Material.AIR));
             event.getBlock().setType(Material.STONE);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
-                try {
-                    for (int i = 0; i < NumberUtils.random(5, 2) + 1; i++) {
-                        event.getPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation().setDirection(Vector.getRandom()), new ItemStack(Material.IRON_NUGGET));
-                    }
-                    TimeUnit.MILLISECONDS.sleep(10000);
-                    event.getBlock().setType(Material.IRON_ORE);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }, 1);
+            for (int i = 0; i < NumberUtils.random(5, 2) + 1; i++) {
+                event.getPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation().setDirection(Vector.getRandom()).add(Vector.getRandom()), new ItemStack(Material.IRON_NUGGET));
+            }
+            Bukkit.getScheduler().runTaskLaterAsynchronously(main, () -> {
+                event.getBlock().setType(Material.IRON_ORE);
+            }, 10000);
         }
     }
 
