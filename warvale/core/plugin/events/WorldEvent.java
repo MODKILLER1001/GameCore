@@ -2,6 +2,7 @@ package warvale.core.plugin.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -35,18 +36,16 @@ public class WorldEvent implements Listener {
                 event.getPlayer().getInventory().addItem(new ItemStack(Material.IRON_INGOT));
             }
             event.setCancelled(true);
-            event.getBlock().breakNaturally(new ItemStack(Material.AIR));
             event.getBlock().setType(Material.STONE);
             for (int i = 0; i < NumberUtils.random(5, 2) + 1; i++) {
                 ItemStack stack = new ItemStack(Material.IRON_NUGGET);
-                stack.setDurability(NumberUtils.random(100, 1).shortValue());
+                stack.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, NumberUtils.random(100, 1));
                 event.getPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation().setDirection(Vector.getRandom()).add(Vector.getRandom()), stack);
             }
-            new Thread(() -> {
-                Bukkit.getScheduler().runTaskLaterAsynchronously(main, () -> {
-                    event.getBlock().setType(Material.IRON_ORE);
-                }, 1);
-            });
+            Bukkit.getScheduler().runTaskLaterAsynchronously(main, () -> {
+                event.getBlock().setType(Material.IRON_ORE);
+                event.getPlayer().getWorld().getNearbyEntities(event.getBlock().getLocation(), 2, 2, 2).stream().forEach(entity -> entity.remove());
+            }, 10);
         }
     }
 
