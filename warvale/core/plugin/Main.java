@@ -1,6 +1,5 @@
 package warvale.core.plugin;
 
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +23,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
     	
-    	new JoinServer(this);
+    	new warvale.core.plugin.JoinServer(this);
     	new WorldEvent(this);
     	getCommand("join").setExecutor(new Join());
     	getCommand("leave").setExecutor(new Leave());

@@ -1,4 +1,4 @@
-main: warvale.core.plugin.Main
+main: Main
 name: CTFCore
 version: 1.1.2
 author: Pixelific, Aerh, Draem, Laep
