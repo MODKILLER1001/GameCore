@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import warvale.core.plugin.Main;
@@ -37,11 +38,15 @@ public class WorldEvent implements Listener {
             event.getBlock().breakNaturally(new ItemStack(Material.AIR));
             event.getBlock().setType(Material.STONE);
             for (int i = 0; i < NumberUtils.random(5, 2) + 1; i++) {
-                event.getPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation().setDirection(Vector.getRandom()).add(Vector.getRandom()), new ItemStack(Material.IRON_NUGGET));
+                ItemStack stack = new ItemStack(Material.IRON_NUGGET);
+                stack.setDurability(NumberUtils.random(100, 1).shortValue());
+                event.getPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation().setDirection(Vector.getRandom()).add(Vector.getRandom()), stack);
             }
-            Bukkit.getScheduler().runTaskLaterAsynchronously(main, () -> {
-                event.getBlock().setType(Material.IRON_ORE);
-            }, 10);
+            new Thread(() -> {
+                Bukkit.getScheduler().runTaskLaterAsynchronously(main, () -> {
+                    event.getBlock().setType(Material.IRON_ORE);
+                }, 1);
+            });
         }
     }
 
