@@ -1,5 +1,6 @@
 package warvale.core.plugin;
 
+import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +12,7 @@ import warvale.core.plugin.commands.Join;
 import warvale.core.plugin.commands.Kits;
 import warvale.core.plugin.commands.Leave;
 import warvale.core.plugin.commands.StartAuto;
+import warvale.core.plugin.events.WorldEvent;
 import warvale.core.plugin.kits.KitItems;
 
 public class Main extends JavaPlugin {
@@ -23,6 +25,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
     	
     	new JoinServer(this);
+    	new WorldEvent(this);
     	getCommand("join").setExecutor(new Join());
     	getCommand("leave").setExecutor(new Leave());
     	getCommand("ctf").setExecutor(new CTF());
@@ -45,7 +48,6 @@ public class Main extends JavaPlugin {
         blueTeam.setPrefix(ChatColor.DARK_AQUA.toString());
     	redTeam.setPrefix(ChatColor.RED.toString());
     	spectatorTeam.setPrefix(ChatColor.GRAY.toString());
-    			
     }
    
     @Override
