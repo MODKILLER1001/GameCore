@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -41,13 +42,13 @@ public class JoinServer implements Listener {
         }
     }
     @EventHandler(priority = EventPriority.LOWEST) 
-    public void onMove(InventoryClickEvent e){
-        ItemStack i = e.getWhoClicked().getInventory().getItem(4);
+    public void onMove(InventoryClickEvent event){
+        ItemStack i = event.getWhoClicked().getInventory().getItem(4);
         if(i != null)
         {
-            if(e.getSlot() == 4 && i.getType() == Material.ENCHANTED_BOOK) // Get if the clicked slot was the 4th
+            if(event.getSlot() == 4 && i.getType() == Material.ENCHANTED_BOOK) // Get if the clicked slot was the 4th
             {
-                e.setCancelled(true);
+                event.setCancelled(true);
             }
         }
     }
@@ -59,4 +60,10 @@ public class JoinServer implements Listener {
     event.setCancelled(true);
     }
     }
-     }
+    
+    @EventHandler
+    public void onPlayerOffHand(PlayerSwapHandItemsEvent event) {
+    	event.setCancelled(true);
+    }
+    }
+     
