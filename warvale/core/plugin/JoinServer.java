@@ -92,18 +92,9 @@ public class JoinServer implements Listener {
     }
     
     
-    @EventHandler(priority = EventPriority.LOWEST) 
+    @EventHandler(priority = EventPriority.HIGHEST) 
     public void onMove(InventoryClickEvent event){
-        ItemStack i = event.getWhoClicked().getInventory().getItem(4);
         Player player = (Player) event.getWhoClicked();
-        ItemStack item = event.getCurrentItem();
-        
-        if(i != null)
-        {
-            if(event.getSlot() == 4 && i.getType() == Material.ENCHANTED_BOOK) {
-                event.setCancelled(true);
-            }
-        }
         
         switch (event.getSlot()) {
         case 3: // Join red 
@@ -116,6 +107,7 @@ public class JoinServer implements Listener {
   		    	player.getInventory().clear();
         	break;
         case 4: // Close menu
+        	event.setCancelled(true);
         	player.closeInventory();
         	break;
         case 5: // Join blue
@@ -129,10 +121,12 @@ public class JoinServer implements Listener {
         	break;
         	
         default:
-        	player.closeInventory();
-        	break;
+        	if (Main.getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
+        		event.setCancelled(true);
+	        	break;
+	        }
         }
-    }
+	    }
     
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
@@ -146,5 +140,8 @@ public class JoinServer implements Listener {
     public void onPlayerOffHand(PlayerSwapHandItemsEvent event) {
     	event.setCancelled(true);
     }
-    }
+	
      
+
+}
+
