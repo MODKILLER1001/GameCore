@@ -13,6 +13,7 @@ import warvale.core.plugin.commands.Leave;
 import warvale.core.plugin.commands.StartAuto;
 import warvale.core.plugin.events.WorldEvent;
 import warvale.core.plugin.kits.KitItems;
+import warvale.core.plugin.spec.ClassSelect;
 import warvale.core.plugin.spec.TeamSelect;
 
 public class Main extends JavaPlugin {
@@ -27,6 +28,7 @@ public class Main extends JavaPlugin {
     	new JoinServer(this);
     	new WorldEvent(this);
     	new TeamSelect(this);
+    	new ClassSelect(this);
     	getCommand("join").setExecutor(new Join());
     	getCommand("leave").setExecutor(new Leave());
     	getCommand("ctf").setExecutor(new CTF());
