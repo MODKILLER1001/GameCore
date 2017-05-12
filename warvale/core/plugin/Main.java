@@ -14,6 +14,7 @@ import warvale.core.plugin.commands.StartAuto;
 import warvale.core.plugin.events.WorldEvent;
 import warvale.core.plugin.kits.KitItems;
 import warvale.core.plugin.spec.ClassSelect;
+import warvale.core.plugin.spec.Preferences;
 import warvale.core.plugin.spec.TeamSelect;
 
 public class Main extends JavaPlugin {
@@ -21,6 +22,11 @@ public class Main extends JavaPlugin {
   	private static Team blueTeam;
   	private static Team redTeam;
   	private static Team spectatorTeam;
+  	
+  	private static Team classPicked;
+  	
+  	private static Team soldierClassTeam;
+  	private static Team hunterClassTeam;
 
     @Override
     public void onEnable() {
@@ -29,6 +35,7 @@ public class Main extends JavaPlugin {
     	new WorldEvent(this);
     	new TeamSelect(this);
     	new ClassSelect(this);
+    	new Preferences(this);
     	getCommand("join").setExecutor(new Join());
     	getCommand("leave").setExecutor(new Leave());
     	getCommand("ctf").setExecutor(new CTF());
@@ -42,6 +49,11 @@ public class Main extends JavaPlugin {
       	blueTeam = board.registerNewTeam("blue");
         redTeam = board.registerNewTeam("red");
         spectatorTeam = board.registerNewTeam("spectator");
+        
+        soldierClassTeam = board.registerNewTeam("soldier");
+        hunterClassTeam = board.registerNewTeam("hunter");
+        
+        classPicked = board.registerNewTeam("classpicked");
         
     	redTeam.setAllowFriendlyFire(false);
     	blueTeam.setAllowFriendlyFire(false);
@@ -58,8 +70,13 @@ public class Main extends JavaPlugin {
        	blueTeam.unregister();
         redTeam.unregister();
         spectatorTeam.unregister();
+        
+        soldierClassTeam.unregister();
+        hunterClassTeam.unregister();
+        
+        classPicked.unregister();
 
-        Bukkit.broadcastMessage(ChatColor.DARK_RED + "CTF " + ChatColor.GRAY + "Reloading plugin...");
+        Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warvale: Gamecore " + ChatColor.GRAY + "Reloading plugin...");
     }
   
   	public static Team getBlueTeam() {
@@ -73,5 +90,17 @@ public class Main extends JavaPlugin {
  	public static Team getSpectatorTeam() {
         return spectatorTeam;
     }
+ 	
+ 	public static Team getClassSoldier() {
+ 		return soldierClassTeam;
+ 	}
+ 	
+ 	public static Team getClassHunter() {
+ 		return hunterClassTeam;
+ 	}
+ 	
+ 	public static Team getClassPicked() {
+ 		return classPicked;
+ 	}
 
 }

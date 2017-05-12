@@ -1,5 +1,8 @@
 package warvale.core.plugin.spec;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -35,6 +38,8 @@ public class ClassSelect implements Listener {
 	        ItemMeta spawnmeta = classselect.getItemMeta();
 	        spawnmeta.setDisplayName(ChatColor.RESET + "" + ChatColor.AQUA + "Class Selector");
 	        classselect.setItemMeta(spawnmeta);
+	        Main.getClassPicked().addEntry(event.getPlayer().getName());
+	        
 	        
 	        event.getPlayer().getInventory().setItem(2, classselect);
 	        }
@@ -43,6 +48,34 @@ public class ClassSelect implements Listener {
 	
 	private void tsGUI(Player player ) {
 		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.DARK_GRAY + "Select a class:");
+	
+		// Soldier
+		ItemStack soldier_icon = new ItemStack(Material.IRON_HELMET, 1);
+		ItemMeta soldier_iconmeta = soldier_icon.getItemMeta();
+		soldier_iconmeta.setDisplayName(ChatColor.AQUA + "Soldier");
+		ArrayList<String> lore_soldier = new ArrayList<String>();
+
+		lore_soldier.add(ChatColor.YELLOW + "Available by default.");
+		lore_soldier.add(ChatColor.GRAY + "Ascend walls on right click of your ability!");
+		
+        soldier_iconmeta.setLore(lore_soldier);
+        soldier_icon.setItemMeta(soldier_iconmeta);
+		
+        // Hunter
+		ItemStack hunter_icon = new ItemStack(Material.BOW, 1);
+		ItemMeta hunter_iconmeta = hunter_icon.getItemMeta();
+		hunter_iconmeta.setDisplayName(ChatColor.AQUA + "Hunter");
+		ArrayList<String> lore_hunter = new ArrayList<String>();
+		
+		lore_hunter.add(ChatColor.YELLOW + "Available by default.");
+		lore_hunter.add(ChatColor.GRAY + "Fire a bomb arrow on right click of your ability!");
+		
+		
+        hunter_iconmeta.setLore(lore_hunter);
+        hunter_icon.setItemMeta(hunter_iconmeta);
+        
+		inv.setItem(0, soldier_icon);
+		inv.setItem(1, hunter_icon);
 		
 		player.openInventory(inv);
 	}
@@ -65,6 +98,37 @@ public class ClassSelect implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST) 
 	public void onMove(InventoryClickEvent event){
 	    Player player = (Player) event.getWhoClicked();
+	    
+	    switch (event.getSlot()) {
+	    case 0: // Select soldier
+	    	if (Main.getClassPicked().getEntries().contains(event.getWhoClicked().getName())) {
+	    		event.getWhoClicked().sendMessage(ChatColor.GRAY + "You may not change classes at this time.");
+	    	}
+	    	
+	    	else {
+	   
+		    	Main.getClassSoldier().addEntry(event.getWhoClicked().getName());
+		    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "You selected the" + ChatColor.AQUA + " Soldier " + ChatColor.GRAY + "class.");
+		    	player.closeInventory();
+	    }
+	    
+	    	break;
+	    
+	    case 1: // Select hunter
+	    	if (Main.getClassPicked().getEntries().contains(event.getWhoClicked().getName())) {
+	    		event.getWhoClicked().sendMessage(ChatColor.GRAY + "You may not change classes at this time.");
+	    	}
+	    	
+	    	else {
+	    
+		    	Main.getClassHunter().addEntry(event.getWhoClicked().getName());
+		    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "You selected the" + ChatColor.AQUA + " Hunter " + ChatColor.GRAY + "class.");
+		    	player.closeInventory();
+	    }
+	
+	    	break;
+	    	
+	    }
 	    event.setCancelled(true);
 	    
 	   }
