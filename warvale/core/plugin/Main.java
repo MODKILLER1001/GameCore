@@ -22,11 +22,6 @@ public class Main extends JavaPlugin {
   	private static Team blueTeam;
   	private static Team redTeam;
   	private static Team spectatorTeam;
-  	
-  	private static Team classPicked;
-  	
-  	private static Team soldierClassTeam;
-  	private static Team hunterClassTeam;
 
     @Override
     public void onEnable() {
@@ -50,11 +45,6 @@ public class Main extends JavaPlugin {
         redTeam = board.registerNewTeam("red");
         spectatorTeam = board.registerNewTeam("spectator");
         
-        soldierClassTeam = board.registerNewTeam("soldier");
-        hunterClassTeam = board.registerNewTeam("hunter");
-        
-        classPicked = board.registerNewTeam("classpicked");
-        
     	redTeam.setAllowFriendlyFire(false);
     	blueTeam.setAllowFriendlyFire(false);
     	spectatorTeam.setAllowFriendlyFire(false);
@@ -70,11 +60,6 @@ public class Main extends JavaPlugin {
        	blueTeam.unregister();
         redTeam.unregister();
         spectatorTeam.unregister();
-        
-        soldierClassTeam.unregister();
-        hunterClassTeam.unregister();
-        
-        classPicked.unregister();
 
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warvale: Gamecore " + ChatColor.GRAY + "Reloading plugin...");
     }
@@ -91,16 +76,5 @@ public class Main extends JavaPlugin {
         return spectatorTeam;
     }
  	
- 	public static Team getClassSoldier() {
- 		return soldierClassTeam;
- 	}
- 	
- 	public static Team getClassHunter() {
- 		return hunterClassTeam;
- 	}
- 	
- 	public static Team getClassPicked() {
- 		return classPicked;
- 	}
 
 }

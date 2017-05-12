@@ -1,10 +1,8 @@
 package warvale.core.plugin.spec;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,8 +17,6 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.Wool;
-import org.bukkit.potion.PotionEffect;
 
 import net.md_5.bungee.api.ChatColor;
 import warvale.core.plugin.Main;
@@ -38,9 +34,6 @@ public class ClassSelect implements Listener {
 	        ItemMeta spawnmeta = classselect.getItemMeta();
 	        spawnmeta.setDisplayName(ChatColor.RESET + "" + ChatColor.AQUA + "Class Selector");
 	        classselect.setItemMeta(spawnmeta);
-	        Main.getClassPicked().addEntry(event.getPlayer().getName());
-	        
-	        
 	        event.getPlayer().getInventory().setItem(2, classselect);
 	        }
 	    }
@@ -70,7 +63,6 @@ public class ClassSelect implements Listener {
 		lore_hunter.add(ChatColor.YELLOW + "Available by default.");
 		lore_hunter.add(ChatColor.GRAY + "Fire a bomb arrow on right click of your ability!");
 		
-		
         hunter_iconmeta.setLore(lore_hunter);
         hunter_icon.setItemMeta(hunter_iconmeta);
         
@@ -79,7 +71,6 @@ public class ClassSelect implements Listener {
 		
 		player.openInventory(inv);
 	}
-	
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
@@ -93,45 +84,24 @@ public class ClassSelect implements Listener {
 			tsGUI(event.getPlayer());
 		
 	}
-	
-	
 	@EventHandler(priority = EventPriority.HIGHEST) 
 	public void onMove(InventoryClickEvent event){
 	    Player player = (Player) event.getWhoClicked();
 	    
 	    switch (event.getSlot()) {
-	    case 0: // Select soldier
-	    	if (Main.getClassPicked().getEntries().contains(event.getWhoClicked().getName())) {
-	    		event.getWhoClicked().sendMessage(ChatColor.GRAY + "You may not change classes at this time.");
-	    	}
-	    	
-	    	else {
-	   
-		    	Main.getClassSoldier().addEntry(event.getWhoClicked().getName());
-		    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "You selected the" + ChatColor.AQUA + " Soldier " + ChatColor.GRAY + "class.");
-		    	player.closeInventory();
-	    }
+	    case 0: // Select soldier   	  
+		    event.getWhoClicked().sendMessage(ChatColor.GRAY + "You selected the" + ChatColor.AQUA + " Soldier " + ChatColor.GRAY + "class.");
+		    player.closeInventory();
+		    break;
 	    
+	    case 1: // Select hunter    
+		    event.getWhoClicked().sendMessage(ChatColor.GRAY + "You selected the" + ChatColor.AQUA + " Hunter " + ChatColor.GRAY + "class.");
+		    player.closeInventory();
 	    	break;
-	    
-	    case 1: // Select hunter
-	    	if (Main.getClassPicked().getEntries().contains(event.getWhoClicked().getName())) {
-	    		event.getWhoClicked().sendMessage(ChatColor.GRAY + "You may not change classes at this time.");
-	    	}
-	    	
-	    	else {
-	    
-		    	Main.getClassHunter().addEntry(event.getWhoClicked().getName());
-		    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "You selected the" + ChatColor.AQUA + " Hunter " + ChatColor.GRAY + "class.");
-		    	player.closeInventory();
-	    }
-	
-	    	break;
-	    	
 	    }
 	    event.setCancelled(true);
-	    
-	   }
+}
+	   
 	     
 	@EventHandler
 	public void onPlayerDropItem(PlayerDropItemEvent event) {
