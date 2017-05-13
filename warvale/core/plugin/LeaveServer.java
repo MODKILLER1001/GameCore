@@ -18,12 +18,19 @@ public class LeaveServer implements Listener {
     	
     	String playerName = event.getPlayer().getName();
         event.getPlayer().getInventory().clear();
-        Main.getSpectatorTeam().removeEntry(event.getPlayer().getName());
-        Main.getRedTeam().removeEntry(event.getPlayer().getName());
-        Main.getBlueTeam().removeEntry(event.getPlayer().getName());
+        
+        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        	Main.getSpectatorTeam().removeEntry(event.getPlayer().getName());
+        if (Main.getRedTeam().getEntries().contains(event.getPlayer().getName())) {
+        	Main.getRedTeam().removeEntry(event.getPlayer().getName());
+        if (Main.getBlueTeam().getEntries().contains(event.getPlayer().getName())) {
+        	Main.getBlueTeam().removeEntry(event.getPlayer().getName());
         
         event.setQuitMessage(ChatColor.GRAY + playerName + ChatColor.GRAY + " left.");      
      
+        }
+        }
+        }
 }
     }
 
