@@ -71,6 +71,10 @@ public class Main extends JavaPlugin {
 				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Shoot flaming arrows towards"),
 				ChatColor.translateAlternateColorCodes('&', "&7enemies to deal extra damage.")),
 				new ItemStack(Material.MAGMA_CREAM), "Volley");
+		new Class("Assassin", 0,
+				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Hide in the shadows with your"),
+				ChatColor.translateAlternateColorCodes('&', "&7sneaky invisibility.")),
+				new ItemStack(Material.SULPHUR), "Sneak");
     }
    
     @Override
