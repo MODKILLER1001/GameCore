@@ -36,10 +36,12 @@ public class Main extends JavaPlugin {
     public void onEnable() {
 
     	new JoinServer(this);
+    	new LeaveServer(this);
     	new WorldEvent(this);
     	new TeamSelect(this);
     	new ClassSelect(this);
     	new Preferences(this);
+    	
     	getCommand("join").setExecutor(new Join());
     	getCommand("leave").setExecutor(new Leave());
     	getCommand("ctf").setExecutor(new CTF());
@@ -47,7 +49,6 @@ public class Main extends JavaPlugin {
     	getCommand("kits").setExecutor(new Kits());
     	getCommand("kit").setExecutor(new KitItems());
     	
-
 		Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
             
       	blueTeam = board.registerNewTeam("blue");
@@ -75,6 +76,10 @@ public class Main extends JavaPlugin {
 				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Hide in the shadows with your"),
 				ChatColor.translateAlternateColorCodes('&', "&7sneaky invisibility.")),
 				new ItemStack(Material.SULPHUR), "Sneak");
+		new Class("Miner", 100,
+				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. &7Chance to deal double damage"),
+				ChatColor.translateAlternateColorCodes('&', "&7when mining the core.")),
+				new ItemStack(Material.IRON_PICKAXE), "Superswing");
     }
    
     @Override

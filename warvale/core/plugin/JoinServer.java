@@ -1,6 +1,8 @@
 package warvale.core.plugin;
 
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -17,10 +19,14 @@ public class JoinServer implements Listener {
     @EventHandler
 
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
+    	
+    	String playerName = event.getPlayer().getName();
         event.getPlayer().getInventory().clear();
         event.getPlayer().sendMessage(ChatColor.GRAY + "Welcome back to " + ChatColor.DARK_RED + "Warvale!");
         Main.getSpectatorTeam().addEntry(event.getPlayer().getName());
         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1));
+        
+        event.setJoinMessage(ChatColor.GRAY + playerName + ChatColor.GRAY + " joined.");
         
         if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
         	event.getPlayer().setAllowFlight(true);
