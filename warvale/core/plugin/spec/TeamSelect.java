@@ -27,6 +27,8 @@ public class TeamSelect implements Listener {
     public TeamSelect(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
+
+    private static Inventory inv;
 	
     @EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
@@ -42,7 +44,7 @@ public class TeamSelect implements Listener {
 	}
 	
 	private void tsGUI(Player player ) {
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.DARK_GRAY + "Select a team:");
+		inv = Bukkit.createInventory(null, 9, ChatColor.DARK_GRAY + "Select a team:");
 		
 		Wool wool_red = new Wool(DyeColor.RED);
 		ItemStack itemtsred = wool_red.toItemStack(1);
@@ -88,6 +90,10 @@ public class TeamSelect implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST) 
 	public void onMove(InventoryClickEvent event){
 	    Player player = (Player) event.getWhoClicked();
+
+	    if (!event.getInventory().equals(inv)) {
+	    	return;
+		}
 	    
 	    switch (event.getSlot()) {
 	    case 3: // Join red 

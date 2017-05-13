@@ -1,6 +1,6 @@
 package warvale.core.plugin.spec;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,8 +20,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import net.md_5.bungee.api.ChatColor;
 import warvale.core.plugin.Main;
+import warvale.core.plugin.classes.Class;
+import warvale.core.plugin.classes.ClassManager;
 
 public class ClassSelect implements Listener {
+
+	private static HashMap<Integer, Class> slots = new HashMap<>();
+	private static Inventory inv;
 	
     public ClassSelect(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -38,37 +43,25 @@ public class ClassSelect implements Listener {
 	        }
 	    }
 	}
-	
-	private void tsGUI(Player player ) {
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.DARK_GRAY + "Select a class:");
-	
-		// Soldier
-		ItemStack soldier_icon = new ItemStack(Material.IRON_HELMET, 1);
-		ItemMeta soldier_iconmeta = soldier_icon.getItemMeta();
-		soldier_iconmeta.setDisplayName(ChatColor.AQUA + "Soldier");
-		ArrayList<String> lore_soldier = new ArrayList<String>();
 
-		lore_soldier.add(ChatColor.YELLOW + "Available by default.");
-		lore_soldier.add(ChatColor.GRAY + "Ascend walls on right click of your ability!");
-		
-        soldier_iconmeta.setLore(lore_soldier);
-        soldier_icon.setItemMeta(soldier_iconmeta);
-		
-        // Hunter
-		ItemStack hunter_icon = new ItemStack(Material.BOW, 1);
-		ItemMeta hunter_iconmeta = hunter_icon.getItemMeta();
-		hunter_iconmeta.setDisplayName(ChatColor.AQUA + "Hunter");
-		ArrayList<String> lore_hunter = new ArrayList<String>();
-		
-		lore_hunter.add(ChatColor.YELLOW + "Available by default.");
-		lore_hunter.add(ChatColor.GRAY + "Fire a bomb arrow on right click of your ability!");
-		
-        hunter_iconmeta.setLore(lore_hunter);
-        hunter_icon.setItemMeta(hunter_iconmeta);
-        
-		inv.setItem(0, soldier_icon);
-		inv.setItem(1, hunter_icon);
-		
+
+	private void openGUI(Player player) {
+    	inv = Bukkit.createInventory(null, 45, ChatColor.DARK_GRAY + "Select a class: ");
+    	Integer inventoryIndex = 0;
+    	for (Map.Entry<String, Class> clazzSet : ClassManager.classes.entrySet()) {
+    		Class clazz = clazzSet.getValue();
+    		ItemStack classStack = clazz.getItem();
+    		ItemMeta classMeta = classStack.getItemMeta();
+    		List<String> desc = new LinkedList<>(clazz.getDescription());
+			desc.add(0, ChatColor.translateAlternateColorCodes('&', "&7PRICE: &e" + clazz.getPrice()));
+			desc.add(1, ChatColor.GRAY + "ABILITY: " + ChatColor.YELLOW + clazz.getAbility());
+    		classMeta.setLore(desc);
+    		classMeta.setDisplayName(ChatColor.AQUA + clazz.getName());
+    		classStack.setItemMeta(classMeta);
+    		inv.setItem(inventoryIndex, classStack);
+    		slots.put(inventoryIndex, clazz);
+    		inventoryIndex = inventoryIndex + 1;
+		}
 		player.openInventory(inv);
 	}
 	
@@ -81,34 +74,38 @@ public class ClassSelect implements Listener {
 			return;
 		
 		if(is.getType()==Material.NETHER_STAR)
-			tsGUI(event.getPlayer());
+			openGUI(event.getPlayer());
 		
 	}
+
 	@EventHandler(priority = EventPriority.HIGHEST) 
 	public void onMove(InventoryClickEvent event){
 	    Player player = (Player) event.getWhoClicked();
-	    
-	    switch (event.getSlot()) {
-	    case 0: // Select soldier   	  
-		    event.getWhoClicked().sendMessage(ChatColor.GRAY + "You selected the" + ChatColor.AQUA + " Soldier " + ChatColor.GRAY + "class.");
-		    player.closeInventory();
-		    break;
-	    
-	    case 1: // Select hunter    
-		    event.getWhoClicked().sendMessage(ChatColor.GRAY + "You selected the" + ChatColor.AQUA + " Hunter " + ChatColor.GRAY + "class.");
-		    player.closeInventory();
-	    	break;
-	    }
+	    Class clazz = slots.get(event.getSlot());
+
+	    if (!event.getInventory().equals(inv)) {
+	    	return;
+		}
+
+	    if (clazz == null) {
+	    	return;
+		}
+	    //if (!ClassManager.hasClass(player)) {
+	    	clazz.addMember(player);
+	    	player.sendMessage(ChatColor.GRAY + "You have successfully chosen the " + ChatColor.YELLOW + clazz.getName() + ChatColor.GRAY + " class!");
+		//} else {
+	    	//player.sendMessage(ChatColor.RED + "You may not switch your class at this time.");
+		//}
 	    event.setCancelled(true);
-}
+	}
 	   
 	     
 	@EventHandler
 	public void onPlayerDropItem(PlayerDropItemEvent event) {
 	
-	if (event.getItemDrop().getItemStack().getType() == Material.ENCHANTED_BOOK ||event.getItemDrop().getItemStack().getType() == Material.NETHER_STAR || event.getItemDrop().getItemStack().getType() == Material.BLAZE_POWDER ) {
-		event.setCancelled(true);
-	}
+		if (event.getItemDrop().getItemStack().getType() == Material.ENCHANTED_BOOK ||event.getItemDrop().getItemStack().getType() == Material.NETHER_STAR || event.getItemDrop().getItemStack().getType() == Material.BLAZE_POWDER ) {
+			event.setCancelled(true);
+		}
 	}
 	
 	@EventHandler
@@ -116,4 +113,4 @@ public class ClassSelect implements Listener {
 		event.setCancelled(true);
 	}
 		
-	}
+}
