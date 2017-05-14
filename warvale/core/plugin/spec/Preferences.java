@@ -28,6 +28,8 @@ public class Preferences implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
+    private static Inventory inv;
+    
     @EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
 	    if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
@@ -42,31 +44,31 @@ public class Preferences implements Listener {
 	}
 	
 	private void tsGUI(Player player ) {
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
+		inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
 		
 		ItemStack forumslink = new ItemStack(Material.NAME_TAG);
 		ItemMeta forumslinkmeta = forumslink.getItemMeta();
-		forumslinkmeta.setDisplayName(ChatColor.DARK_RED + "Forums Link");
+		forumslinkmeta.setDisplayName(ChatColor.AQUA + "Forums Link");
 		forumslink.setItemMeta(forumslinkmeta);
 		
 		ItemStack discordlink = new ItemStack(Material.ANVIL);
 		ItemMeta discordlinkmeta = discordlink.getItemMeta();
-		discordlinkmeta.setDisplayName(ChatColor.DARK_RED + "Discord Link");
+		discordlinkmeta.setDisplayName(ChatColor.AQUA + "Discord Link");
 		discordlink.setItemMeta(discordlinkmeta);
 		
 		ItemStack twitterlink = new ItemStack(Material.DIAMOND);
 		ItemMeta twitterlinkmeta = twitterlink.getItemMeta();
-		twitterlinkmeta.setDisplayName(ChatColor.DARK_RED + "Twitter Link");
+		twitterlinkmeta.setDisplayName(ChatColor.AQUA + "Twitter Link");
 		twitterlink.setItemMeta(twitterlinkmeta);
 		
 		ItemStack storelink = new ItemStack(Material.NETHER_STAR);
 		ItemMeta storelinkmeta = storelink.getItemMeta();
-		storelinkmeta.setDisplayName(ChatColor.DARK_RED + "Store Link");
+		storelinkmeta.setDisplayName(ChatColor.AQUA + "Store Link");
 		storelink.setItemMeta(storelinkmeta);
 		
 		ItemStack closemenu = new ItemStack(Material.BARRIER);
 		ItemMeta closemenumeta = closemenu.getItemMeta();
-		closemenumeta.setDisplayName(ChatColor.DARK_RED + "Close selector");
+		closemenumeta.setDisplayName(ChatColor.AQUA + "Close selector");
 		closemenu.setItemMeta(closemenumeta);
 		
 		inv.setItem(49, forumslink);
@@ -97,12 +99,46 @@ public class Preferences implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST) 
 	public void onMove(InventoryClickEvent event){
-		if (Main.getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
-		    Player player = (Player) event.getWhoClicked();
-		    event.setCancelled(true);
+		Player player = (Player) event.getWhoClicked();
+
+	    if (!event.getInventory().equals(inv)) {
+	    	return;
+		}
 	    
-	   }
-	}
+	    switch (event.getSlot()) {
+	    case 49: 
+	    	System.out.println("worked.");
+	    	event.setCancelled(true);
+	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Forums: " + ChatColor.AQUA + "www.warvale.com/forums");
+			player.closeInventory();
+	    	break;
+	    case 50: 
+	    	event.setCancelled(true);
+	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Discord: " + ChatColor.AQUA + "discord.gg/addlater");
+	    	player.closeInventory();
+	    	break;
+	    case 51: 
+	    	event.setCancelled(true);
+	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Twitter: " + ChatColor.AQUA + "www.twitter.com/Pixelificz");
+	    	player.closeInventory();
+	    	break;
+	    case 52: 
+	    	event.setCancelled(true);
+	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Store: " + ChatColor.AQUA + "www.warvale.com/store");
+	    	player.closeInventory();
+	    	break;
+	    case 53: 
+	    	event.setCancelled(true);
+	    	player.closeInventory();
+	    	break;
+	    default:
+	    	if (Main.getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
+	    		event.setCancelled(true);
+	        	break;
+	        }
+	    }
+	    }
+	
 	@EventHandler
 	public void onPlayerDropItem(PlayerDropItemEvent event) {
 		if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
