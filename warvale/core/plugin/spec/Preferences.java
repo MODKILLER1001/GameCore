@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -83,18 +84,17 @@ public class Preferences implements Listener {
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
-			Action a = event.getAction();
-			ItemStack is = event.getItem();
+		Action a = event.getAction();
+		ItemStack is = event.getItem();
 			
-			if(a == Action.PHYSICAL || is == null || is.getType()==Material.AIR)
+		if(a == Action.PHYSICAL || is == null || is.getType()==Material.AIR)
 				return;
 			
-			if(is.getType()==Material.REDSTONE_COMPARATOR)
+		if(is.getType()==Material.REDSTONE_COMPARATOR)
 				tsGUI(event.getPlayer());
 		
 	}
-	}
+	
 	
 	
 	@EventHandler(priority = EventPriority.HIGHEST) 
@@ -151,5 +151,16 @@ public class Preferences implements Listener {
 	public void onPlayerOffHand(PlayerSwapHandItemsEvent event) {
 		event.setCancelled(true);
 	}
-		
+	
+	@EventHandler
+	public void onPlaceAttempt(BlockPlaceEvent event) {
+		if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+            event.setCancelled(true);
+        }else {
+            event.setCancelled(false);
+        }
+
+    }
+	
 	}
+

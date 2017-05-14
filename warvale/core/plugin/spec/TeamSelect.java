@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -92,9 +93,11 @@ public class TeamSelect implements Listener {
 	    Player player = (Player) event.getWhoClicked();
 
 	    if (!event.getInventory().equals(inv)) {
+	    	if (Main.getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
+	    		event.setCancelled(true);
 	    	return;
 		}
-	    
+	    }
 	    switch (event.getSlot()) {
 	    case 3: // Join red 
 	    	Main.getRedTeam().addEntry(event.getWhoClicked().getName());
@@ -139,5 +142,6 @@ public class TeamSelect implements Listener {
 	public void onPlayerOffHand(PlayerSwapHandItemsEvent event) {
 		event.setCancelled(true);
 	}
-		
+	
 	}
+
