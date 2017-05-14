@@ -1,4 +1,4 @@
-package warvale.core.plugin;
+package warvale.core.plugin.connect;
 
 
 import org.bukkit.Bukkit;
@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import net.md_5.bungee.api.ChatColor;
+import warvale.core.plugin.Main;
 
 public class JoinServer implements Listener {
 

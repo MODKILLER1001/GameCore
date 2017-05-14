@@ -15,6 +15,8 @@ import warvale.core.plugin.commands.Join;
 import warvale.core.plugin.commands.Kits;
 import warvale.core.plugin.commands.Leave;
 import warvale.core.plugin.commands.StartAuto;
+import warvale.core.plugin.connect.JoinServer;
+import warvale.core.plugin.connect.LeaveServer;
 import warvale.core.plugin.events.WorldEvent;
 import warvale.core.plugin.kits.KitItems;
 import warvale.core.plugin.spec.ClassSelect;
@@ -31,39 +33,9 @@ public class Main extends JavaPlugin {
   	private static Team redTeam;
   	private static Team spectatorTeam;
 
-
 	@Override
     public void onEnable() {
-
-    	new JoinServer(this);
-    	new LeaveServer(this);
-    	new WorldEvent(this);
-    	new TeamSelect(this);
-    	new ClassSelect(this);
-    	new Preferences(this);
     	
-    	getCommand("join").setExecutor(new Join());
-    	getCommand("leave").setExecutor(new Leave());
-    	getCommand("ctf").setExecutor(new CTF());
-    	getCommand("start").setExecutor(new StartAuto(this));
-    	getCommand("kits").setExecutor(new Kits());
-    	getCommand("kit").setExecutor(new KitItems());
-    	
-		Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
-            
-      	blueTeam = board.registerNewTeam("blue");
-        redTeam = board.registerNewTeam("red");
-        spectatorTeam = board.registerNewTeam("spectator");
-        
-    	redTeam.setAllowFriendlyFire(false);
-    	blueTeam.setAllowFriendlyFire(false);
-    	spectatorTeam.setAllowFriendlyFire(false);
-    	spectatorTeam.setCanSeeFriendlyInvisibles(true);
-      	
-        blueTeam.setPrefix(ChatColor.DARK_AQUA.toString());
-    	redTeam.setPrefix(ChatColor.RED.toString());
-    	spectatorTeam.setPrefix(ChatColor.GRAY.toString());
-
     	new Class("Soldier", 0,
 				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Charges forward and deals extra"),
 				ChatColor.translateAlternateColorCodes('&', "&7damage to enemies.")),
@@ -80,6 +52,35 @@ public class Main extends JavaPlugin {
 				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. &7Chance to deal double damage"),
 				ChatColor.translateAlternateColorCodes('&', "&7when mining the core.")),
 				new ItemStack(Material.IRON_PICKAXE), "Superswing");
+		
+    	getCommand("join").setExecutor(new Join());
+    	getCommand("leave").setExecutor(new Leave());
+    	getCommand("start").setExecutor(new StartAuto(this));
+    	getCommand("kits").setExecutor(new Kits());
+    	getCommand("kit").setExecutor(new KitItems());
+    	
+		Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
+            
+		blueTeam = board.registerNewTeam("blue");
+        redTeam = board.registerNewTeam("red");
+        spectatorTeam = board.registerNewTeam("spectator");
+        
+    	redTeam.setAllowFriendlyFire(false);
+    	blueTeam.setAllowFriendlyFire(false);
+    	spectatorTeam.setAllowFriendlyFire(false);
+    	spectatorTeam.setCanSeeFriendlyInvisibles(true);
+      	
+    	new JoinServer(this);
+    	new LeaveServer(this);
+    	new WorldEvent(this);
+    	new TeamSelect(this);
+    	new ClassSelect(this);
+    	new Preferences(this);
+    	
+        blueTeam.setPrefix(ChatColor.DARK_AQUA.toString());
+    	redTeam.setPrefix(ChatColor.RED.toString());
+    	spectatorTeam.setPrefix(ChatColor.GRAY.toString());
+
     }
    
     @Override
@@ -88,7 +89,7 @@ public class Main extends JavaPlugin {
         redTeam.unregister();
         spectatorTeam.unregister();
 
-        Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warvale: Gamecore " + ChatColor.GRAY + "Reloading plugin...");
+        Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warvale: Conquest Gamecore " + ChatColor.GRAY + "Reloading plugin...");
     }
   
   	public static Team getBlueTeam() {

@@ -33,7 +33,7 @@ public class Preferences implements Listener {
 	    if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
 	        ItemStack preferences = new ItemStack(Material.REDSTONE_COMPARATOR, 1); {
 	        ItemMeta spawnmeta = preferences.getItemMeta();
-	        spawnmeta.setDisplayName(ChatColor.RESET + "" + ChatColor.AQUA + "Preferences");
+	        spawnmeta.setDisplayName(ChatColor.RESET + "" + ChatColor.AQUA + "Menu & Preferences");
 	        preferences.setItemMeta(spawnmeta);
 	        
 	        event.getPlayer().getInventory().setItem(6, preferences);
@@ -42,7 +42,38 @@ public class Preferences implements Listener {
 	}
 	
 	private void tsGUI(Player player ) {
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.DARK_GRAY + "Preferences Menu:");
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
+		
+		ItemStack forumslink = new ItemStack(Material.NAME_TAG);
+		ItemMeta forumslinkmeta = forumslink.getItemMeta();
+		forumslinkmeta.setDisplayName(ChatColor.DARK_RED + "Forums Link");
+		forumslink.setItemMeta(forumslinkmeta);
+		
+		ItemStack discordlink = new ItemStack(Material.ANVIL);
+		ItemMeta discordlinkmeta = discordlink.getItemMeta();
+		discordlinkmeta.setDisplayName(ChatColor.DARK_RED + "Discord Link");
+		discordlink.setItemMeta(discordlinkmeta);
+		
+		ItemStack twitterlink = new ItemStack(Material.DIAMOND);
+		ItemMeta twitterlinkmeta = twitterlink.getItemMeta();
+		twitterlinkmeta.setDisplayName(ChatColor.DARK_RED + "Twitter Link");
+		twitterlink.setItemMeta(twitterlinkmeta);
+		
+		ItemStack storelink = new ItemStack(Material.NETHER_STAR);
+		ItemMeta storelinkmeta = storelink.getItemMeta();
+		storelinkmeta.setDisplayName(ChatColor.DARK_RED + "Store Link");
+		storelink.setItemMeta(storelinkmeta);
+		
+		ItemStack closemenu = new ItemStack(Material.BARRIER);
+		ItemMeta closemenumeta = closemenu.getItemMeta();
+		closemenumeta.setDisplayName(ChatColor.DARK_RED + "Close selector");
+		closemenu.setItemMeta(closemenumeta);
+		
+		inv.setItem(49, forumslink);
+		inv.setItem(50, discordlink);
+		inv.setItem(51, twitterlink);
+		inv.setItem(52, storelink);
+		inv.setItem(53, closemenu);
 		
 		player.openInventory(inv);
 	}
