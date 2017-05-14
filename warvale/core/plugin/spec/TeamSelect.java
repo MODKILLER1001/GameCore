@@ -100,26 +100,32 @@ public class TeamSelect implements Listener {
 	    }
 	    switch (event.getSlot()) {
 	    case 3: // Join red 
-	    	Main.getRedTeam().addEntry(event.getWhoClicked().getName());
-				event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
-			    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
-			    	event.getWhoClicked().removePotionEffect(effect.getType());
-			    	((Player) event.getWhoClicked()).setAllowFlight(false);
-			    	player.closeInventory();
-			    	player.getInventory().clear();
+		    if (event.getInventory().equals(inv)) {
+		    	Main.getRedTeam().addEntry(event.getWhoClicked().getName());
+					event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
+				    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
+				    	event.getWhoClicked().removePotionEffect(effect.getType());
+				    	((Player) event.getWhoClicked()).setAllowFlight(false);
+				    	player.closeInventory();
+				    	player.getInventory().clear();
+			    }
 	    	break;
 	    case 4: // Close menu
-	    	event.setCancelled(true);
-	    	player.closeInventory();
+	    	if (event.getInventory().equals(inv)) {
+		    	event.setCancelled(true);
+		    	player.closeInventory();
+	    	}
 	    	break;
 	    case 5: // Join blue
-	    	Main.getBlueTeam().addEntry(event.getWhoClicked().getName());
-				event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
-			    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
-			    	event.getWhoClicked().removePotionEffect(effect.getType());
-			    	((Player) event.getWhoClicked()).setAllowFlight(false);
-			    	player.closeInventory();
-			    	player.getInventory().clear();
+		    if (event.getInventory().equals(inv)) {
+		    	Main.getBlueTeam().addEntry(event.getWhoClicked().getName());
+					event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
+				    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
+				    	event.getWhoClicked().removePotionEffect(effect.getType());
+				    	((Player) event.getWhoClicked()).setAllowFlight(false);
+				    	player.closeInventory();
+				    	player.getInventory().clear();
+			    }
 	    	break;
 	    	
 	    default:
