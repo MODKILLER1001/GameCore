@@ -1,12 +1,12 @@
 main: warvale.core.plugin.Main
-name: CTFCore
-version: 1.1.2
-author: Pixelific, Aerh, Draem, Laep
+name: Gamecore
+version: 1.1.4
+author: Warvale
 description: A CTF plugin.
 commands:
-  ctf:
+  gamever:
     description: Test if the core of the plugin is functioning.
-    usage: /ctf
+    usage: /gamever
 
   join:
     description: Join the game.

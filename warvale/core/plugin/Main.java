@@ -10,7 +10,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import warvale.core.plugin.classes.Class;
-import warvale.core.plugin.commands.CTF;
+import warvale.core.plugin.commands.Version;
 import warvale.core.plugin.commands.Join;
 import warvale.core.plugin.commands.Kits;
 import warvale.core.plugin.commands.Leave;
@@ -58,6 +58,7 @@ public class Main extends JavaPlugin {
     	getCommand("start").setExecutor(new StartAuto(this));
     	getCommand("kits").setExecutor(new Kits());
     	getCommand("kit").setExecutor(new KitItems());
+    	getCommand("gamever").setExecutor(new Version());
     	
 		Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
             

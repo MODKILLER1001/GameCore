@@ -17,29 +17,15 @@ public class Leave implements CommandExecutor {
           	Player sender = (Player) cs;
 	        if (command.getName().equalsIgnoreCase("leave")) {
 	        	if (Main.getRedTeam().getEntries().contains(sender.getName())) {
-	        		sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time."); // Temporarily disabling leaving
-	        	/*Main.getSpectatorTeam().addEntry(sender.getName());
-	        		sender.sendMessage(ChatColor.GRAY + "Left the game on team " + ChatColor.RED + "red");
-	    	    	sender.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1));
-	    	    	sender.getInventory().clear();
-	    	    	sender.setAllowFlight(true); */
+	        		sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time.");
 	        	}
 	        	
 	        	else if (Main.getBlueTeam().getEntries().contains(sender.getName())) {
-	        		sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time."); // Temporarily disabling leaving
-	        		/*Main.getSpectatorTeam().addEntry(sender.getName());
-	        		sender.sendMessage(ChatColor.GRAY + "Left the game on team " + ChatColor.DARK_AQUA + "blue");
-	    	    	sender.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1));
-	    	    	sender.getInventory().clear();
-	    	    	sender.setAllowFlight(true);*/
+	        		sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time.");
 	        	}
 	        	
 	        	else
 	        		sender.sendMessage(ChatColor.GRAY + "You must be on a team to leave the game.");
-	        	
-	        	/*Main.getBlueTeam().removeEntry(sender.getName());
-	        	Main.getRedTeam().removeEntry(sender.getName());*/
-
 	            return true;
         }
         return false;
