@@ -2,6 +2,7 @@ package warvale.core.plugin.connect;
 
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,6 +32,7 @@ public class JoinServer implements Listener {
         
         if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
         	event.getPlayer().setAllowFlight(true);
+        	event.getPlayer().setGameMode(GameMode.ADVENTURE);
      
 }
     }

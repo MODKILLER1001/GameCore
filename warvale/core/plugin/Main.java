@@ -4,11 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import warvale.core.plugin.chat.Announcements;
 import warvale.core.plugin.classes.Class;
 import warvale.core.plugin.commands.Version;
 import warvale.core.plugin.commands.Join;
@@ -26,16 +29,20 @@ import warvale.core.plugin.spec.TeamSelect;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
 
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin implements Listener {
 	  
   	private static Team blueTeam;
   	private static Team redTeam;
   	private static Team spectatorTeam;
-
+  	
+  	
 	@Override
     public void onEnable() {
-    	
+		
+		
     	new Class("Soldier", 0,
 				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Charges forward and deals extra"),
 				ChatColor.translateAlternateColorCodes('&', "&7damage to enemies.")),
@@ -84,8 +91,14 @@ public class Main extends JavaPlugin {
 
     }
    
+	public void registerListeners() {
+		getServer().getPluginManager().registerEvents(new Announcements(this), this);
+	}
+	
+	
     @Override
     public void onDisable() {
+ 	
        	blueTeam.unregister();
         redTeam.unregister();
         spectatorTeam.unregister();
