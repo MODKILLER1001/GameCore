@@ -38,7 +38,7 @@ public class Main extends JavaPlugin implements Listener {
   	
 	@Override
     public void onEnable() {
-		
+		instance = this;
 		
     	new Class("Soldier", 0,
 				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Charges forward and deals extra"),
@@ -87,10 +87,8 @@ public class Main extends JavaPlugin implements Listener {
     	spectatorTeam.setPrefix(ChatColor.GRAY.toString());
 
     	for (BroadcastType type : BroadcastType.values()) {
-    		type.autoBroadcast(NumberUtils.random(1400, 1200), NumberUtils.random(10, 1));
+    		type.autoBroadcast(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
 		}
-
-    	instance = this;
     }
 	
     @Override

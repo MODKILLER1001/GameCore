@@ -55,7 +55,7 @@ public class WorldEvent implements Listener {
                 public void run() {
                     entityList.stream().forEach(entity -> entity.remove());
                 }
-            }.runTaskLater(Bukkit.getPluginManager().getPlugin(main.getDescription().getName()), 60L);
+            }.runTaskLater(Main.get(), 60L);
 
             new BukkitRunnable() {
                 @Override
@@ -63,7 +63,7 @@ public class WorldEvent implements Listener {
                     event.getPlayer().getWorld().getBlockAt(blockLoc).setType(Material.IRON_ORE);
                     event.getPlayer().getWorld().playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 25, 1);
                 }
-            }.runTaskLater(Bukkit.getPluginManager().getPlugin(main.getDescription().getName()), 400L);
+            }.runTaskLater(Main.get(), 400L);
         }
     }
 
