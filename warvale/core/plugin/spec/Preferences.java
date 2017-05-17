@@ -208,7 +208,7 @@ public class Preferences implements Listener {
 	    	player.closeInventory();
 	    	break;
 	    
-	    // Tips
+		// Tips
 	    case 4:
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages" + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see tips in chat.");

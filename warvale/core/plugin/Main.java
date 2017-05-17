@@ -3,15 +3,13 @@ package warvale.core.plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import warvale.core.plugin.chat.Announcements;
+import warvale.core.plugin.chat.BroadcastType;
 import warvale.core.plugin.classes.Class;
 import warvale.core.plugin.commands.Version;
 import warvale.core.plugin.commands.Join;
@@ -25,18 +23,17 @@ import warvale.core.plugin.kits.KitItems;
 import warvale.core.plugin.spec.ClassSelect;
 import warvale.core.plugin.spec.Preferences;
 import warvale.core.plugin.spec.TeamSelect;
+import warvale.core.plugin.utils.NumberUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
 
 public class Main extends JavaPlugin implements Listener {
 	  
   	private static Team blueTeam;
   	private static Team redTeam;
   	private static Team spectatorTeam;
+
+  	private static Main instance;
   	
   	
 	@Override
@@ -89,12 +86,12 @@ public class Main extends JavaPlugin implements Listener {
     	redTeam.setPrefix(ChatColor.RED.toString());
     	spectatorTeam.setPrefix(ChatColor.GRAY.toString());
 
+    	for (BroadcastType type : BroadcastType.values()) {
+    		type.autoBroadcast(NumberUtils.random(1400, 1200), NumberUtils.random(10, 1));
+		}
+
+    	instance = this;
     }
-   
-	public void registerListeners() {
-		getServer().getPluginManager().registerEvents(new Announcements(this), this);
-	}
-	
 	
     @Override
     public void onDisable() {
@@ -117,5 +114,9 @@ public class Main extends JavaPlugin implements Listener {
  	public static Team getSpectatorTeam() {
         return spectatorTeam;
     }
+
+    public static Main get() {
+		return instance;
+	}
 
 }

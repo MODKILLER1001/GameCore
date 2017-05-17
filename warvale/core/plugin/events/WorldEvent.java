@@ -37,7 +37,7 @@ public class WorldEvent implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.getBlock().getType().equals(Material.IRON_ORE)) {
             event.getPlayer().giveExp(10);
-            for (int i = 0; i < NumberUtils.random(2, 1) + 1; i++) {
+            for (int i = 0; i < NumberUtils.random(2, 1); i++) {
                 event.getPlayer().getInventory().addItem(new ItemStack(Material.IRON_INGOT));
             }
             event.setCancelled(true);
