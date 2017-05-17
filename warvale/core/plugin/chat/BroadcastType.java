@@ -10,8 +10,12 @@ import warvale.core.plugin.utils.NumberUtils;
  * Created by Draem on 5/16/2017.
  */
 public enum BroadcastType {
-    TIP("&b&l[!]", new String[] {"tip 1", "tip 2", "tip 3", "tip 4", "tip 5"}),
-    ADVERTISEMENT("&c&l[!]", new String[] {"advertise 1", "advertise 2"});
+    TIP("&b&l[!]", new String[] {"There is a lapis mine located towards the edge of each team base!", 
+    		"You can change disable join and leave messages in the Preferences.", "Traps are a very effective way to kill enemies secretively!", 
+    		"On each map, there is a monster spawner located somewhere within a team spawn.", "Your core is invincible for the first 10 minutes of the game!"}),
+    ADVERTISEMENT("&2&l[!]", new String[] {"Follow @warvalenetwork on twitter for giveaways and news by clicking: https://twitter.com/warvalenetwork ", 
+    		"Support us and help grow the community by purchasing a rank at https://store.warvale.com "}),
+	/*ANNOUNCEMENT("&c&l[!]", new String[] {"New announcement system added!", "New playsounds introduced!"});*/ // Disabling announcements temporarily.
 
     private String prefix;
     private String[] messages;
