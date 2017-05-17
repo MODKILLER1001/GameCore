@@ -3,6 +3,7 @@ package warvale.core.plugin.spec;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -106,6 +107,7 @@ public class TeamSelect implements Listener {
 				    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
 				    	event.getWhoClicked().removePotionEffect(effect.getType());
 				    	((Player) event.getWhoClicked()).setAllowFlight(false);
+				    	player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
 				    	player.closeInventory();
 				    	player.getInventory().clear();
 			    }
@@ -113,6 +115,7 @@ public class TeamSelect implements Listener {
 	    case 4: // Close menu
 	    	if (event.getInventory().equals(inv)) {
 		    	event.setCancelled(true);
+		    	player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_CLOSE, 1, 1);
 		    	player.closeInventory();
 	    	}
 	    	break;
@@ -123,6 +126,7 @@ public class TeamSelect implements Listener {
 				    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
 				    	event.getWhoClicked().removePotionEffect(effect.getType());
 				    	((Player) event.getWhoClicked()).setAllowFlight(false);
+				    	player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
 				    	player.closeInventory();
 				    	player.getInventory().clear();
 			    }

@@ -3,6 +3,7 @@ package warvale.core.plugin.spec;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -129,11 +130,11 @@ public class Preferences implements Listener {
 		inv.setItem(24, prefFalse);
 		inv.setItem(26, prefFalse);
 		
-		inv.setItem(49, forumslink);
-		inv.setItem(50, discordlink);
-		inv.setItem(51, twitterlink);
-		inv.setItem(52, storelink);
-		inv.setItem(53, closemenu);
+		inv.setItem(47, forumslink);
+		inv.setItem(48, discordlink);
+		inv.setItem(49, twitterlink);
+		inv.setItem(50, storelink);
+		inv.setItem(51, closemenu);
 		
 		player.openInventory(inv);
 	}
@@ -168,12 +169,14 @@ public class Preferences implements Listener {
 	    case 0:
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages" + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see users join the server.");
-			player.closeInventory();
+	    	player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
+	    	player.closeInventory();
 	    	break;
 	    	
 	    case 9:
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
+	    	player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
 	    	// Add code for this
 			player.closeInventory();
 	    	break;
@@ -181,6 +184,7 @@ public class Preferences implements Listener {
 	    case 18:
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
+	    	player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
 	    	// Add code for this
 			player.closeInventory();
 	    	break;
@@ -190,7 +194,8 @@ public class Preferences implements Listener {
 	    case 2:
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages" + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see users leave the server.");
-			player.closeInventory();
+	    	player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
+	    	player.closeInventory();
 	    	break;
 	    
 	    
@@ -198,6 +203,7 @@ public class Preferences implements Listener {
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
 	    	// Add code for this
+	    	player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
 	    	player.closeInventory();
 	    	break;
 	    	
@@ -205,6 +211,7 @@ public class Preferences implements Listener {
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
 	    	// Add code for this
+	    	player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
 	    	player.closeInventory();
 	    	break;
 	    
@@ -212,7 +219,8 @@ public class Preferences implements Listener {
 	    case 4:
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages" + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see tips in chat.");
-			player.closeInventory();
+	    	player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
+	    	player.closeInventory();
 	    	break;
 	    
 	    
@@ -220,6 +228,7 @@ public class Preferences implements Listener {
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
 	    	// Add code for this
+	    	player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
 	    	player.closeInventory();
 	    	break;
 	    	
@@ -227,6 +236,7 @@ public class Preferences implements Listener {
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
 	    	// Add code for this
+	    	player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
 	    	player.closeInventory();
 	    	break;	
 	    	
@@ -234,7 +244,8 @@ public class Preferences implements Listener {
 	    case 6:
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages" + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see advertisements in chat.");
-			player.closeInventory();
+	    	player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
+	    	player.closeInventory();
 	    	break;
 	    
 	    
@@ -242,6 +253,7 @@ public class Preferences implements Listener {
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
 	    	// Add code for this
+	    	player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
 	    	player.closeInventory();
 	    	break;
 	    	
@@ -249,6 +261,7 @@ public class Preferences implements Listener {
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
 	    	// Add code for this
+	    	player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
 	    	player.closeInventory();
 	    	break;		    	
 	    	
@@ -256,7 +269,8 @@ public class Preferences implements Listener {
 	    case 8:
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages" + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see private messages from regular users in chat.");
-			player.closeInventory();
+	    	player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
+	    	player.closeInventory();
 	    	break;
 	    
 	    
@@ -264,6 +278,7 @@ public class Preferences implements Listener {
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
 	    	// Add code for this
+	    	player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
 	    	player.closeInventory();
 	    	break;
 	    	
@@ -271,33 +286,39 @@ public class Preferences implements Listener {
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages" + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
 	    	// Add code for this
+	    	player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
 	    	player.closeInventory();
 	    	break;	
 	    	
 	    	
 	    // Links
-	    case 49: 
+	    case 47: 
 	    	event.setCancelled(true);
 	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Forums: " + ChatColor.AQUA + "www.warvale.com/forums");
-			player.closeInventory();
+	    	player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
+	    	player.closeInventory();
+	    	break;
+	    case 48: 
+	    	event.setCancelled(true);
+	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Discord: " + ChatColor.AQUA + "discord.gg/addlater");
+	    	player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
+	    	player.closeInventory();
+	    	break;
+	    case 49: 
+	    	event.setCancelled(true);
+	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Twitter: " + ChatColor.AQUA + "www.twitter.com/Pixelificz");
+	    	player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
+	    	player.closeInventory();
 	    	break;
 	    case 50: 
 	    	event.setCancelled(true);
-	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Discord: " + ChatColor.AQUA + "discord.gg/addlater");
+	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Store: " + ChatColor.AQUA + "www.warvale.com/store");
+	    	player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
 	    	player.closeInventory();
 	    	break;
 	    case 51: 
 	    	event.setCancelled(true);
-	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Twitter: " + ChatColor.AQUA + "www.twitter.com/Pixelificz");
-	    	player.closeInventory();
-	    	break;
-	    case 52: 
-	    	event.setCancelled(true);
-	    	event.getWhoClicked().sendMessage(ChatColor.GRAY + "Warvale Store: " + ChatColor.AQUA + "www.warvale.com/store");
-	    	player.closeInventory();
-	    	break;
-	    case 53: 
-	    	event.setCancelled(true);
+	    	player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_CLOSE, 1, 1);
 	    	player.closeInventory();
 	    	break;
 	    default:
