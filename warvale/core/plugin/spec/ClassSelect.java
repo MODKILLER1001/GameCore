@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -93,6 +94,7 @@ public class ClassSelect implements Listener {
 	    //if (!ClassManager.hasClass(player)) {
 	    	clazz.addMember(player);
 	    	player.sendMessage(ChatColor.GRAY + "You have successfully chosen the " + ChatColor.YELLOW + clazz.getName() + ChatColor.GRAY + " class!");
+	    	player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
 		//} else {
 	    	//player.sendMessage(ChatColor.RED + "You may not switch your class at this time.");
 		//}
