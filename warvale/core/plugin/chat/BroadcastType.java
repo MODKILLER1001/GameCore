@@ -14,7 +14,7 @@ public enum BroadcastType {
     		"You can change disable join and leave messages in the Preferences.", "Traps are a very effective way to kill enemies secretively!", 
     		"On each map, there is a monster spawner located somewhere within a team spawn.", "Your core is invincible for the first 10 minutes of the game!"}),
     ADVERTISEMENT("&2&l[!]", new String[] {"Follow @warvalenetwork on twitter for giveaways and news by clicking: https://twitter.com/warvalenetwork ", 
-    		"Support us and help grow the community by purchasing a rank at https://store.warvale.com "}),
+    		"Support us and help grow the community by purchasing a rank at https://store.warvale.com "});
 	/*ANNOUNCEMENT("&c&l[!]", new String[] {"New announcement system added!", "New playsounds introduced!"});*/ // Disabling announcements temporarily.
 
     private String prefix;

@@ -76,6 +76,7 @@ public class ClassSelect implements Listener {
 		
 		if(is.getType()==Material.NETHER_STAR)
 			openGUI(event.getPlayer());
+			event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
 		
 	}
 

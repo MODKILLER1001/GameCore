@@ -85,7 +85,7 @@ public class TeamSelect implements Listener {
 		
 		if(is.getType()==Material.ENCHANTED_BOOK)
 			tsGUI(event.getPlayer());
-		
+    		event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
 	}
 	
 	
@@ -106,7 +106,6 @@ public class TeamSelect implements Listener {
 					event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
 				    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
 				    	event.getWhoClicked().removePotionEffect(effect.getType());
-				    	((Player) event.getWhoClicked()).setAllowFlight(false);
 				    	player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
 				    	player.closeInventory();
 				    	player.getInventory().clear();
@@ -125,7 +124,6 @@ public class TeamSelect implements Listener {
 					event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
 				    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
 				    	event.getWhoClicked().removePotionEffect(effect.getType());
-				    	((Player) event.getWhoClicked()).setAllowFlight(false);
 				    	player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
 				    	player.closeInventory();
 				    	player.getInventory().clear();
