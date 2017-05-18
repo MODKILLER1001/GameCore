@@ -56,7 +56,31 @@ public class Main extends JavaPlugin implements Listener {
 				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. &7Chance to deal double damage"),
 				ChatColor.translateAlternateColorCodes('&', "&7when mining the core.")),
 				new ItemStack(Material.IRON_PICKAXE), "Superswing");
-		
+		new Class("Spy", 500,
+				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. &7Appear as if you are on the other team"),
+				ChatColor.translateAlternateColorCodes('&', "&7 by transforming your name color!")),
+				new ItemStack(Material.GLASS_BOTTLE), "Undercover");
+		new Class("Technician", 1000,
+				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. &7Paralyze your enemy with your stunning "),
+				ChatColor.translateAlternateColorCodes('&', "&7electrocution powers.")),
+				new ItemStack(Material.REDSTONE_TORCH_ON), "Electrocute");
+		new Class("Musician", 1000,
+				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. &7Play your music and gain healing powers"),
+				ChatColor.translateAlternateColorCodes('&', "&7when near it!")),
+				new ItemStack(Material.RECORD_8), "Jukebox");
+		new Class("Pyromaniac", 1000,
+				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. &7Use the power of fire to light your"),
+				ChatColor.translateAlternateColorCodes('&', "&7target aflame.")),
+				new ItemStack(Material.FIREBALL), "Ignite");
+		new Class("Necromancer", 5000,
+				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. &7Raise evil mobs from the dead to attack"),
+				ChatColor.translateAlternateColorCodes('&', "&7enemies.")),
+				new ItemStack(Material.BONE), "Reincarnate");
+		new Class("Earthbender", 5000,
+				Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&aPurchasable class. Harness the powers of the Earth to control"),
+				ChatColor.translateAlternateColorCodes('&', "&7the environment.")),
+				new ItemStack(Material.GRASS), "Terraform");
+			
     	getCommand("join").setExecutor(new Join());
     	getCommand("leave").setExecutor(new Leave());
     	getCommand("start").setExecutor(new StartAuto(this));

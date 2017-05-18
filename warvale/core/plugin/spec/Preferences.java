@@ -150,7 +150,10 @@ public class Preferences implements Listener {
 			
 		if(is.getType()==Material.REDSTONE_COMPARATOR)
 				tsGUI(event.getPlayer());
-    			event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+		
+		if(Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+    		event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+	}
 	}
 	
 	

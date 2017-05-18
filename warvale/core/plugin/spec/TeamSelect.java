@@ -85,7 +85,10 @@ public class TeamSelect implements Listener {
 		
 		if(is.getType()==Material.ENCHANTED_BOOK)
 			tsGUI(event.getPlayer());
+		
+		if(Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
     		event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+	}
 	}
 	
 	
