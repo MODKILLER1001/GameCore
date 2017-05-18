@@ -110,7 +110,6 @@ public class TeamSelect implements Listener {
                     event.getWhoClicked().removePotionEffect(effect.getType());
                 player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
                 player.closeInventory();
-                player.getInventory().clear();
             }
             break;
         case 4: // Close menu
@@ -128,7 +127,6 @@ public class TeamSelect implements Listener {
                     event.getWhoClicked().removePotionEffect(effect.getType());
                 player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
                 player.closeInventory();
-                player.getInventory().clear();
             }
             break;
 

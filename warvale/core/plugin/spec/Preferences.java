@@ -46,7 +46,7 @@ public class Preferences implements Listener {
         }
     }
 
-    private void tsGUI(Player player) {
+    private static void tsGUI(Player player) {
         inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
 
         // Actual preferences
@@ -155,7 +155,7 @@ public class Preferences implements Listener {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
         }
     }
-        
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMove(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();

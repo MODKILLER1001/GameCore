@@ -13,13 +13,12 @@ import warvale.core.plugin.chat.BroadcastType;
 import warvale.core.plugin.classes.Class;
 import warvale.core.plugin.commands.Version;
 import warvale.core.plugin.commands.Join;
-import warvale.core.plugin.commands.Kits;
+import warvale.core.plugin.commands.Classes;
 import warvale.core.plugin.commands.Leave;
 import warvale.core.plugin.commands.StartAuto;
 import warvale.core.plugin.connect.JoinServer;
 import warvale.core.plugin.connect.LeaveServer;
 import warvale.core.plugin.events.WorldEvent;
-import warvale.core.plugin.kits.KitItems;
 import warvale.core.plugin.spec.ClassSelect;
 import warvale.core.plugin.spec.Preferences;
 import warvale.core.plugin.spec.TeamSelect;
@@ -94,15 +93,21 @@ public class Main extends JavaPlugin implements Listener {
         new Class("Earthbender", 5000,
                 Arrays.asList(
                         ChatColor.translateAlternateColorCodes('&',
-                                "&aPurchasable class. Harness the powers of the Earth to control"),
+                                "&aPurchasable class. &7Harness the powers of the Earth to control"),
                         ChatColor.translateAlternateColorCodes('&', "&7the environment.")),
                 new ItemStack(Material.GRASS), "Terraform");
+        new Class("Medic", 7000,
+                Arrays.asList(
+                        ChatColor.translateAlternateColorCodes('&',
+                                "&aPurchasable class. &7Take on the role of a support class by "),
+                        ChatColor.translateAlternateColorCodes('&', "&7healing your teammates around you!")),
+                new ItemStack(Material.BLAZE_ROD), "Trainquility");
 
+        
         getCommand("join").setExecutor(new Join());
         getCommand("leave").setExecutor(new Leave());
         getCommand("start").setExecutor(new StartAuto(this));
-        getCommand("kits").setExecutor(new Kits());
-        getCommand("kit").setExecutor(new KitItems());
+        getCommand("classes").setExecutor(new Classes());
         getCommand("gamever").setExecutor(new Version());
 
         Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
