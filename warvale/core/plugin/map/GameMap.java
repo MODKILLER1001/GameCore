@@ -39,16 +39,19 @@ public class GameMap {
         this.mapFile = new File(path + filedir + this.name + "\\");
 
         if (!this.mapFile.exists()) {
-            if(this.mapFile.mkdirs()) {
+            if (this.mapFile.mkdirs()) {
                 this.mapXML = new File(this.mapFile.getPath() + "\\" + filename);
                 this.mapXML.createNewFile();
 
-//            for (Player player : Bukkit.getOnlinePlayers()) {
-//                if (player.isOp()) {
-//                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4CTF &7Map &c\"" + this.name + "\" does not contain map.xml file." +
-//                            "\n&7-> I have created one for you, please fill in the &arequired &7fields."));
-//                }
-//            }
+                // for (Player player : Bukkit.getOnlinePlayers()) {
+                // if (player.isOp()) {
+                // player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                // "&4CTF &7Map &c\"" + this.name + "\" does not contain map.xml
+                // file." +
+                // "\n&7-> I have created one for you, please fill in the
+                // &arequired &7fields."));
+                // }
+                // }
             } else {
                 throw new IOException("Failed to created directory for map.xml.");
             }
@@ -83,7 +86,8 @@ public class GameMap {
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(this.mapXML);
         doc.getDocumentElement().normalize();
 
-        return Arrays.asList(doc.getElementsByTagName("authors").item(0).getTextContent().replaceAll(",", "").split(" "));
+        return Arrays
+                .asList(doc.getElementsByTagName("authors").item(0).getTextContent().replaceAll(",", "").split(" "));
     }
 
     public HashMap<String, Integer> getLobby() throws ParserConfigurationException, IOException, SAXException {
@@ -93,18 +97,24 @@ public class GameMap {
         Element element = (Element) doc.getElementsByTagName("lobby").item(0);
         HashMap<String, Integer> lobby = new HashMap<>();
 
-        lobby.put("plx", Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[0]));
-        lobby.put("ply", Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[1]));
-        lobby.put("plz", Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[2]));
-        lobby.put("p2x", Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[3]));
-        lobby.put("p2y", Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[4]));
-        lobby.put("p2z", Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[5]));
+        lobby.put("plx",
+                Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[0]));
+        lobby.put("ply",
+                Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[1]));
+        lobby.put("plz",
+                Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[2]));
+        lobby.put("p2x",
+                Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[3]));
+        lobby.put("p2y",
+                Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[4]));
+        lobby.put("p2z",
+                Integer.valueOf(element.getElementsByTagName("region").item(0).getTextContent().split(" ")[5]));
 
         lobby.put("exx", Integer.valueOf(element.getElementsByTagName("exact").item(0).getTextContent().split(" ")[0]));
         lobby.put("exy", Integer.valueOf(element.getElementsByTagName("exact").item(0).getTextContent().split(" ")[1]));
         lobby.put("exz", Integer.valueOf(element.getElementsByTagName("exact").item(0).getTextContent().split(" ")[2]));
 
-        lobby.put("yaw", Integer.valueOf( element.getElementsByTagName("yaw").item(0).getTextContent()));
+        lobby.put("yaw", Integer.valueOf(element.getElementsByTagName("yaw").item(0).getTextContent()));
         lobby.put("pitch", Integer.valueOf(element.getElementsByTagName("pitch").item(0).getTextContent()));
 
         return lobby;
@@ -119,30 +129,39 @@ public class GameMap {
 
     public HashMap<String, Integer[]> getSpawns() throws IOException, SAXException, ParserConfigurationException {
         HashMap<String, Integer[]> spawns = new HashMap<>();
-        Integer[] blue = new Integer[]{};
-        Integer[] red = new Integer[]{};
+        Integer[] blue = new Integer[] {};
+        Integer[] red = new Integer[] {};
 
-        blue[0] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[0]);
-        blue[1] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[1]);
-        blue[2] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[2]);
-        blue[3] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[3]);
-        blue[4] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[4]);
-        blue[5] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[5]);
+        blue[0] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red")
+                .item(0).getTextContent().split(" ")[0]);
+        blue[1] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red")
+                .item(0).getTextContent().split(" ")[1]);
+        blue[2] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red")
+                .item(0).getTextContent().split(" ")[2]);
+        blue[3] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red")
+                .item(0).getTextContent().split(" ")[3]);
+        blue[4] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red")
+                .item(0).getTextContent().split(" ")[4]);
+        blue[5] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red")
+                .item(0).getTextContent().split(" ")[5]);
 
-        red[0] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[0]);
-        red[1] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[1]);
-        red[2] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[2]);
-        red[3] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[3]);
-        red[4] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[4]);
-        red[5] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[5]);
+        red[0] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue")
+                .item(0).getTextContent().split(" ")[0]);
+        red[1] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue")
+                .item(0).getTextContent().split(" ")[1]);
+        red[2] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue")
+                .item(0).getTextContent().split(" ")[2]);
+        red[3] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue")
+                .item(0).getTextContent().split(" ")[3]);
+        red[4] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue")
+                .item(0).getTextContent().split(" ")[4]);
+        red[5] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue")
+                .item(0).getTextContent().split(" ")[5]);
 
         spawns.put("red", red);
         spawns.put("blue", blue);
 
         return spawns;
     }
-
-
-
 
 }

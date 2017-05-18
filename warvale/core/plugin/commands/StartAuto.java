@@ -17,7 +17,7 @@ public class StartAuto implements CommandExecutor {
     public StartAuto(Main plugin) {
         this.plugin = plugin;
     }
-    
+
     public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
 
         if (cs instanceof Player) {
@@ -27,11 +27,12 @@ public class StartAuto implements CommandExecutor {
                 task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new BukkitRunnable() {
                     @Override
                     public void run() {
-                        Bukkit.broadcastMessage(ChatColor.DARK_RED + "CTF " + ChatColor.GRAY + "starts in " + startCountdown + " seconds.");
+                        Bukkit.broadcastMessage(ChatColor.DARK_RED + "CTF " + ChatColor.GRAY + "starts in "
+                                + startCountdown + " seconds.");
                         startCountdown--;
 
                         if (startCountdown <= 0) {
-                        	startCountdown = 10;
+                            startCountdown = 10;
                             Bukkit.getScheduler().cancelTask(task);
                             Bukkit.broadcastMessage(ChatColor.GRAY + "The game has begun on <map>!");
                         }

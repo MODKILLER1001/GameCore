@@ -47,7 +47,9 @@ public class WorldEvent implements Listener {
             for (int i = 0; i < NumberUtils.random(5, 2) + 1; i++) {
                 ItemStack stack = new ItemStack(Material.IRON_NUGGET);
                 stack.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, NumberUtils.random(100, 1));
-                entityList.add(event.getPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation().setDirection(Vector.getRandom()).add(Vector.getRandom()), stack));
+                entityList.add(event.getPlayer().getWorld().dropItemNaturally(
+                        event.getBlock().getLocation().setDirection(Vector.getRandom()).add(Vector.getRandom()),
+                        stack));
             }
 
             new BukkitRunnable() {

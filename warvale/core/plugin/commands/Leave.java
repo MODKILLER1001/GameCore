@@ -12,25 +12,25 @@ import warvale.core.plugin.Main;
 
 public class Leave implements CommandExecutor {
 
-	public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
-		if (cs instanceof Player) {
-          	Player sender = (Player) cs;
-	        if (command.getName().equalsIgnoreCase("leave")) {
-	        	if (Main.getRedTeam().getEntries().contains(sender.getName())) {
-	        		sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time.");
-	        	}
-	        	
-	        	else if (Main.getBlueTeam().getEntries().contains(sender.getName())) {
-	        		sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time.");
-	        	}
-	        	
-	        	else
-	        		sender.sendMessage(ChatColor.GRAY + "You must be on a team to leave the game.");
-	            return true;
+    public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
+        if (cs instanceof Player) {
+            Player sender = (Player) cs;
+            if (command.getName().equalsIgnoreCase("leave")) {
+                if (Main.getRedTeam().getEntries().contains(sender.getName())) {
+                    sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time.");
+                }
+
+                else if (Main.getBlueTeam().getEntries().contains(sender.getName())) {
+                    sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time.");
+                }
+
+                else
+                    sender.sendMessage(ChatColor.GRAY + "You must be on a team to leave the game.");
+                return true;
+            }
+            return false;
         }
         return false;
+
     }
-		return false;
-   
-	}
 }
