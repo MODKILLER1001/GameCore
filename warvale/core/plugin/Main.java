@@ -145,7 +145,7 @@ public class Main extends JavaPlugin implements Listener {
         spectatorTeam.unregister();
 
         Bukkit.broadcastMessage(
-                ChatColor.DARK_RED + "Warvale: Conquest Gamecore " + ChatColor.GRAY + "Reloading plugin...");
+                ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Warvale " + ChatColor.DARK_GRAY + "┃" + ChatColor.GRAY + " Reloading" + ChatColor.RED + " Conquest Gamecore ");
     }
 
     public static Team getBlueTeam() {
