@@ -13,6 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import warvale.core.plugin.Main;
+import warvale.core.plugin.classes.Abilities;
+import warvale.core.plugin.events.ClassChooseEvent;
 import warvale.core.plugin.utils.NumberUtils;
 
 import java.util.ArrayList;
@@ -26,7 +28,12 @@ public class GlobalEvent implements Listener {
     public GlobalEvent(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
-
+    
+    @EventHandler
+    public void onClassChoose(ClassChooseEvent event) {
+    Abilities.detectClass(event.getPlayer());
+    }
+    
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.getBlock().getType().equals(Material.IRON_ORE)) {
