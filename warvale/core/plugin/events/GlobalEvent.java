@@ -1,9 +1,5 @@
 package warvale.core.plugin.events;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -29,7 +25,6 @@ public class GlobalEvent implements Listener {
 
     public GlobalEvent(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        listenerToPackets();
     }
 
     @EventHandler
@@ -180,19 +175,6 @@ public class GlobalEvent implements Listener {
         if (event.getItem().getItemStack().getType().equals(Material.EYE_OF_ENDER)) {
             event.setCancelled(true);    
     }
-    }
-
-    private static void listenerToPackets() {
-        Main.getProtocol().addPacketListener(new PacketAdapter(Main.get(), ListenerPriority.HIGHEST, PacketType.Play.Server.BLOCK_ACTION) {
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                if (event.getPacketType().equals(PacketType.Play.Server.BLOCK_ACTION)) {
-                    if (event.getPacket().getBytes().read(0).equals((byte) 0x0A) && event.getPacket().getIntegers().read(0).equals(209)) {
-                        event.setCancelled(true);
-                    }
-                }
-            }
-        });
     }
 
 
