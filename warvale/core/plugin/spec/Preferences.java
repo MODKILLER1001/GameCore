@@ -306,7 +306,7 @@ public class Preferences implements Listener {
         case 47:
             event.setCancelled(true);
             event.getWhoClicked()
-                    .sendMessage(ChatColor.GRAY + "Warvale Forums: " + ChatColor.AQUA + "www.warvale.com/forums");
+                    .sendMessage(ChatColor.GRAY + "Warvale Forums: " + ChatColor.AQUA + "www.warvale.net/forums");
             player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
             player.closeInventory();
             break;
@@ -320,14 +320,14 @@ public class Preferences implements Listener {
         case 49:
             event.setCancelled(true);
             event.getWhoClicked()
-                    .sendMessage(ChatColor.GRAY + "Warvale Twitter: " + ChatColor.AQUA + "www.twitter.com/Pixelificz");
+                    .sendMessage(ChatColor.GRAY + "Warvale Twitter: " + ChatColor.AQUA + "www.twitter.com/warvalenetwork");
             player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
             player.closeInventory();
             break;
         case 50:
             event.setCancelled(true);
             event.getWhoClicked()
-                    .sendMessage(ChatColor.GRAY + "Warvale Store: " + ChatColor.AQUA + "www.warvale.com/store");
+                    .sendMessage(ChatColor.GRAY + "Warvale Store: " + ChatColor.AQUA + "www.warvale.net/store");
             player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
             player.closeInventory();
             break;
