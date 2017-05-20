@@ -23,6 +23,7 @@ import net.md_5.bungee.api.ChatColor;
 import warvale.core.plugin.Main;
 import warvale.core.plugin.classes.Class;
 import warvale.core.plugin.classes.ClassManager;
+import warvale.core.plugin.events.ClassChooseEvent;
 
 public class ClassSelect implements Listener {
 
@@ -100,6 +101,7 @@ public class ClassSelect implements Listener {
         player.sendMessage(ChatColor.GRAY + "You have successfully chosen the " + ChatColor.YELLOW + clazz.getName()
                 + ChatColor.GRAY + " class!");
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+        new ClassChooseEvent(player, clazz);
         // } else {
         // player.sendMessage(ChatColor.RED + "You may not switch your class at
         // this time.");

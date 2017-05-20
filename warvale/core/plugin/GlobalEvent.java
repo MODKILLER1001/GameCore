@@ -1,4 +1,4 @@
-package warvale.core.plugin.events;
+package warvale.core.plugin;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

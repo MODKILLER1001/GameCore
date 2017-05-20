@@ -79,6 +79,7 @@ public class GameMap {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        assert jarPath != null;
         return new File(jarPath).getParentFile().getPath();
     }
 
@@ -166,5 +167,9 @@ public class GameMap {
         FileUtils.copyFolder(new File(getMapFile().getPath() + "/world/"), file);
         Bukkit.createWorld(WorldCreator.name(this.name));
         return Bukkit.getWorld(this.name);
+    }
+
+    public static HashMap<String, GameMap> getMaps() {
+        return maps;
     }
 }

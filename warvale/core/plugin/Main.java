@@ -17,7 +17,6 @@ import warvale.core.plugin.commands.Leave;
 import warvale.core.plugin.commands.StartAuto;
 import warvale.core.plugin.connect.JoinServer;
 import warvale.core.plugin.connect.LeaveServer;
-import warvale.core.plugin.events.GlobalEvent;
 import warvale.core.plugin.spec.ClassSelect;
 import warvale.core.plugin.spec.Preferences;
 import warvale.core.plugin.spec.TeamSelect;
