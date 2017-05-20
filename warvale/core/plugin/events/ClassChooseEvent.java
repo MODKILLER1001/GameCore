@@ -2,7 +2,6 @@ package warvale.core.plugin.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerEvent;
 import warvale.core.plugin.classes.Class;
 
@@ -21,12 +20,16 @@ public class ClassChooseEvent extends PlayerEvent {
         this.player = who;
     }
 
-    @Override
-    public HandlerList getHandlers() {
-        return null;
-    }
-
     public Class getClazz() {
         return clazz;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return new HandlerList();
+    }
+
+    public static HandlerList getHandlerList() {
+        return new HandlerList();
     }
 }
