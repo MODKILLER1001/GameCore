@@ -18,10 +18,10 @@ public enum BroadcastType {
                     "Your core is invincible for the first 10 minutes of the game!" }), ADVERTISEMENT(
                             "&2&l[!]",
                             new String[] {
-                                    "Follow @warvalenetwork on twitter for giveaways and news at" + ChatColor.AQUA
+                                    "Follow @warvalenetwork on Twitter for giveaways and news at" + ChatColor.AQUA
                                             + " https://twitter.com/warvalenetwork ",
                                     "Support us and help grow the community by purchasing a rank at" + ChatColor.AQUA
-                                            + " https://store.warvale.com " });
+                                            + " https://store.warvale.net " });
 
     private String prefix;
     private String[] messages;

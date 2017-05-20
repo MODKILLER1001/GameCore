@@ -63,7 +63,7 @@ public class WorldEvent implements Listener {
                 @Override
                 public void run() {
                     event.getPlayer().getWorld().getBlockAt(blockLoc).setType(Material.IRON_ORE);
-                    event.getPlayer().getWorld().playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 25, 1);
+                    event.getPlayer().getWorld().playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 1);
                 }
             }.runTaskLater(Main.get(), 400L);
         }
@@ -95,7 +95,7 @@ public class WorldEvent implements Listener {
                 @Override
                 public void run() {
                     event.getPlayer().getWorld().getBlockAt(blockLoc).setType(Material.GOLD_ORE);
-                    event.getPlayer().getWorld().playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 25, 1);
+                    event.getPlayer().getWorld().playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                 }
             }.runTaskLater(Main.get(), 400L);
         }
@@ -131,7 +131,40 @@ public class WorldEvent implements Listener {
                 }
             }.runTaskLater(Main.get(), 400L);
         }    
-    
+        if (event.getBlock().getType().equals(Material.LAPIS_ORE)) {
+            event.getPlayer().giveExp(50);
+            for (int i = 0; i < NumberUtils.random(1, 0); i++) {
+                event.getPlayer().getInventory().addItem(new ItemStack(Material.LAPIS_BLOCK));
+            }
+            event.setCancelled(true);
+            Location blockLoc = event.getBlock().getLocation();
+            event.getBlock().setType(Material.STONE);
+            List<Entity> entityList = new ArrayList<>();
+            for (int i = 0; i < NumberUtils.random(5, 2) + 1; i++) {
+                ItemStack stack = new ItemStack(Material.EYE_OF_ENDER);
+                stack.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, NumberUtils.random(100, 1));
+                entityList.add(event.getPlayer().getWorld().dropItemNaturally(
+                        event.getBlock().getLocation().setDirection(Vector.getRandom()).add(Vector.getRandom()),
+                        stack));
+            }
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    entityList.stream().forEach(entity -> entity.remove());
+                }
+            }.runTaskLater(Main.get(), 60L);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    event.getPlayer().getWorld().getBlockAt(blockLoc).setType(Material.LAPIS_ORE);
+                    event.getPlayer().getWorld().playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 15, 1);
+                }
+            }.runTaskLater(Main.get(), 400L);
+        }   
+        
+        
     }
 
     @EventHandler
@@ -145,5 +178,8 @@ public class WorldEvent implements Listener {
         if (event.getItem().getItemStack().getType().equals(Material.PRISMARINE_CRYSTALS)) {
             event.setCancelled(true);
         }
+        if (event.getItem().getItemStack().getType().equals(Material.EYE_OF_ENDER)) {
+            event.setCancelled(true);    
+    }
     }
 }
