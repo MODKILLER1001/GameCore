@@ -1,5 +1,7 @@
 package warvale.core.plugin;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,7 +20,7 @@ import warvale.core.plugin.commands.Leave;
 import warvale.core.plugin.commands.StartAuto;
 import warvale.core.plugin.connect.JoinServer;
 import warvale.core.plugin.connect.LeaveServer;
-import warvale.core.plugin.events.WorldEvent;
+import warvale.core.plugin.events.GlobalEvent;
 import warvale.core.plugin.kits.KitItems;
 import warvale.core.plugin.spec.ClassSelect;
 import warvale.core.plugin.spec.Preferences;
@@ -34,6 +36,7 @@ public class Main extends JavaPlugin implements Listener {
   	private static Team spectatorTeam;
 
   	private static Main instance;
+  	private static ProtocolManager protocol;
   	
   	
 	@Override
@@ -77,7 +80,7 @@ public class Main extends JavaPlugin implements Listener {
       	
     	new JoinServer(this);
     	new LeaveServer(this);
-    	new WorldEvent(this);
+    	new GlobalEvent(this);
     	new TeamSelect(this);
     	new ClassSelect(this);
     	new Preferences(this);
@@ -85,6 +88,8 @@ public class Main extends JavaPlugin implements Listener {
         blueTeam.setPrefix(ChatColor.DARK_AQUA.toString());
     	redTeam.setPrefix(ChatColor.RED.toString());
     	spectatorTeam.setPrefix(ChatColor.GRAY.toString());
+
+    	protocol = ProtocolLibrary.getProtocolManager();
 
     	for (BroadcastType type : BroadcastType.values()) {
     		type.autoBroadcast(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
@@ -115,6 +120,10 @@ public class Main extends JavaPlugin implements Listener {
 
     public static Main get() {
 		return instance;
+	}
+
+	public static ProtocolManager getProtocol() {
+		return protocol;
 	}
 
 }

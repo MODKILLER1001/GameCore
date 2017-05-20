@@ -1,36 +1,35 @@
 package warvale.core.plugin.events;
 
-import org.bukkit.*;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import warvale.core.plugin.Main;
 import warvale.core.plugin.utils.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Draem on 5/8/2017.
  */
-public class WorldEvent implements Listener {
+public class GlobalEvent implements Listener {
 
-    private Main main;
-
-    public WorldEvent(Main plugin) {
+    public GlobalEvent(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        main = plugin;
+        listenerToPackets();
     }
 
     @EventHandler
@@ -53,7 +52,7 @@ public class WorldEvent implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    entityList.stream().forEach(entity -> entity.remove());
+                    entityList.forEach(Entity::remove);
                 }
             }.runTaskLater(Main.get(), 60L);
 
@@ -73,4 +72,19 @@ public class WorldEvent implements Listener {
             event.setCancelled(true);
         }
     }
+
+    private static void listenerToPackets() {
+        Main.getProtocol().addPacketListener(new PacketAdapter(Main.get(), ListenerPriority.HIGHEST, PacketType.Play.Server.BLOCK_ACTION) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
+                if (event.getPacketType().equals(PacketType.Play.Server.BLOCK_ACTION)) {
+                    if (event.getPacket().getBytes().read(0).equals((byte) 0x0A) && event.getPacket().getIntegers().read(0).equals(209)) {
+                        event.setCancelled(true);
+                    }
+                }
+            }
+        });
+    }
+
+
 }

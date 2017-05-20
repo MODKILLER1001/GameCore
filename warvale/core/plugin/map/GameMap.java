@@ -1,12 +1,13 @@
 package warvale.core.plugin.map;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import warvale.core.plugin.Main;
+import warvale.core.plugin.utils.FileUtils;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,10 +26,8 @@ import java.util.List;
  */
 public class GameMap {
 
-    public static String filedir = "\\maps\\";
-    public static String filename = "map.xml";
-    public static String path = getPath();
-    public static HashMap<String, GameMap> maps = new HashMap<>();
+    private static String path = getPath();
+    private static HashMap<String, GameMap> maps = new HashMap<>();
 
     private String name;
     private File mapFile;
@@ -36,8 +35,10 @@ public class GameMap {
 
     public GameMap(String name) throws IOException {
         this.name = name;
+        String filedir = "\\maps\\";
         this.mapFile = new File(path + filedir + this.name + "\\");
 
+        String filename = "map.xml";
         if (!this.mapFile.exists()) {
             if(this.mapFile.mkdirs()) {
                 this.mapXML = new File(this.mapFile.getPath() + "\\" + filename);
@@ -67,7 +68,7 @@ public class GameMap {
         return name;
     }
 
-    public static String getPath() {
+    private static String getPath() {
         URL url = GameMap.class.getProtectionDomain().getCodeSource().getLocation();
         String jarPath = null;
         try {
@@ -75,8 +76,7 @@ public class GameMap {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String parentPath = new File(jarPath).getParentFile().getPath();
-        return parentPath;
+        return new File(jarPath).getParentFile().getPath();
     }
 
     public List<String> getAuthors() throws ParserConfigurationException, IOException, SAXException {
@@ -110,39 +110,53 @@ public class GameMap {
         return lobby;
     }
 
-    protected Element getTeamInfo() throws ParserConfigurationException, IOException, SAXException {
+    private Element getTeamInfo() throws ParserConfigurationException, IOException, SAXException {
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(this.mapXML);
         doc.getDocumentElement().normalize();
 
         return (Element) doc.getElementsByTagName("team").item(0);
     }
 
-    public HashMap<String, Integer[]> getSpawns() throws IOException, SAXException, ParserConfigurationException {
-        HashMap<String, Integer[]> spawns = new HashMap<>();
-        Integer[] blue = new Integer[]{};
-        Integer[] red = new Integer[]{};
-
-        blue[0] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[0]);
-        blue[1] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[1]);
-        blue[2] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[2]);
-        blue[3] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[3]);
-        blue[4] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[4]);
-        blue[5] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("red").item(0).getTextContent().split(" ")[5]);
-
-        red[0] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[0]);
-        red[1] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[1]);
-        red[2] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[2]);
-        red[3] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[3]);
-        red[4] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[4]);
-        red[5] = Integer.valueOf(((Element) getTeamInfo().getElementsByTagName("spawns")).getElementsByTagName("blue").item(0).getTextContent().split(" ")[5]);
-
-        spawns.put("red", red);
-        spawns.put("blue", blue);
-
-        return spawns;
+    private Element getSpawnElement(String team) throws ParserConfigurationException, IOException, SAXException {
+        return (Element) ((Element) getTeamInfo().getElementsByTagName("spawns").item(0)).getElementsByTagName(team);
     }
 
+    public HashMap<String, Integer> getSpawnInfo(String team) throws IOException, SAXException, ParserConfigurationException {
+        HashMap<String, Integer> spawn = new HashMap<>();
+        spawn.put("exact", Integer.valueOf(getSpawnElement(team).getElementsByTagName("exact").item(0).getTextContent()));
+        spawn.put("radius", Integer.valueOf(getSpawnElement(team).getElementsByTagName("radius").item(0).getTextContent()));
+        return spawn;
+    }
 
+    private Element getCoreElement(String team) throws ParserConfigurationException, IOException, SAXException {
+        return (Element) ((Element) getTeamInfo().getElementsByTagName("cores").item(0)).getElementsByTagName(team);
+    }
+
+    public HashMap<String, Integer> getCoreInfo(String team) throws IOException, SAXException, ParserConfigurationException {
+        HashMap<String, Integer> core = new HashMap<>();
+        core.put("exact", Integer.valueOf(getCoreElement(team).getElementsByTagName("exact").item(0).getTextContent()));
+        core.put("radius", Integer.valueOf(getCoreElement(team).getElementsByTagName("radius").item(0).getTextContent()));
+        return core;
+    }
+
+    public HashMap<String, Integer> getCenter() throws ParserConfigurationException, IOException, SAXException {
+        Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(this.mapXML);
+        doc.getDocumentElement().normalize();
+        HashMap<String, Integer> center = new HashMap<>();
+        center.put("exact", Integer.valueOf(((Element) doc.getElementsByTagName("center").item(0)).getElementsByTagName("exact").item(0).getTextContent()));
+        center.put("radius", Integer.valueOf(((Element) doc.getElementsByTagName("center").item(0)).getElementsByTagName("radius").item(0).getTextContent()));
+        return center;
+    }
+
+    public World load() throws IOException {
+        File file = new File(Bukkit.getWorldContainer().getPath() + "/" + this.name + "/");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        FileUtils.copyFolder(new File(getMapFile().getPath() + "/world/"), file);
+        Bukkit.createWorld(WorldCreator.name(this.name));
+        return Bukkit.getWorld(this.name);
+    }
 
 
 }
