@@ -26,9 +26,9 @@ public class TeamManager {
 
     public void setup() {
 
-        blueTeam = board.registerNewTeam("blue");
-        redTeam = board.registerNewTeam("red");
-        spectatorTeam = board.registerNewTeam("spectator");
+        blueTeam = board.getTeam("blue") == null ? board.registerNewTeam("blue") : board.getTeam("blue");
+        redTeam = board.getTeam("red") == null ? board.registerNewTeam("red") : board.getTeam("red");
+        spectatorTeam = board.getTeam("spectator") == null ? board.registerNewTeam("spectator") : board.getTeam("spectator");
 
         redTeam.setAllowFriendlyFire(false);
         blueTeam.setAllowFriendlyFire(false);
