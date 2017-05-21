@@ -1,5 +1,6 @@
 package net.warvale.core.map;
 
+import net.warvale.core.Main;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.core.utils.files.FileUtils;
@@ -33,20 +34,20 @@ public class GameMap {
 
     public GameMap(String name) throws IOException {
         this.name = name;
-        String filedir = "\\maps\\";
-        this.mapFile = new File(path + filedir + this.name + "\\");
+        String filedir = "maps";
+        this.mapFile = new File(Main.getMapDir(), this.name);
 
         String filename = "map.xml";
         if (!this.mapFile.exists()) {
             if (this.mapFile.mkdirs()) {
-                this.mapXML = new File(this.mapFile.getPath() + "\\" + filename);
+                this.mapXML = new File(this.mapFile.getPath(), filename);
                 this.mapXML.createNewFile();
 
                 MessageManager.broadcast(PrefixType.MAIN,  ChatColor.GRAY +
                         "Map " + ChatColor.RED + this.name + ChatColor.GRAY + " does not contain a valid map.xml file.", "warvale.newmap");
 
                 MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "A new map.xml for the map " + ChatColor.RED + this.name +
-                    ChatColor.RED + " has been created, please fill in the required fields");
+                    ChatColor.GRAY + " has been created, please fill in the required fields");
 
                 // for (Player player : Bukkit.getOnlinePlayers()) {
                 // if (player.isOp()) {
@@ -61,7 +62,7 @@ public class GameMap {
                 throw new IOException("Failed to created directory for map.xml.");
             }
         } else {
-            this.mapXML = new File(this.mapFile.getPath() + "\\" + filename);
+            this.mapXML = new File(this.mapFile, filename);
         }
 
         maps.put(this.name, this);

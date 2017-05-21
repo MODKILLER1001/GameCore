@@ -18,6 +18,7 @@ import net.warvale.core.utils.files.PropertiesFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,6 +45,9 @@ public class Main extends JavaPlugin implements Listener {
 
 	//command stuff
 	private static CommandHandler commandHandler;
+
+	//map dir
+	private static File mapDir = new File("maps");
 
 	@Override
     public void onEnable() {
@@ -117,6 +121,10 @@ public class Main extends JavaPlugin implements Listener {
 		} catch (Exception e) {
 			getLogger().log(Level.WARNING, "Could not connect to MySQL", e);
 			endSetup("Could not establish connection to database");
+		}
+
+		if (!mapDir.exists()) {
+			mapDir.mkdir();
 		}
 
 	}
@@ -238,6 +246,10 @@ public class Main extends JavaPlugin implements Listener {
 
 	public static TeamManager getTeams() {
 		return teams;
+	}
+
+	public static File getMapDir() {
+		return mapDir;
 	}
 
 }
