@@ -1,5 +1,7 @@
 package net.warvale.core.map;
 
+import net.warvale.core.message.MessageManager;
+import net.warvale.core.message.PrefixType;
 import net.warvale.core.utils.files.FileUtils;
 import org.bukkit.*;
 import org.w3c.dom.Document;
@@ -39,6 +41,12 @@ public class GameMap {
             if (this.mapFile.mkdirs()) {
                 this.mapXML = new File(this.mapFile.getPath() + "\\" + filename);
                 this.mapXML.createNewFile();
+
+                MessageManager.broadcast(PrefixType.MAIN,  ChatColor.GRAY +
+                        "Map " + ChatColor.RED + this.name + ChatColor.GRAY + " does not contain a valid map.xml file.", "warvale.newmap");
+
+                MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "A new map.xml for the map " + ChatColor.RED + this.name +
+                    ChatColor.RED + " has been created, please fill in the required fields");
 
                 // for (Player player : Bukkit.getOnlinePlayers()) {
                 // if (player.isOp()) {

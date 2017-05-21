@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.warvale.core.Main;
+import net.warvale.core.commands.admin.MapCommand;
 import net.warvale.core.commands.game.ClassesCommand;
 import net.warvale.core.commands.game.LeaveCommand;
 import net.warvale.core.commands.game.StartCommand;
@@ -116,6 +117,9 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
      * Register all the commands.
      */
     public void registerCommands() {
+
+        //admin
+        cmds.add(new MapCommand());
 
         // basic
 
