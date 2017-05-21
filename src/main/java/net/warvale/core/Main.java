@@ -119,6 +119,11 @@ public class Main extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
 
+		//unregister teams
+		getTeams().getBlueTeam().unregister();
+		getTeams().getRedTeam().unregister();
+		getTeams().getSpectatorTeam().unregister();
+
 		getLogger().log(Level.INFO, "Closing connection to database...");
 
 		try {
