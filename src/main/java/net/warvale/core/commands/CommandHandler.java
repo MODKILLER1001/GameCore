@@ -100,7 +100,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
      * Get a uhc command.
      *
      * @param name The name of the uhc command
-     * @return The UHCCommand if found, null otherwise.
+     * @return The Command if found, null otherwise.
      */
     protected AbstractCommand getCommand(String name) {
         for (AbstractCommand cmd : cmds) {
