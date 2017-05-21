@@ -80,7 +80,7 @@ public class JoinCommand extends AbstractCommand {
         }
 
 
-        return false;
+        return true;
     }
 
     @Override
