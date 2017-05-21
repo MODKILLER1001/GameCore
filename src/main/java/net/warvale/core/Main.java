@@ -11,7 +11,9 @@ import net.warvale.core.connect.LeaveServer;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
+import net.warvale.core.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
+import net.warvale.core.utils.files.PropertiesFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,15 +23,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.io.File;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 public class Main extends JavaPlugin implements Listener {
+
+	private static boolean shutdown = false;
 
   	private static Team blueTeam;
   	private static Team redTeam;
   	private static Team spectatorTeam;
 
   	private static Main instance;
+
+  	//sql stuff
+	private final File sqlpropertiesfile = new File("connect.properties");
+	private PropertiesFile propertiesFile;
+	private static SQLConnection db;
 
 
 	@Override
@@ -71,11 +84,66 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     @Override
+    public void onLoad() {
+
+		//Loading properties
+		getLogger().log(Level.INFO, "Loading SQL Properties");
+
+		if (!sqlpropertiesfile.exists()) {
+			try {
+				PropertiesFile.generateFresh(sqlpropertiesfile, new String[]{"hostname", "port", "username", "password", "database"}, new String[]{"localhost", "3306", "root", "NONE", "crnetwork"});
+			} catch (Exception e) {
+				getLogger().log(Level.WARNING, "Could not generate fresh properties file");
+			}
+		}
+
+		try {
+			propertiesFile = new PropertiesFile(sqlpropertiesfile);
+		} catch (Exception e) {
+			getLogger().log(Level.SEVERE, "Could not load SQL properties file", e);
+			endSetup("Exception occurred when loading properties");
+		}
+
+		String temp;
+		getLogger().log(Level.INFO, "Finding database information...");
+
+		//SQL info
+		try {
+			db = new SQLConnection(propertiesFile.getString("hostname"), propertiesFile.getNumber("port").intValue(), propertiesFile.getString("database"), propertiesFile.getString("username"), (temp = propertiesFile.getString("password")).equals("NONE") ? null : temp);
+		} catch (ParseException ex) {
+			getLogger().log(Level.WARNING, "Could not load database information", ex);
+			endSetup("Invalid database port");
+		} catch (Exception ex) {
+			getLogger().log(Level.WARNING, "Could not load database information", ex);
+			endSetup("Invalid configuration");
+		}
+
+		//Connecting to MySQL
+		getLogger().log(Level.INFO, "Connecting to MySQL...");
+
+		try {
+			getDB().openConnection();
+		} catch (Exception e) {
+			getLogger().log(Level.WARNING, "Could not connect to MySQL", e);
+			endSetup("Could not establish connection to database");
+		}
+
+	}
+
+    @Override
     public void onDisable() {
 
        	blueTeam.unregister();
         redTeam.unregister();
         spectatorTeam.unregister();
+
+		getLogger().log(Level.INFO, "Closing connection to database...");
+
+		try {
+			getDB().closeConnection();
+		} catch (SQLException e) {
+			getLogger().log(Level.SEVERE, "Could not close database connection", e);
+		}
 
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warvale: Conquest Gamecore " + ChatColor.GRAY + "Reloading plugin...");
     }
@@ -161,6 +229,27 @@ public class Main extends JavaPlugin implements Listener {
 								"&aPurchasable class. &7Take on the role of a support class by "),
 						ChatColor.translateAlternateColorCodes('&', "&7healing your teammates around you!")),
 				new ItemStack(Material.BLAZE_ROD), "Trainquility");
+	}
+
+	public static SQLConnection getDB() {
+		return db;
+	}
+
+	public PropertiesFile getProperties() {
+		return propertiesFile;
+	}
+
+	public void endSetup(String s) {
+		getLogger().log(Level.SEVERE, s);
+		if (!shutdown) {
+			stop();
+			shutdown = true;
+		}
+		throw new IllegalArgumentException("Disabling... " + s);
+	}
+
+	private void stop() {
+		Bukkit.getServer().shutdown();
 	}
 
 }

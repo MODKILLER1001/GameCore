@@ -5,6 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Draem on 5/12/2017.
@@ -17,7 +18,7 @@ public class Class {
     private ItemStack item;
     private String ability;
 
-    private List<Player> players;
+    private List<UUID> players;
 
     public Class(String name, Integer price, List<String> description, ItemStack item, String ability) {
         this.name = name;
@@ -73,13 +74,13 @@ public class Class {
 
     public boolean addMember(Player player) {
         if (!ClassManager.hasClass(player)) {
-            this.players.add(player);
+            this.players.add(player.getUniqueId());
             return true;
         }
         return false;
     }
 
-    public List<Player> getMembers() {
+    public List<UUID> getMembers() {
         return this.players;
     }
 }
