@@ -1,0 +1,29 @@
+main: net.warvale.core.Main
+name: Gamecore
+version: 1.1.4
+author: Warvale
+description: A CTF plugin.
+commands:
+  gamever:
+    description: Test if the core of the plugin is functioning.
+    usage: /gamever
+
+  join:
+    description: Join the game.
+    usage: /join
+  
+  leave:
+    description: Leave the game.
+    usage: /leave
+    
+  start:
+    description: Automatically start the game.
+    usage: /start
+  
+  kit:
+    description: Select a kit.
+    usage: /kit 
+  
+  kits:
+    description: List all kits.
+    usage: /kits
