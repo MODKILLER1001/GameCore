@@ -13,7 +13,6 @@ public class LeaveServer implements Listener {
     }
 
     @EventHandler
-
     public void onPlayerLeaveEvent(PlayerQuitEvent event) {
 
         String playerName = event.getPlayer().getName();
