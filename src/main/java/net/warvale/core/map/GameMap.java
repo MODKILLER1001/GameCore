@@ -1,9 +1,7 @@
 package net.warvale.core.map;
 
-import net.warvale.core.utils.FileUtils;
+import net.warvale.core.utils.files.FileUtils;
 import org.bukkit.*;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;

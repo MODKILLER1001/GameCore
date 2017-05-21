@@ -1,4 +1,4 @@
-package net.warvale.core.utils;
+package net.warvale.core.utils.files;
 
 import java.io.*;
 
