@@ -1,4 +1,4 @@
-package warvale.core.plugin.game.start;
+package net.warvale.core.game.end;
 
 /**
  * Created by Draem on 5/21/2017.

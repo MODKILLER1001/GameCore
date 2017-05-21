@@ -1,7 +1,8 @@
-package warvale.core.plugin.game;
+package net.warvale.core.game;
 
-import warvale.core.plugin.map.GameMap;
-import warvale.core.plugin.utils.NumberUtils;
+
+import net.warvale.core.map.GameMap;
+import net.warvale.core.utils.NumberUtils;
 
 /**
  * Created by Draem on 5/20/2017.

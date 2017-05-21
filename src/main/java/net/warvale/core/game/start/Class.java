@@ -1,4 +1,4 @@
-package warvale.core.plugin.game.logic;
+package net.warvale.core.game.start;
 
 /**
  * Created by Draem on 5/21/2017.
