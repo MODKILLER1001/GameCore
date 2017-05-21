@@ -1,4 +1,4 @@
-package net.warvale.core.sql;
+package net.warvale.core.utils.sql;
 
 import com.google.common.base.Joiner;
 

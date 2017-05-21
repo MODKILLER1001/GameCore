@@ -11,7 +11,7 @@ import net.warvale.core.connect.LeaveServer;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
-import net.warvale.core.sql.SQLConnection;
+import net.warvale.core.utils.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.files.PropertiesFile;
 import org.bukkit.Bukkit;

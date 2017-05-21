@@ -1,4 +1,4 @@
-package net.warvale.core.sql;
+package net.warvale.core.utils.sql;
 
 import java.sql.*;
 import org.jooq.DSLContext;
