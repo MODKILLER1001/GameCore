@@ -1,4 +1,4 @@
-package warvale.core.plugin.start;
+package warvale.core.plugin.game;
 
 import warvale.core.plugin.map.GameMap;
 import warvale.core.plugin.utils.NumberUtils;
