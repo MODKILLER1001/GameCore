@@ -11,18 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Copyright Statement
- * ----------------------
- * Copyright (C) CreativeRealms - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- *
- * Class information
- * ---------------------
- * Package: zone.creativerealms.api
- * Project: CreativeAPI
- */
+
 //TODO - New methods coming soon
 public class SQLUtil {
     private static String createTable(String table, Map<String, Map.Entry<SQLDataType, Integer>> data) {

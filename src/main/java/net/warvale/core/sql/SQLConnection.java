@@ -5,18 +5,6 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
-/**
- * Copyright Statement
- * ----------------------
- * Copyright (C) CreativeRealms - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- *
- * Class information
- * ---------------------
- * Package: zone.creativerealms.api
- * Project: CreativeAPI
- */
 public class SQLConnection {
     private final String user;
     private final String database;
