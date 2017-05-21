@@ -28,9 +28,9 @@ public class ChatUtils {
     public static String white = ChatColor.WHITE.toString();
     public static String yellow = ChatColor.YELLOW.toString();
 
-    public static String warning = yellow + "[!]";
+    public static String warning = red + "[!]";
 
-    public static String divider = dark_green + strike + "======================================";
+    public static String divider = dark_gray + strike + "--------------------------------------";
     public static String tab = "   ";
 
     public static String repeat(int count, String with) {
@@ -40,17 +40,17 @@ public class ChatUtils {
     public static String center(String s)
     {
         int le = ( 70 - s.length() ) / 2;
-        String newS = "";
+        StringBuilder newS = new StringBuilder();
         for ( int i = 0; i < le; i++ )
         {
-            newS += " ";
+            newS.append(" ");
         }
-        newS += s;
+        newS.append(s);
         for ( int i = 0; i < le; i++ )
         {
-            newS +=  " ";
+            newS.append(" ");
         }
-        return newS;
+        return newS.toString();
     }
 
 }
