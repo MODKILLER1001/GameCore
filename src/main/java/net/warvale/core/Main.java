@@ -2,10 +2,7 @@ package net.warvale.core;
 
 import net.warvale.core.chat.BroadcastType;
 import net.warvale.core.classes.Class;
-import net.warvale.core.commands.Join;
-import net.warvale.core.commands.Leave;
-import net.warvale.core.commands.StartAuto;
-import net.warvale.core.commands.Version;
+import net.warvale.core.commands.CommandHandler;
 import net.warvale.core.connect.JoinServer;
 import net.warvale.core.connect.LeaveServer;
 import net.warvale.core.scoreboard.BoardManager;
@@ -22,8 +19,6 @@ import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -34,11 +29,6 @@ import java.util.logging.Level;
 public class Main extends JavaPlugin implements Listener {
 
 	private static boolean shutdown = false;
-
-  	private static Team blueTeam;
-  	private static Team redTeam;
-  	private static Team spectatorTeam;
-
   	private static Main instance;
 
   	//sql stuff
@@ -50,16 +40,14 @@ public class Main extends JavaPlugin implements Listener {
 	private static BoardManager board;
 	private static TeamManager teams;
 
+	//command stuff
+	private static CommandHandler commandHandler;
+
 	@Override
     public void onEnable() {
 		instance = this;
 
 		setupClasses();
-
-    	getCommand("join").setExecutor(new Join());
-    	getCommand("leave").setExecutor(new Leave());
-    	getCommand("game").setExecutor(new StartAuto(this));
-    	getCommand("gamever").setExecutor(new Version());
 
 		board = new BoardManager(this);
 		teams = new TeamManager(this, board);
@@ -75,6 +63,10 @@ public class Main extends JavaPlugin implements Listener {
     	for (BroadcastType type : BroadcastType.values()) {
     		type.autoBroadcast(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
 		}
+
+		//register commands
+		commandHandler = new CommandHandler(this);
+    	commandHandler.registerCommands();
     }
 
     @Override
@@ -126,10 +118,6 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-
-       	blueTeam.unregister();
-        redTeam.unregister();
-        spectatorTeam.unregister();
 
 		getLogger().log(Level.INFO, "Closing connection to database...");
 
