@@ -3,10 +3,12 @@ package net.warvale.core;
 import net.warvale.core.chat.BroadcastType;
 import net.warvale.core.classes.Class;
 import net.warvale.core.commands.CommandHandler;
+import net.warvale.core.config.ConfigManager;
 import net.warvale.core.connect.JoinServer;
 import net.warvale.core.connect.LeaveServer;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.TeamManager;
+import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
@@ -48,6 +50,9 @@ public class Main extends JavaPlugin implements Listener {
 		instance = this;
 
 		setupClasses();
+
+		ConfigManager.getInstance().setup();
+		MessageManager.getInstance().setup();
 
 		board = new BoardManager(this);
 		teams = new TeamManager(this, board);
@@ -118,6 +123,11 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+
+		//unregister teams
+		getTeams().getBlueTeam().unregister();
+		getTeams().getRedTeam().unregister();
+		getTeams().getSpectatorTeam().unregister();
 
 		getLogger().log(Level.INFO, "Closing connection to database...");
 

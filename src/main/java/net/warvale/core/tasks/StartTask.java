@@ -1,5 +1,6 @@
 package net.warvale.core.tasks;
 
+import net.warvale.core.config.ConfigManager;
 import net.warvale.core.map.GameMap;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
@@ -23,6 +24,10 @@ public class StartTask extends BukkitRunnable {
             this.countdown--;
         } else {
             cancel();
+            if (ConfigManager.getConfig().getBoolean("debug")) {
+                MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun");
+                return;
+            }
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + this.map.getName());
         }
 
