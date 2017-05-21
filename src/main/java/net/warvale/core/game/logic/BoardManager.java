@@ -1,4 +1,4 @@
-package net.warvale.core.scoreboard;
+package net.warvale.core.game.logic;
 
 
 import net.warvale.core.Main;

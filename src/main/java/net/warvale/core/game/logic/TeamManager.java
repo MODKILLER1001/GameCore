@@ -1,9 +1,10 @@
-package net.warvale.core.teams;
+package net.warvale.core.game.logic;
 
 
 import net.warvale.core.Main;
-import net.warvale.core.scoreboard.BoardManager;
+import net.warvale.core.game.logic.BoardManager;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 

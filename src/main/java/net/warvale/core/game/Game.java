@@ -1,6 +1,9 @@
 package net.warvale.core.game;
 
 
+import net.warvale.core.Main;
+import net.warvale.core.game.logic.TeamManager;
+import net.warvale.core.game.start.Initialization;
 import net.warvale.core.map.GameMap;
 import net.warvale.core.utils.NumberUtils;
 
@@ -14,7 +17,8 @@ public class Game {
     public static void start(GameMap last, GameMap next) {
         GameMap map = next == null ? getMap(last) : next;
         running = true;
-
+        Integer tp = Main.getTeams().getBlueTeam().getSize() + Main.getTeams().getRedTeam().getSize();
+        new Initialization(map, new MatchInfo(tp, Main.getTeams().getRedTeam().getSize(), Main.getTeams().getBlueTeam().getSize())).startGame();
     }
 
     public static void end(GameMap next) {
