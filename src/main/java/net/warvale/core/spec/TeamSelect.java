@@ -34,7 +34,7 @@ public class TeamSelect implements Listener {
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             ItemStack teamselect = new ItemStack(Material.ENCHANTED_BOOK, 1);
             {
                 ItemMeta spawnmeta = teamselect.getItemMeta();
@@ -86,7 +86,7 @@ public class TeamSelect implements Listener {
         if (is.getType() == Material.ENCHANTED_BOOK)
             tsGUI(event.getPlayer());
 
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
         }
     }
@@ -96,7 +96,7 @@ public class TeamSelect implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         if (!event.getInventory().equals(inv)) {
-            if (Main.getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
+            if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
                 event.setCancelled(true);
                 return;
             }
@@ -104,7 +104,7 @@ public class TeamSelect implements Listener {
         switch (event.getSlot()) {
         case 3: // Join red
             if (event.getInventory().equals(inv)) {
-                Main.getRedTeam().addEntry(event.getWhoClicked().getName());
+                Main.getTeams().getRedTeam().addEntry(event.getWhoClicked().getName());
                 event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
                 for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
                     event.getWhoClicked().removePotionEffect(effect.getType());
@@ -121,7 +121,7 @@ public class TeamSelect implements Listener {
             break;
         case 5: // Join blue
             if (event.getInventory().equals(inv)) {
-                Main.getBlueTeam().addEntry(event.getWhoClicked().getName());
+                Main.getTeams().getBlueTeam().addEntry(event.getWhoClicked().getName());
                 event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
                 for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
                     event.getWhoClicked().removePotionEffect(effect.getType());
@@ -131,7 +131,7 @@ public class TeamSelect implements Listener {
             break;
 
         default:
-            if (Main.getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
+            if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
                 event.setCancelled(true);
                 break;
             }

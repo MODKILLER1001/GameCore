@@ -24,12 +24,12 @@ public class JoinServer implements Listener {
         String playerName = event.getPlayer().getName();
         event.getPlayer().getInventory().clear();
         event.getPlayer().sendMessage(ChatColor.GRAY + "Welcome back to " + ChatColor.DARK_RED + "Warvale!");
-        Main.getSpectatorTeam().addEntry(event.getPlayer().getName());
+        Main.getTeams().getSpectatorTeam().addEntry(event.getPlayer().getName());
         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 1));
 
         event.setJoinMessage(ChatColor.GRAY + playerName + ChatColor.GRAY + " joined.");
 
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.getPlayer().setAllowFlight(true);
             event.getPlayer().setGameMode(GameMode.ADVENTURE);
 

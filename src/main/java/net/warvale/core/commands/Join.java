@@ -20,33 +20,33 @@ public class Join implements CommandExecutor {
             if (args.length == 1) {
                 switch (args[0]) {
                 case "blue":
-                    if (Main.getBlueTeam().getEntries().contains(sender.getName())) {
+                    if (Main.getTeams().getBlueTeam().getEntries().contains(sender.getName())) {
                         sender.sendMessage(
                                 ChatColor.GRAY + "You're already on the " + ChatColor.DARK_AQUA + "blue team");
                         return true;
                     } else {
                         // Join the team
-                        if (Main.getRedTeam().getEntries().contains(sender.getName())) {
+                        if (Main.getTeams().getRedTeam().getEntries().contains(sender.getName())) {
                             sender.sendMessage(ChatColor.GRAY + "You may not change teams at this time.");
                             return true;
                         }
-                        Main.getBlueTeam().addEntry(sender.getName());
+                        Main.getTeams().getBlueTeam().addEntry(sender.getName());
                         sender.sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
                         for (PotionEffect effect : sender.getActivePotionEffects())
                             sender.removePotionEffect(effect.getType());
                         return true;
                     }
                 case "red":
-                    if (Main.getRedTeam().getEntries().contains(sender.getName())) {
+                    if (Main.getTeams().getRedTeam().getEntries().contains(sender.getName())) {
                         sender.sendMessage(ChatColor.GRAY + "You're already on the " + ChatColor.RED + "red team");
                         return true;
                     } else {
                         // Join the team
-                        if (Main.getBlueTeam().getEntries().contains(sender.getName())) {
+                        if (Main.getTeams().getBlueTeam().getEntries().contains(sender.getName())) {
                             sender.sendMessage(ChatColor.GRAY + "You may not change teams at this time.");
                             return true;
                         }
-                        Main.getRedTeam().addEntry(sender.getName());
+                        Main.getTeams().getRedTeam().addEntry(sender.getName());
                         sender.sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
                         for (PotionEffect effect : sender.getActivePotionEffects())
                             sender.removePotionEffect(effect.getType());
@@ -54,7 +54,7 @@ public class Join implements CommandExecutor {
                     }
 
                 case "spectator":
-                    if (Main.getSpectatorTeam().getEntries().contains(sender.getName())) {
+                    if (Main.getTeams().getSpectatorTeam().getEntries().contains(sender.getName())) {
                         sender.sendMessage(ChatColor.GRAY + "You're already spectating!");
                         return true;
                     } else {

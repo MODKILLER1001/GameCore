@@ -16,11 +16,11 @@ public class Leave implements CommandExecutor {
         if (cs instanceof Player) {
             Player sender = (Player) cs;
             if (command.getName().equalsIgnoreCase("leave")) {
-                if (Main.getRedTeam().getEntries().contains(sender.getName())) {
+                if (Main.getTeams().getRedTeam().getEntries().contains(sender.getName())) {
                     sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time.");
                 }
 
-                else if (Main.getBlueTeam().getEntries().contains(sender.getName())) {
+                else if (Main.getTeams().getBlueTeam().getEntries().contains(sender.getName())) {
                     sender.sendMessage(ChatColor.GRAY + "You may not leave the game at this time.");
                 }
 
