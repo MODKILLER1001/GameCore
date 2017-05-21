@@ -21,7 +21,7 @@ public class ClassManager {
 
     public static boolean hasClass(Player player) {
         for (Map.Entry<String, Class> entry : classes.entrySet()) {
-            if (entry.getValue().getMembers().contains(player)) {
+            if (entry.getValue().getMembers().contains(player.getUniqueId())) {
                 return true;
             }
         }
