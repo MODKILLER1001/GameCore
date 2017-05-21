@@ -35,7 +35,7 @@ public class ClassSelect implements Listener {
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             ItemStack classselect = new ItemStack(Material.NETHER_STAR, 1);
             {
                 ItemMeta spawnmeta = classselect.getItemMeta();
@@ -77,7 +77,7 @@ public class ClassSelect implements Listener {
         if (is.getType() == Material.NETHER_STAR)
             openGUI(event.getPlayer());
 
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
         }
 

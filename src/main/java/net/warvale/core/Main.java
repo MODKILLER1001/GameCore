@@ -8,9 +8,11 @@ import net.warvale.core.commands.StartAuto;
 import net.warvale.core.commands.Version;
 import net.warvale.core.connect.JoinServer;
 import net.warvale.core.connect.LeaveServer;
+import net.warvale.core.scoreboard.BoardManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
+import net.warvale.core.teams.TeamManager;
 import net.warvale.core.utils.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.files.PropertiesFile;
@@ -44,6 +46,9 @@ public class Main extends JavaPlugin implements Listener {
 	private PropertiesFile propertiesFile;
 	private static SQLConnection db;
 
+	//scoreboard stuff
+	private static BoardManager board;
+	private static TeamManager teams;
 
 	@Override
     public void onEnable() {
@@ -56,16 +61,9 @@ public class Main extends JavaPlugin implements Listener {
     	getCommand("game").setExecutor(new StartAuto(this));
     	getCommand("gamever").setExecutor(new Version());
 
-		Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
-
-		blueTeam = board.registerNewTeam("blue");
-        redTeam = board.registerNewTeam("red");
-        spectatorTeam = board.registerNewTeam("spectator");
-
-    	redTeam.setAllowFriendlyFire(false);
-    	blueTeam.setAllowFriendlyFire(false);
-    	spectatorTeam.setAllowFriendlyFire(false);
-    	spectatorTeam.setCanSeeFriendlyInvisibles(true);
+		board = new BoardManager(this);
+		teams = new TeamManager(this, board);
+		teams.setup();
 
     	new JoinServer(this);
     	new LeaveServer(this);
@@ -73,10 +71,6 @@ public class Main extends JavaPlugin implements Listener {
     	new TeamSelect(this);
     	new ClassSelect(this);
     	new Preferences(this);
-
-        blueTeam.setPrefix(ChatColor.DARK_AQUA.toString());
-    	redTeam.setPrefix(ChatColor.RED.toString());
-    	spectatorTeam.setPrefix(ChatColor.GRAY.toString());
 
     	for (BroadcastType type : BroadcastType.values()) {
     		type.autoBroadcast(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
@@ -146,18 +140,6 @@ public class Main extends JavaPlugin implements Listener {
 		}
 
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warvale: Conquest Gamecore " + ChatColor.GRAY + "Reloading plugin...");
-    }
-
-  	public static Team getBlueTeam() {
-      	return blueTeam;
-  	}
-
- 	public static Team getRedTeam() {
-        return redTeam;
-    }
-
- 	public static Team getSpectatorTeam() {
-        return spectatorTeam;
     }
 
     public static Main get() {
@@ -250,6 +232,14 @@ public class Main extends JavaPlugin implements Listener {
 
 	private void stop() {
 		Bukkit.getServer().shutdown();
+	}
+
+	public static BoardManager getBoard() {
+		return board;
+	}
+
+	public static TeamManager getTeams() {
+		return teams;
 	}
 
 }

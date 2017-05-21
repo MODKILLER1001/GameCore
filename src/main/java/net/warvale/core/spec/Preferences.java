@@ -34,7 +34,7 @@ public class Preferences implements Listener {
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             ItemStack preferences = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
             {
                 ItemMeta spawnmeta = preferences.getItemMeta();
@@ -151,7 +151,7 @@ public class Preferences implements Listener {
         if (is.getType() == Material.REDSTONE_COMPARATOR)
             tsGUI(event.getPlayer());
 
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
         }
     }
@@ -337,7 +337,7 @@ public class Preferences implements Listener {
             player.closeInventory();
             break;
         default:
-            if (Main.getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
+            if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
                 event.setCancelled(true);
                 break;
             }
@@ -346,7 +346,7 @@ public class Preferences implements Listener {
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             if (event.getItemDrop().getItemStack().getType() == Material.REDSTONE_COMPARATOR
                     || event.getItemDrop().getItemStack().getType() == Material.NETHER_STAR
                     || event.getItemDrop().getItemStack().getType() == Material.BLAZE_POWDER) {
@@ -362,7 +362,7 @@ public class Preferences implements Listener {
 
     @EventHandler
     public void onPlaceAttempt(BlockPlaceEvent event) {
-        if (Main.getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.setCancelled(true);
         } else {
             event.setCancelled(false);
