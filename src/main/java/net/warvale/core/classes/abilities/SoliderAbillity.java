@@ -28,7 +28,7 @@ public class SoliderAbillity implements Listener {
 
 
         Vector velocity = p.getLocation().getDirection();
-        // I. have. no. idea. what. should. I. do. to. make. this. work. send help.
+        // I. have. no. idea. what. should. I. do. to. make. this. work. Send help.
 
     }
 }
