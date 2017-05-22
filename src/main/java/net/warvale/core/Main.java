@@ -2,6 +2,7 @@ package net.warvale.core;
 
 import net.warvale.core.chat.BroadcastType;
 import net.warvale.core.classes.Class;
+import net.warvale.core.classes.abilities.SoliderAbillity;
 import net.warvale.core.commands.CommandHandler;
 import net.warvale.core.config.ConfigManager;
 import net.warvale.core.connect.JoinServer;
@@ -76,6 +77,10 @@ public class Main extends JavaPlugin implements Listener {
 		//register commands
 		commandHandler = new CommandHandler(this);
     	commandHandler.registerCommands();
+
+		//Register abilities
+
+		Bukkit.getServer().getPluginManager().registerEvents(new SoliderAbillity(), this);
     }
 
     @Override
