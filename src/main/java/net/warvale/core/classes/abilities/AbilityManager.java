@@ -18,15 +18,17 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
  */
 public class AbilityManager implements Listener {
 
+    ArrayList<Player> cooldown = new ArrayList<>();
 
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (!(e.getAction() == RIGHT_CLICK_AIR || e.getAction() == RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().equals(new ItemStack(Material.FIREWORK_CHARGE)))) return;
+        if (cooldown.contains(p)) return;
 
         Class classCheck = ClassManager.getClassForPlayer(p.getName());
 
-
+        e.setCancelled(true);
 
         switch (classCheck.getName()){
             case "Soldier":
@@ -36,13 +38,21 @@ public class AbilityManager implements Listener {
                 break;
         }
 
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            public void run() {
+                cooldown.remove(p);
+                p.sendMessage("You are no longer cooldown");
+            }
+        }, 200);
+
     }
 
     private void Soldier (Player p) {
         Vector vector = p.getLocation().getDirection();
         vector.setY(0.4);
         p.setVelocity(vector);
-
+        p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
     }
+
 
 }
