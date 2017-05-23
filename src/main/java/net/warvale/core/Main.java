@@ -61,6 +61,8 @@ public class Main extends JavaPlugin implements Listener {
 		MessageManager.getInstance().setup();
 
 		board = new BoardManager(this);
+		board.setup();
+
 		teams = new TeamManager(this, board);
 		teams.setup();
 
