@@ -80,7 +80,7 @@ public class Main extends JavaPlugin implements Listener {
 
 		//Register abilities
 
-		Bukkit.getServer().getPluginManager().registerEvents(new SoliderAbillity(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new Abillity(), this);
     }
 
     @Override
