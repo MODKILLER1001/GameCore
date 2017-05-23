@@ -15,7 +15,7 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 /**
  * Created by Ron on 22/5/2017.
  */
-public class SoliderAbillity implements Listener {
+public class Abillity implements Listener {
 
 
     public void onPlayerInteract(PlayerInteractEvent e) {
@@ -23,12 +23,24 @@ public class SoliderAbillity implements Listener {
         if (!(e.getAction() == RIGHT_CLICK_AIR || e.getAction() == RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().equals(new ItemStack(Material.FIREWORK_CHARGE)))) return;
 
-        Class PlayerClass = ClassManager.getClassForPlayer(p.getName());
-        // CommandFox, could you add the class check to make sure they are using solider class.
+        Class classCheck = ClassManager.getClassForPlayer(p.getName());
 
+        if (!classCheck) {
+            return;
+        }
 
-        Vector velocity = p.getLocation().getDirection();
-        // I. have. no. idea. what. should. I. do. to. make. this. work. Send help.
+        switch (classCheck){
+            case "Soldier":
+                if(e.getItem().equals(new ItemStack(Material.FIREWORK_CHARGE))){
+                    this.Soldier();
+                }
+                break;
+        }
 
     }
+
+    public void Soldier () {
+        // Do soldier stuff
+    }
+
 }
