@@ -2,13 +2,19 @@ package net.warvale.core.classes.abilities;
 
 import net.warvale.core.classes.Class;
 import net.warvale.core.classes.ClassManager;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
 
 import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
 import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
@@ -18,7 +24,7 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
  */
 public class AbilityManager implements Listener {
 
-    ArrayList<Player> cooldown = new ArrayList<>();
+    private ArrayList<Player> cooldown = new ArrayList<>();
 
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
@@ -38,10 +44,10 @@ public class AbilityManager implements Listener {
                 break;
         }
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
             public void run() {
                 cooldown.remove(p);
-                p.sendMessage("You are no longer cooldown");
+                p.sendMessage(ChatColor.GREEN + "You can use your ability now!");
             }
         }, 200);
 
