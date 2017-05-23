@@ -1,5 +1,6 @@
 package net.warvale.core.connect;
 
+import net.warvale.core.message.MessageManager;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

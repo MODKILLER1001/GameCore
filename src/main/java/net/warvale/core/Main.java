@@ -8,10 +8,12 @@ import net.warvale.core.connect.JoinServer;
 import net.warvale.core.connect.LeaveServer;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.TeamManager;
+import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
+import net.warvale.core.tasks.ScoreboardTask;
 import net.warvale.core.utils.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.files.PropertiesFile;
@@ -76,6 +78,11 @@ public class Main extends JavaPlugin implements Listener {
 		//register commands
 		commandHandler = new CommandHandler(this);
     	commandHandler.registerCommands();
+
+    	//register scoreboards
+		LobbyScoreboard.getInstance().setup();
+
+		ScoreboardTask.getInstance().runTaskTimer(this, 0, 20);
     }
 
     @Override
@@ -136,6 +143,9 @@ public class Main extends JavaPlugin implements Listener {
 		getTeams().getBlueTeam().unregister();
 		getTeams().getRedTeam().unregister();
 		getTeams().getSpectatorTeam().unregister();
+
+		//unregister scoreboard specific teams
+		LobbyScoreboard.getInstance().shutdown();
 
 		getLogger().log(Level.INFO, "Closing connection to database...");
 
