@@ -10,6 +10,7 @@ import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
+import net.warvale.core.map.GameMap;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
@@ -86,6 +87,13 @@ public class Main extends JavaPlugin implements Listener {
 
     	//register scoreboards
 		ScoreboardTask.getInstance().runTaskTimer(this, 0, 20);
+
+		//load the maps
+		try {
+			GameMap.getMaps().put("Redwood Forest", new GameMap("Redwood Forest"));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
     }
 
     @Override

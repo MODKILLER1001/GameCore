@@ -18,6 +18,7 @@ public class Game {
     private static Game instance;
     private int maxPlayer;
     private int minPlayers;
+    private int gameLength;
 
     public static  Game getInstance() {
         if (instance == null) {
@@ -38,6 +39,7 @@ public class Game {
 
         maxPlayer = ConfigManager.getConfig().getInt("maxPlayers", 50);
         minPlayers = ConfigManager.getConfig().getInt("minPlayers", 8);
+        gameLength = ConfigManager.getConfig().getInt("gameLength", 60);
     }
 
     /**
@@ -107,5 +109,9 @@ public class Game {
 
     public int getMinPlayers() {
         return minPlayers;
+    }
+
+    public int getGameLength() {
+        return gameLength;
     }
 }
