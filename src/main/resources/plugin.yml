@@ -17,3 +17,5 @@ commands:
     description: List all classes.
   map:
     description: manage maps
+  teststart:
+    description: tests the bossbar countdown
