@@ -166,7 +166,7 @@ public class Main extends JavaPlugin implements Listener {
 				new ItemStack(Material.FIREWORK_CHARGE), "Charge");
 		new Class("Archer", 0,
 				Arrays.asList(
-						ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Shoot flaming arrows towards"),
+						ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Shoot explosive arrows towards"),
 						ChatColor.translateAlternateColorCodes('&', "&7enemies to deal extra damage.")),
 				new ItemStack(Material.MAGMA_CREAM), "Volley");
 		new Class("Assassin", 0,

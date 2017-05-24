@@ -5,8 +5,10 @@ import net.warvale.core.classes.ClassManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -25,7 +27,7 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 public class AbilityManager implements Listener {
 
     private ArrayList<Player> cooldown = new ArrayList<>();
-
+    private ArrayList<Player> ArcherArrow = new ArrayList<>();
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (!(e.getAction() == RIGHT_CLICK_AIR || e.getAction() == RIGHT_CLICK_BLOCK)) return;
@@ -38,10 +40,27 @@ public class AbilityManager implements Listener {
 
         switch (classCheck.getName()){
             case "Soldier":
-                if(e.getItem().equals(new ItemStack(Material.FIREWORK_CHARGE))){
+                if(!e.getItem().equals(new ItemStack(Material.FIREWORK_CHARGE))) return;
                     this.Soldier(p);
-                }
+
                 break;
+
+
+
+            case "Archer":
+                if(!e.getItem().equals(new ItemStack(Material.MAGMA_CREAM))) return;
+                    this.Archer(p);
+
+                break;
+
+
+            case "Assassin":
+                if (!e.getItem().equals(new ItemStack(Material.SULPHUR))) return;
+                this.Assassin(p);
+                break;
+
+
+
         }
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
@@ -59,6 +78,31 @@ public class AbilityManager implements Listener {
         p.setVelocity(vector);
         p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
     }
+    private void Archer (Player p) {
+        Arrow arrow = p.launchProjectile(Arrow.class);
+        arrow.setVelocity(arrow.getVelocity().multiply(10));
+        ArcherArrow.add(p);
+
+    }
+    private void Assassin(Player p) {
+        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 100));
+    }
+
+
+
+    //         For Archer class.
+    public void ArcherProjectileHit(ProjectileHitEvent e) {
+        if (!(e.getEntity() instanceof Arrow)) return;
+        Arrow arrow = (Arrow)e.getEntity();
+        if (!(arrow.getShooter() instanceof Player)) return;
+        Player p = (Player)arrow.getShooter();
+        if (!ArcherArrow.contains(p)) return;
+        p.getWorld().createExplosion(arrow.getLocation(), 5.0F);
+        ArcherArrow.remove(p);
+    }
+
+
 
 
 }
+
