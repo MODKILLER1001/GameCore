@@ -2,7 +2,10 @@ package net.warvale.core.connect;
 
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.message.MessageManager;
+import net.warvale.staffcore.bossbar.BarManager;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
+import org.bukkit.boss.BarColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -35,5 +38,8 @@ public class JoinServer implements Listener {
 
         LobbyScoreboard.getInstance().addScoreboard(event.getPlayer());
         LobbyScoreboard.getInstance().newScoreboard(event.getPlayer());
+
+        BarManager.broadcast(BarColor.GREEN, ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "[+] " + ChatColor.RESET + playerName);
+        BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
     }
 }
