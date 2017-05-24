@@ -2,6 +2,8 @@ package net.warvale.core.tasks;
 
 
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ScoreboardTask extends BukkitRunnable {
@@ -18,8 +20,9 @@ public class ScoreboardTask extends BukkitRunnable {
     @Override
     public void run() {
 
-        LobbyScoreboard.getInstance().newLobbyBoard();
-
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            LobbyScoreboard.getInstance().newScoreboard(player);
+        }
     }
 
 }

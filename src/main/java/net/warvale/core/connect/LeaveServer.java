@@ -1,5 +1,6 @@
 package net.warvale.core.connect;
 
+import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -31,6 +32,8 @@ public class LeaveServer implements Listener {
         }
 
         event.setQuitMessage(ChatColor.GRAY + playerName + ChatColor.GRAY + " left.");
+
+        LobbyScoreboard.getInstance().removeScoreboard(event.getPlayer());
 
     }
 }

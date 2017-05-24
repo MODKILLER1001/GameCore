@@ -1,5 +1,6 @@
 package net.warvale.core.connect;
 
+import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.message.MessageManager;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
@@ -30,7 +31,9 @@ public class JoinServer implements Listener {
         if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.getPlayer().setAllowFlight(true);
             event.getPlayer().setGameMode(GameMode.ADVENTURE);
-
         }
+
+        LobbyScoreboard.getInstance().addScoreboard(event.getPlayer());
+        LobbyScoreboard.getInstance().newScoreboard(event.getPlayer());
     }
 }

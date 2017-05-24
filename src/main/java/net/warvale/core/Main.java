@@ -6,6 +6,7 @@ import net.warvale.core.commands.CommandHandler;
 import net.warvale.core.config.ConfigManager;
 import net.warvale.core.connect.JoinServer;
 import net.warvale.core.connect.LeaveServer;
+import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
@@ -66,6 +67,8 @@ public class Main extends JavaPlugin implements Listener {
 		teams = new TeamManager(this, board);
 		teams.setup();
 
+		Game.getInstance().setup();
+
     	new JoinServer(this);
     	new LeaveServer(this);
     	new GlobalEvent(this);
@@ -82,8 +85,6 @@ public class Main extends JavaPlugin implements Listener {
     	commandHandler.registerCommands();
 
     	//register scoreboards
-		LobbyScoreboard.getInstance().setup();
-
 		ScoreboardTask.getInstance().runTaskTimer(this, 0, 20);
     }
 
