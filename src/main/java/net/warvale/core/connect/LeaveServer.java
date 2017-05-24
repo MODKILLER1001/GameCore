@@ -1,7 +1,11 @@
 package net.warvale.core.connect;
 
+import net.warvale.core.game.Game;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
+import net.warvale.core.message.MessageManager;
+import net.warvale.core.message.PrefixType;
 import net.warvale.staffcore.bossbar.BarManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.event.EventHandler;
@@ -40,6 +44,12 @@ public class LeaveServer implements Listener {
 
         BarManager.broadcast(BarColor.RED, ChatColor.DARK_RED + ChatColor.BOLD.toString() + "[-] " + ChatColor.RESET + playerName);
         BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
+
+        int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
+
+        MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED +
+                String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
+                " more players needed to start the game!");
 
     }
 }

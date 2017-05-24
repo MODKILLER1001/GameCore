@@ -36,7 +36,7 @@ public class Game {
             state = State.LOBBY;
         }
 
-        maxPlayer = ConfigManager.getConfig().getInt("maxPlayers", 16);
+        maxPlayer = ConfigManager.getConfig().getInt("maxPlayers", 50);
         minPlayers = ConfigManager.getConfig().getInt("minPlayers", 8);
     }
 

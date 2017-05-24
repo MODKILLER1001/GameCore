@@ -1,8 +1,11 @@
 package net.warvale.core.connect;
 
+import net.warvale.core.game.Game;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.message.MessageManager;
+import net.warvale.core.message.PrefixType;
 import net.warvale.staffcore.bossbar.BarManager;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
@@ -13,8 +16,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import net.md_5.bungee.api.ChatColor;
 import net.warvale.core.Main;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class JoinServer implements Listener {
+
 
     public JoinServer(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -41,5 +46,11 @@ public class JoinServer implements Listener {
 
         BarManager.broadcast(BarColor.GREEN, ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "[+] " + ChatColor.RESET + playerName);
         BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
+
+        int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
+
+        MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED +
+                String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
+                " more players needed to start the game!");
     }
 }
