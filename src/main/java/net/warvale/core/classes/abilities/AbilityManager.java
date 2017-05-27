@@ -28,6 +28,7 @@ public class AbilityManager implements Listener {
 
     private ArrayList<Player> cooldown = new ArrayList<>();
     private ArrayList<Player> electroCooldown = new ArrayList<>();
+    private ArrayList<Player> fireCooldown = new ArrayList<>();
     private ArrayList<Player> ArcherArrow = new ArrayList<>();
     private ArrayList<Player> freeze = new ArrayList<>();
 
@@ -71,8 +72,18 @@ public class AbilityManager implements Listener {
                 break;
 
             case "Technician":
-                if (!e.getItem().equals(new ItemStack(Material.GLASS_BOTTLE))) return;
+                if (!e.getItem().equals(new ItemStack(Material.REDSTONE_TORCH_ON))) return;
                 this.Technician(p);
+                break;
+
+            case "Musician":
+                if (!e.getItem().equals(new ItemStack(Material.RECORD_8))) return;
+                this.Musician(p);
+                break;
+
+            case "Pyromaniac":
+                if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
+                this.Pyromaniac(p);
                 break;
 
         }
@@ -92,8 +103,15 @@ public class AbilityManager implements Listener {
         LivingEntity entity = (LivingEntity)e.getEntity();
         if (entity.getLastDamageCause().getEntity() instanceof Player) { // if a player last damaged the entity
             Player p = (Player)entity.getLastDamageCause().getEntity(); // player who damaged the entity
-            if(!electroCooldown.contains(p)) return;
-            freeze.add(p);
+            if (electroCooldown.contains(p)){
+                freeze.add(entity);
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
+                    public void run() {
+                        freeze.remove(entity);
+                    }
+                }, 100);
+            }
+            if (fireCooldown.contains(p)) entity.setFireTicks(100);
         }
     }
 
@@ -110,6 +128,12 @@ public class AbilityManager implements Listener {
             z += .5;
             e.getPlayer().teleport(new Location(from.getWorld(),x,from.getY(),z,from.getYaw(),from.getPitch()));
         }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onEntityTarget(EntityTargetEvent event) {
+        Entity entity = event.getEntity();
+        Entity target = event.getTarget();
     }
 
     private void Soldier (Player p) {
@@ -142,7 +166,34 @@ public class AbilityManager implements Listener {
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
             public void run() {
                 electroCooldown.remove(p);
-                if (freeze.contains(p)) freeze.remove(p);
+            }
+        }, 100);
+    }
+
+    private void Musician (Player p) {
+        electroCooldown.add(p);
+        p.sendMessage(ChatColor.GREEN + "A jukebox has been spawned beneath you!");
+
+        final Block block = player.getLocation().subtract(0, 1, 0).getBlock();
+        final Material type = block.getType();
+
+        block.setType(Material.JUKEBOX); //set the block beneat player to jukebox
+
+        // Give player a disc and when the player inserts the disc into the jukebox, give healing in a radius of ten blocks
+
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
+                public void run() {
+                    block.setType(type);
+                }
+        }, 100);
+    }
+
+    private void Pyromaniac (Player p) {
+        fireCooldown.add(p);
+        p.sendMessage(ChatColor.GREEN + "You can now hit a player to light them on fire!");
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
+            public void run() {
+                fireCooldown.remove(p);
             }
         }, 100);
     }
