@@ -4,12 +4,20 @@ import net.warvale.core.classes.Class;
 import net.warvale.core.classes.ClassManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
@@ -101,10 +109,11 @@ public class AbilityManager implements Listener {
     @EventHandler
     public void onEntityDamage (EntityDamageByEntityEvent e) {
         LivingEntity entity = (LivingEntity)e.getEntity();
+        Player playerEntity = (Player)entity;
         if (entity.getLastDamageCause().getEntity() instanceof Player) { // if a player last damaged the entity
             Player p = (Player)entity.getLastDamageCause().getEntity(); // player who damaged the entity
             if (electroCooldown.contains(p)){
-                freeze.add(entity);
+                freeze.add(playerEntity);
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
                     public void run() {
                         freeze.remove(entity);
@@ -115,7 +124,7 @@ public class AbilityManager implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.NORMAL)
+    @EventHandler
     public void onMove (PlayerMoveEvent e) {
         if (!freeze.contains(e.getPlayer())) return;
         if (!electroCooldown.contains(e.getPlayer())) return;
@@ -130,7 +139,7 @@ public class AbilityManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler
     public void onEntityTarget(EntityTargetEvent event) {
         Entity entity = event.getEntity();
         Entity target = event.getTarget();
@@ -174,7 +183,7 @@ public class AbilityManager implements Listener {
         electroCooldown.add(p);
         p.sendMessage(ChatColor.GREEN + "A jukebox has been spawned beneath you!");
 
-        final Block block = player.getLocation().subtract(0, 1, 0).getBlock();
+        final Block block = p.getLocation().subtract(0, 1, 0).getBlock();
         final Material type = block.getType();
 
         block.setType(Material.JUKEBOX); //set the block beneat player to jukebox
