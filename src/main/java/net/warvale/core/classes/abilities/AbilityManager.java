@@ -106,12 +106,27 @@ public class AbilityManager implements Listener {
 
     }
 
+    public boolean isInRect (Player player, Location loc1, Location loc2) {
+        double[] dim = new double[2];
+
+        dim[0] = loc1.getX();
+        dim[1] = loc2.getX();
+        Arrays.sort(dim);
+        if (player.getLocation().getX() > dim[1] || player.getLocation().getX() < dim[0]) return false;
+
+        dim[0] = loc1.getZ();
+        dim[1] = loc2.getZ();
+        Arrays.sort(dim);
+        if (player.getLocation().getZ() > dim[1] || player.getLocation().getZ() < dim[0]) return false;
+        return true;
+    }
+
     @EventHandler
     public void onEntityDamage (EntityDamageByEntityEvent e) {
         LivingEntity entity = (LivingEntity)e.getEntity();
         Player playerEntity = (Player)entity;
-        if (entity.getLastDamageCause().getEntity() instanceof Player) { // if a player last damaged the entity
-            Player p = (Player)entity.getLastDamageCause().getEntity(); // player who damaged the entity
+        if (entity.getLastDamageCause().getEntity() instanceof Player) {
+            Player p = (Player)entity.getLastDamageCause().getEntity();
             if (electroCooldown.contains(p)){
                 freeze.add(playerEntity);
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
@@ -183,6 +198,7 @@ public class AbilityManager implements Listener {
         electroCooldown.add(p);
         p.sendMessage(ChatColor.GREEN + "A jukebox has been spawned beneath you!");
 
+        final Location loc1 = p.getLocation().substract();
         final Block block = p.getLocation().subtract(0, 1, 0).getBlock();
         final Material type = block.getType();
 
@@ -190,10 +206,15 @@ public class AbilityManager implements Listener {
 
         // Give player a disc and when the player inserts the disc into the jukebox, give healing in a radius of ten blocks
 
+        /*getNearbyEntities(Location location,
+        double x,
+        double y,
+        double z)*/
+
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
-                public void run() {
-                    block.setType(type);
-                }
+            public void run() {
+                block.setType(type);
+            }
         }, 100);
     }
 
@@ -205,6 +226,14 @@ public class AbilityManager implements Listener {
                 fireCooldown.remove(p);
             }
         }, 100);
+    }
+
+    private void Medic (Player p) {
+        List<Entity> entities = (List<Entity>) p.getNearbyEntities(10, 10, 10);
+        for(Entity e : entities){
+            Boolean isTeammate = true; // Do teammate checks here
+            if(isTeammate) e.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 100, 100));
+        }
     }
 
 
@@ -224,4 +253,3 @@ public class AbilityManager implements Listener {
 
 
 }
-
