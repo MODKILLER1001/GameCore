@@ -1,5 +1,6 @@
 package net.warvale.core.classes.abilities;
 
+import net.warvale.core.Main;
 import net.warvale.core.classes.Class;
 import net.warvale.core.classes.ClassManager;
 import org.bukkit.Bukkit;
@@ -25,6 +26,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
 import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
@@ -71,7 +75,7 @@ public class AbilityManager implements Listener {
 
             case "Miner":
                 if (!e.getItem().equals(new ItemStack(Material.IRON_PICKAXE))) return;
-                this.Assassin(p);
+                this.Miner(p);
                 break;
 
             case "Spy":
@@ -93,7 +97,10 @@ public class AbilityManager implements Listener {
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
                 this.Pyromaniac(p);
                 break;
-
+            case "Medic":
+                if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
+                this.Medic(p);
+                break;
         }
 
         cooldown.add(p);
@@ -198,11 +205,10 @@ public class AbilityManager implements Listener {
         electroCooldown.add(p);
         p.sendMessage(ChatColor.GREEN + "A jukebox has been spawned beneath you!");
 
-        final Location loc1 = p.getLocation().substract();
         final Block block = p.getLocation().subtract(0, 1, 0).getBlock();
         final Material type = block.getType();
 
-        block.setType(Material.JUKEBOX); //set the block beneat player to jukebox
+        block.setType(Material.JUKEBOX); //set the block beneath player to jukebox
 
         // Give player a disc and when the player inserts the disc into the jukebox, give healing in a radius of ten blocks
 
@@ -229,10 +235,15 @@ public class AbilityManager implements Listener {
     }
 
     private void Medic (Player p) {
-        List<Entity> entities = (List<Entity>) p.getNearbyEntities(10, 10, 10);
+        List<Entity> entities = p.getNearbyEntities(10, 10, 10);
         for(Entity e : entities){
-            Boolean isTeammate = true; // Do teammate checks here
-            if(isTeammate) e.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 100, 100));
+            if (!(e instanceof Player)) return;
+            Player nbp = (Player) e;
+            Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
+            Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
+            Set<String> teammates = ((blueteamplayers.contains(p.getName())) ? blueteamplayers : redteamplayers);
+            if(!teammates.contains(nbp.getName())) return;
+            nbp.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 100, 100));
         }
     }
 

@@ -78,7 +78,7 @@ public class Main extends JavaPlugin implements Listener {
 		commandHandler = new CommandHandler(this);
     	commandHandler.registerCommands();
 
-		//Register AbillityManager
+		/* Register AbilityManager */
 
 		Bukkit.getServer().getPluginManager().registerEvents(new AbilityManager(), this);
     }
