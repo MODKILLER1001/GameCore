@@ -209,8 +209,10 @@ public class AbilityManager implements Listener {
         final Material type = block.getType();
 
         block.setType(Material.JUKEBOX); //set the block beneath player to jukebox
-
-        // Give player a disc and when the player inserts the disc into the jukebox, give healing in a radius of ten blocks
+        ItemStack item = new ItemStack(Material.GREEN_RECORD);
+        item.getItemMeta().getLore().add(ChatColor.translateAlternateColorCodes('&', "&7Use this in the Jukebox below you."));
+        p.getInventory().addItem(item);
+        // (Give player a disc -- DONE-- ) and when the player inserts the disc into the jukebox, give healing in a radius of ten blocks
 
         /*getNearbyEntities(Location location,
         double x,
@@ -239,9 +241,9 @@ public class AbilityManager implements Listener {
         for(Entity e : entities){
             if (!(e instanceof Player)) return;
             Player nbp = (Player) e;
-            Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
-            Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
-            Set<String> teammates = ((blueteamplayers.contains(p.getName())) ? blueteamplayers : redteamplayers);
+            Set<String> BlueTeam = Main.getTeams().getBlueTeam().getEntries();
+            Set<String> RedTeam = Main.getTeams().getRedTeam().getEntries();
+            Set<String> teammates = ((BlueTeam.contains(p.getName())) ? BlueTeam : RedTeam);
             if(!teammates.contains(nbp.getName())) return;
             nbp.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 100, 100));
         }
