@@ -26,5 +26,5 @@ permissions:
       default: true
   show.JoinMessages:
     description: Players with this permission will see join messages.
-      default true
+      default: true
       
