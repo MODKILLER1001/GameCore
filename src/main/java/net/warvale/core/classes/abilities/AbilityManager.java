@@ -14,6 +14,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -25,6 +26,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +45,10 @@ public class AbilityManager implements Listener {
     private ArrayList<Player> fireCooldown = new ArrayList<>();
     private ArrayList<Player> ArcherArrow = new ArrayList<>();
     private ArrayList<Player> freeze = new ArrayList<>();
+    private ArrayList<Player> MusicianJukebox = new ArrayList<>();
+
+
+
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
@@ -209,9 +215,11 @@ public class AbilityManager implements Listener {
         final Material type = block.getType();
 
         block.setType(Material.JUKEBOX); //set the block beneath player to jukebox
+
         ItemStack item = new ItemStack(Material.GREEN_RECORD);
         item.getItemMeta().getLore().add(ChatColor.translateAlternateColorCodes('&', "&7Use this in the Jukebox below you."));
         p.getInventory().addItem(item);
+        MusicianJukebox.add(p);
         // (Give player a disc -- DONE-- ) and when the player inserts the disc into the jukebox, give healing in a radius of ten blocks
 
         /*getNearbyEntities(Location location,
@@ -241,6 +249,7 @@ public class AbilityManager implements Listener {
         for(Entity e : entities){
             if (!(e instanceof Player)) return;
             Player nbp = (Player) e;
+            if (Main.getTeams().getSpectatorTeam().getEntries().contains(nbp.getName())) return;
             Set<String> BlueTeam = Main.getTeams().getBlueTeam().getEntries();
             Set<String> RedTeam = Main.getTeams().getRedTeam().getEntries();
             Set<String> teammates = ((BlueTeam.contains(p.getName())) ? BlueTeam : RedTeam);
@@ -263,6 +272,20 @@ public class AbilityManager implements Listener {
     }
 
 
+    @EventHandler
+    public void MusicianInteract(PlayerInteractEvent e) {
+        Action action = e.getAction();
+        Block blockFacing = e.getClickedBlock();
+        Player p = e.getPlayer();
+
+        if (!(action.equals(RIGHT_CLICK_BLOCK))) return;
+            /* Need to check if it is the right block that was clicked using a object, for example: {player:block, player:block}
+            * Give healing for players in a radius of 10 blocks here.
+            *
+            * */
+
+
+    }
 
 
 }
