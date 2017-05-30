@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Wool;
 import org.bukkit.potion.PotionEffect;
+import net.warvale.core.PermissionManager;
 
 import net.md_5.bungee.api.ChatColor;
 import net.warvale.core.Main;
@@ -180,7 +181,7 @@ public class Preferences implements Listener {
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
-            // Add code for this
+            PermissionManager.addPermission(player,"show.JoinMessages");
             player.closeInventory();
             break;
 
@@ -189,7 +190,7 @@ public class Preferences implements Listener {
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
             player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
-            // Add code for this
+            PermissionManager.removePermission(player,"show.JoinMessages");
             player.closeInventory();
             break;
 
@@ -206,7 +207,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            // Add code for this
+            PermissionManager.addPermission(player,"show.LeaveMessages");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
             player.closeInventory();
             break;
@@ -215,7 +216,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            // Add code for this
+            PermissionManager.removePermission(player,"show.LeaveMessages");
             player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
             player.closeInventory();
             break;

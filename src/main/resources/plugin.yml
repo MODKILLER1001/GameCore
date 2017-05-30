@@ -19,3 +19,11 @@ commands:
     description: manage maps
   teststart:
     description: tests the bossbar countdown
+
+permissions:
+  show.LeaveMessages:
+    description: Players with this permission will see leave messages.
+	default: true
+  show.JoinMessages:
+    description: Players with this permission will see join messages.
+	default true

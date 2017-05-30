@@ -22,7 +22,7 @@ public class LeaveServer implements Listener {
 
     @EventHandler
     public void onPlayerLeaveEvent(PlayerQuitEvent event) {
-
+    	event.setQuitMessage("");
         String playerName = event.getPlayer().getName();
         event.getPlayer().getInventory().clear();
 
@@ -37,8 +37,11 @@ public class LeaveServer implements Listener {
         if (Main.getTeams().getBlueTeam().getEntries().contains(event.getPlayer().getName())) {
             Main.getTeams().getBlueTeam().removeEntry(event.getPlayer().getName());
         }
-
-        event.setQuitMessage(ChatColor.GRAY + playerName + ChatColor.GRAY + " left.");
+        for(Player onlinePlayer : Bukkit.getServer().getOnlinePlayers()){
+			if(onlinePlayer.hasPermission("show.LeaveMessages")){
+				onlinePlayer.sendMessage(ChatColor.GRAY + playerName + ChatColor.GRAY + " left.");
+			}
+		}
 
         LobbyScoreboard.getInstance().removeScoreboard(event.getPlayer());
 
