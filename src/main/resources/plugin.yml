@@ -23,8 +23,8 @@ commands:
 permissions:
   show.LeaveMessages:
     description: Players with this permission will see leave messages.
-      default: true
+    default: true
   show.JoinMessages:
     description: Players with this permission will see join messages.
-      default: true
+    default: true
       
