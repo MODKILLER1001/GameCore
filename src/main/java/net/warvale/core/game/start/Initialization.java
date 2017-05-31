@@ -2,6 +2,7 @@ package net.warvale.core.game.start;
 
 import net.warvale.core.Main;
 import net.warvale.core.game.MatchInfo;
+import net.warvale.core.game.start.Bosses;
 import net.warvale.core.map.GameMap;
 import net.warvale.core.tasks.StartTask;
 import net.warvale.core.utils.chat.ChatUtils;
@@ -41,6 +42,8 @@ public class Initialization {
     }
 
     public void startGame() {
+
+        new Bosses().initBoss();
         List<Player> players = new ArrayList<>();
         List<Player> red = new ArrayList<>();
         List<Player> blue = new ArrayList<>();
