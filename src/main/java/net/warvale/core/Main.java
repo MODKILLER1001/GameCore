@@ -6,6 +6,7 @@ import net.warvale.core.commands.CommandHandler;
 import net.warvale.core.config.ConfigManager;
 import net.warvale.core.connect.JoinServer;
 import net.warvale.core.connect.LeaveServer;
+import net.warvale.core.connect.PingListener;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.TeamManager;
@@ -15,6 +16,7 @@ import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
+import net.warvale.core.tasks.LobbyTask;
 import net.warvale.core.tasks.ScoreboardTask;
 import net.warvale.core.utils.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
@@ -76,6 +78,7 @@ public class Main extends JavaPlugin implements Listener {
     	new TeamSelect(this);
     	new ClassSelect(this);
     	new Preferences(this);
+    	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
 
     	for (BroadcastType type : BroadcastType.values()) {
     		type.autoBroadcast(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
@@ -87,6 +90,7 @@ public class Main extends JavaPlugin implements Listener {
 
     	//register scoreboards
 		ScoreboardTask.getInstance().runTaskTimer(this, 0, 20);
+		LobbyTask.getInstance().runTaskTimer(this, 0, 20);
 
 		//load the maps
 		try {

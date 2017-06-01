@@ -7,6 +7,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class LobbyTask extends BukkitRunnable {
 
+    private static LobbyTask instance;
+
+    public static LobbyTask getInstance() {
+        if (instance == null) {
+            instance = new LobbyTask();
+        }
+        return instance;
+    }
+
     @Override
     public void run() {
 
