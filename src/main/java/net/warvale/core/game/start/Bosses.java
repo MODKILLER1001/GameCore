@@ -1,9 +1,6 @@
 package net.warvale.core.game.start;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -62,23 +59,28 @@ public class Bosses {
         chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
         Wizard.getEquipment().setChestplate(chestplate);
         Wizard.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+        Wizard.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 1000000, 1, false, false, Color.RED));
     }
 
     private void BossFarborf(Location bossLocation) {
         /* Thanks MatrixTunnel for the name! - http://i.imgur.com/4qSg1Hf.png */
         Silverfish Farborf = (Silverfish) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.SILVERFISH);
         Farborf.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eFarborf"));
+        Farborf.setCustomNameVisible(true);
         Farborf.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(15);
         Farborf.setHealth(15);
         Farborf.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1000);
-        Farborf.setGlowing(true);
+        Farborf.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 1000000, 1, false, false, Color.RED));
     }
 
     /* Thanks CommandFox for all of the names below. */
     private void BossGrometator(Location bossLocation) {
         IronGolem Grometator = (IronGolem) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.IRON_GOLEM);
-        /* Need to continue work on this thing. */
+        Grometator.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eGrometator"));
+        Grometator.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 1000000, 1, false, false, Color.RED));
 
+        Grometator.setPlayerCreated(false);
+        Grometator.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
     }
     private void BossCruitionator(Location bossLocation) {
 
