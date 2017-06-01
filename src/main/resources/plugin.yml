@@ -27,4 +27,13 @@ permissions:
   show.JoinMessages:
     description: Players with this permission will see join messages.
     default: true
+  show.TipMessages:
+    description: Players with this permission will see tip messages.
+    default: true
+  show.AdvertisementMessages:
+    description: Players with this permission will see advertisement messages.
+    default: true
+  show.PrivateMessages:
+    description: Players with this permission will see messages from other players.
+    default: true
       

@@ -236,6 +236,11 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
                     + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see tips in chat.");
+            if (event.getWhoClicked().hasPermission("show.TipMessages")){
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
+            }
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
             player.closeInventory();
             break;
@@ -244,7 +249,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            // Add code for this
+            PermissionManager.addPermission(player,"show.TipMessages");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
             player.closeInventory();
             break;
@@ -253,7 +258,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            // Add code for this
+            PermissionManager.removePermission(player,"show.TipMessages");
             player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
             player.closeInventory();
             break;
@@ -263,6 +268,11 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
                     + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see advertisements in chat.");
+            if (event.getWhoClicked().hasPermission("show.AdvertisementMessages")){
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
+            }
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
             player.closeInventory();
             break;
@@ -271,7 +281,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            // Add code for this
+            PermissionManager.addPermission(player,"show.AdvertisementMessages");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
             player.closeInventory();
             break;
@@ -280,7 +290,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            // Add code for this
+            PermissionManager.removePermission(player,"show.AdvertisementMessages");
             player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
             player.closeInventory();
             break;
@@ -291,6 +301,11 @@ public class Preferences implements Listener {
             event.getWhoClicked()
                     .sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages" + ChatColor.RESET
                             + ChatColor.GRAY + ": Toggle whether you see private messages from regular users in chat.");
+            if (event.getWhoClicked().hasPermission("show.PrivateMessages")){
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
+            }
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
             player.closeInventory();
             break;
@@ -299,7 +314,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            // Add code for this
+            PermissionManager.addPermission(player,"show.PrivateMessages");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
             player.closeInventory();
             break;
@@ -308,7 +323,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
                     + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            // Add code for this
+            PermissionManager.removePermission(player,"show.PrivateMessages");
             player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
             player.closeInventory();
             break;
