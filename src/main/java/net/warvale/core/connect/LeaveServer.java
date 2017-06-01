@@ -4,12 +4,12 @@ import net.warvale.core.game.Game;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
+import net.warvale.core.spec.Preferences;
 import net.warvale.staffcore.bossbar.BarManager;
 import org.bukkit.entity.Player;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -40,7 +40,7 @@ public class LeaveServer implements Listener {
             Main.getTeams().getBlueTeam().removeEntry(event.getPlayer().getName());
         }
         for(Player onlinePlayer : Bukkit.getServer().getOnlinePlayers()){
-			if(onlinePlayer.hasPermission("show.LeaveMessages")){
+			if(!Preferences.noLeaveMessages.contains(onlinePlayer.getName()) && onlinePlayer.getName() != event.getPlayer().getName()){
 				onlinePlayer.sendMessage(ChatColor.GRAY + playerName + ChatColor.GRAY + " left.");
 			}
 		}

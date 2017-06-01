@@ -25,6 +25,8 @@ import net.warvale.core.PermissionManager;
 import net.md_5.bungee.api.ChatColor;
 import net.warvale.core.Main;
 
+import java.util.ArrayList;
+
 public class Preferences implements Listener {
 
     public Preferences(Main plugin) {
@@ -32,6 +34,16 @@ public class Preferences implements Listener {
     }
 
     private static Inventory inv;
+
+    public static ArrayList<String> noJoinMessages = new ArrayList<>();
+    public static ArrayList<String> noLeaveMessages = new ArrayList<>();
+    public static ArrayList<String> noTipMessages = new ArrayList<>();
+    public static ArrayList<String> noAdvertisementMessages = new ArrayList<>();
+    public static ArrayList<String> noPrivateMessages = new ArrayList<>();
+
+
+
+
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
@@ -120,17 +132,31 @@ public class Preferences implements Listener {
         inv.setItem(6, advertisementspref);
         inv.setItem(8, privatemessagespref);
 
-        inv.setItem(9, prefTrue);
-        inv.setItem(11, prefTrue);
-        inv.setItem(13, prefTrue);
-        inv.setItem(15, prefTrue);
-        inv.setItem(17, prefTrue);
-
-        inv.setItem(18, prefFalse);
-        inv.setItem(20, prefFalse);
-        inv.setItem(22, prefFalse);
-        inv.setItem(24, prefFalse);
-        inv.setItem(26, prefFalse);
+        if (!noJoinMessages.contains(player.getName())) {
+            inv.setItem(9, prefFalse);
+        } else {
+            inv.setItem(9, prefTrue);
+        }
+        if (!noLeaveMessages.contains(player.getName())){
+            inv.setItem(11, prefFalse);
+        } else {
+            inv.setItem(11, prefTrue);
+        }
+        if (!noTipMessages.contains(player.getName())){
+            inv.setItem(13, prefFalse);
+        } else {
+            inv.setItem(13, prefTrue);
+        }
+        if (!noAdvertisementMessages.contains(player.getName())){
+            inv.setItem(15, prefFalse);
+        } else {
+            inv.setItem(15, prefTrue);
+        }
+        if (!noPrivateMessages.contains(player.getName())){
+            inv.setItem(17, prefFalse);
+        } else {
+            inv.setItem(17, prefTrue);
+        }
 
         inv.setItem(47, forumslink);
         inv.setItem(48, discordlink);
@@ -172,7 +198,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
                     + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see users join the server.");
-            if (event.getWhoClicked().hasPermission("show.JoinMessages")){
+            if (!noJoinMessages.contains(event.getWhoClicked().getName())){
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
@@ -183,20 +209,20 @@ public class Preferences implements Listener {
 
         case 9:
             event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
-            PermissionManager.addPermission(player,"show.JoinMessages");
-            player.closeInventory();
-            break;
+            if (!noJoinMessages.contains(event.getWhoClicked().getName())){
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+                noJoinMessages.add(event.getWhoClicked().getName());
+                player.closeInventory();
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
+                noJoinMessages.remove(event.getWhoClicked().getName());
+                player.closeInventory();
+            }
 
-        case 18:
-            event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
-            PermissionManager.removePermission(player,"show.JoinMessages");
-            player.closeInventory();
             break;
 
         // Leave Messages
@@ -204,7 +230,7 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
                     + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see users leave the server.");
-            if (event.getWhoClicked().hasPermission("show.LeaveMessages")){
+            if (!noLeaveMessages.contains(event.getWhoClicked().getName())){
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
@@ -215,28 +241,26 @@ public class Preferences implements Listener {
 
         case 11:
             event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            PermissionManager.addPermission(player,"show.LeaveMessages");
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
-            player.closeInventory();
-            break;
-
-        case 20:
-            event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            PermissionManager.removePermission(player,"show.LeaveMessages");
-            player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
-            player.closeInventory();
-            break;
+            if (!noLeaveMessages.contains(event.getWhoClicked().getName())){
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+                noLeaveMessages.add(event.getWhoClicked().getName());
+                player.closeInventory();
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
+                noLeaveMessages.remove(event.getWhoClicked().getName());
+                player.closeInventory();
+            }
 
         // Tips
         case 4:
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
                     + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see tips in chat.");
-            if (event.getWhoClicked().hasPermission("show.TipMessages")){
+            if (!noTipMessages.contains(event.getWhoClicked().getName())){
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
@@ -246,29 +270,27 @@ public class Preferences implements Listener {
             break;
 
         case 13:
-            event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            PermissionManager.addPermission(player,"show.TipMessages");
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
-            player.closeInventory();
-            break;
+            if (!noTipMessages.contains(event.getWhoClicked().getName())){
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+                noTipMessages.add(event.getWhoClicked().getName());
+                player.closeInventory();
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
+                noTipMessages.remove(event.getWhoClicked().getName());
+                player.closeInventory();
+            }
 
-        case 22:
-            event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            PermissionManager.removePermission(player,"show.TipMessages");
-            player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
-            player.closeInventory();
-            break;
 
         // Advertisements
         case 6:
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
                     + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see advertisements in chat.");
-            if (event.getWhoClicked().hasPermission("show.AdvertisementMessages")){
+            if (!noAdvertisementMessages.contains(event.getWhoClicked().getName())){
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
@@ -278,22 +300,20 @@ public class Preferences implements Listener {
             break;
 
         case 15:
-            event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            PermissionManager.addPermission(player,"show.AdvertisementMessages");
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
-            player.closeInventory();
-            break;
+            if (!noAdvertisementMessages.contains(event.getWhoClicked().getName())){
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+                noAdvertisementMessages.add(event.getWhoClicked().getName());
+                player.closeInventory();
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
+                noAdvertisementMessages.remove(event.getWhoClicked().getName());
+                player.closeInventory();
+            }
 
-        case 24:
-            event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            PermissionManager.removePermission(player,"show.AdvertisementMessages");
-            player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
-            player.closeInventory();
-            break;
 
         // Private Messages
         case 8:
@@ -301,7 +321,7 @@ public class Preferences implements Listener {
             event.getWhoClicked()
                     .sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages" + ChatColor.RESET
                             + ChatColor.GRAY + ": Toggle whether you see private messages from regular users in chat.");
-            if (event.getWhoClicked().hasPermission("show.PrivateMessages")){
+            if (!noPrivateMessages.contains(event.getWhoClicked().getName())){
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
@@ -311,22 +331,20 @@ public class Preferences implements Listener {
             break;
 
         case 17:
-            event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
-            PermissionManager.addPermission(player,"show.PrivateMessages");
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
-            player.closeInventory();
-            break;
+            if (!noPrivateMessages.contains(event.getWhoClicked().getName())){
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+                noPrivateMessages.add(event.getWhoClicked().getName());
+                player.closeInventory();
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
+                noPrivateMessages.remove(event.getWhoClicked().getName());
+                player.closeInventory();
+            }
 
-        case 26:
-            event.setCancelled(true);
-            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
-                    + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
-            PermissionManager.removePermission(player,"show.PrivateMessages");
-            player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
-            player.closeInventory();
-            break;
 
         // Links
         case 47:
