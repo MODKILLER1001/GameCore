@@ -172,6 +172,11 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
                     + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see users join the server.");
+            if (event.getWhoClicked().hasPermission("show.JoinMessages")){
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
+            }
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
             player.closeInventory();
             break;
@@ -199,6 +204,11 @@ public class Preferences implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
                     + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you see users leave the server.");
+            if (event.getWhoClicked().hasPermission("show.LeaveMessages")){
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
+            }
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
             player.closeInventory();
             break;

@@ -5,6 +5,7 @@ import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.staffcore.bossbar.BarManager;
+import org.bukkit.entity.Player;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
