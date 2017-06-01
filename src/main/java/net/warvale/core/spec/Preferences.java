@@ -40,11 +40,7 @@ public class Preferences implements Listener {
     public static ArrayList<String> noTipMessages = new ArrayList<>();
     public static ArrayList<String> noAdvertisementMessages = new ArrayList<>();
     public static ArrayList<String> noPrivateMessages = new ArrayList<>();
-
-
-
-
-
+    
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
