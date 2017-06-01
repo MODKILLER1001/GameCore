@@ -57,6 +57,24 @@ public class LobbyScoreboard {
         scoreboards.put(player.getUniqueId(), scoreboard);
     }
 
+    public void addScoreboard(Player player, String display) {
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        Objective objective = scoreboard.registerNewObjective("lobby", "dummy");
+
+        objective.setDisplayName(ChatColor.DARK_GRAY + "» " + display + ChatColor.DARK_GRAY + " «" );
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        Team time = scoreboard.registerNewTeam("LobbyTime");
+        time.addEntry("§8» §cTime:");
+        time.setSuffix(" §7");
+
+        Team lobbyCount = scoreboard.registerNewTeam("LobbyCount");
+        lobbyCount.addEntry("§8» §cPlayers:");
+        lobbyCount.setSuffix(" §7");
+
+        scoreboards.put(player.getUniqueId(), scoreboard);
+    }
+
 
     public void removeScoreboard(Player player) {
         if (scoreboards.containsKey(player.getUniqueId())) {
@@ -80,6 +98,26 @@ public class LobbyScoreboard {
         //add the user to the scoreboard
         if (!getScoreboards().containsKey(p.getUniqueId())) {
             addScoreboard(p);
+        }
+
+        //update the scoreboard
+        updateTime();
+        updatePlayerCount();
+
+        p.setScoreboard(getScoreboards().get(p.getUniqueId()));
+    }
+
+    public void newScoreboard(Player p, String display) {
+
+        //add the user to the scoreboard
+        if (!getScoreboards().containsKey(p.getUniqueId())) {
+            addScoreboard(p, display);
+        }
+
+        Objective objective = getScoreboards().get(p.getUniqueId()).getObjective("lobby");
+
+        if (objective != null) {
+            objective.setDisplayName(ChatColor.DARK_GRAY + "» " + display + ChatColor.DARK_GRAY + " «");
         }
 
         //update the scoreboard

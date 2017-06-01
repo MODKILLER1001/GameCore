@@ -1,6 +1,8 @@
 package net.warvale.core.tasks;
 
 
+import net.warvale.core.game.Game;
+import net.warvale.core.game.State;
 import net.warvale.core.utils.dates.DateUtils;
 import net.warvale.staffcore.bossbar.BarManager;
 import org.bukkit.ChatColor;
@@ -9,16 +11,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class BossbarCountdownTask extends BukkitRunnable {
 
-    private int countdown = 5 * 60;
+    private static int countdown = 5 * 60;
 
     public BossbarCountdownTask() {
-        this.countdown = 5 * 60;
+        countdown = 5 * 60;
     }
 
     @Override
     public void run(){
+        Game.getInstance().setState(State.COUNTDOWN);
         BarManager.getAnnounceBar().setVisible(true);
-        if (this.countdown > 0) {
+        if (countdown > 0) {
             BarManager.getAnnounceBar().setTitle(ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + DateUtils.secondsToString(countdown));
             BarManager.getAnnounceBar().setColor(BarColor.BLUE);
 
@@ -28,6 +31,10 @@ public class BossbarCountdownTask extends BukkitRunnable {
             BarManager.getAnnounceBar().setVisible(false);
             cancel();
         }
+    }
+
+    public static int getCountdown() {
+        return countdown;
     }
 
 }
