@@ -8,11 +8,13 @@ import net.warvale.core.message.PrefixType;
 import net.warvale.core.tasks.BossbarCountdownTask;
 import net.warvale.core.utils.dates.DateUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
 public class PingListener implements Listener {
 
+    @EventHandler
     public void onServerListPing(ServerListPingEvent e) {
 
         e.setMaxPlayers(Game.getInstance().getMaxPlayer());
