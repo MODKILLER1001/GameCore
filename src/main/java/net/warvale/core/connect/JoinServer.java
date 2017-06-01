@@ -1,10 +1,12 @@
 package net.warvale.core.connect;
 
 import net.warvale.core.game.Game;
+import net.warvale.core.game.State;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.staffcore.bossbar.BarManager;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -58,6 +60,11 @@ public class JoinServer implements Listener {
         MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED +
                 String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
                 " more players needed to start the game!");
+
+        if (Game.getInstance().isState(State.LOBBY)) {
+            event.getPlayer().teleport(new Location(Bukkit.getWorld("lobby"),
+                    0, 50, 0));
+        }
 
     }
 }
