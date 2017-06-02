@@ -51,8 +51,8 @@ public class PrivateMessages implements CommandExecutor {
                     return false;
                 } else {
 
-                    target.sendMessage(ChatColor.AQUA + "From " + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.GRAY + message);
-                    sender.sendMessage(ChatColor.AQUA + "To " + ChatColor.WHITE + target.getName() + ChatColor.GRAY + ": " + ChatColor.GRAY + message);
+                    target.sendMessage(ChatColor.AQUA + "From " + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ":" + ChatColor.GRAY + message);
+                    sender.sendMessage(ChatColor.AQUA + "To " + ChatColor.WHITE + target.getName() + ChatColor.GRAY + ":" + ChatColor.GRAY + message);
                     return true;
                 }
             }
