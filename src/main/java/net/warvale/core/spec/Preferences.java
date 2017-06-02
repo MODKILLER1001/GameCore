@@ -246,15 +246,17 @@ public class Preferences implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noJoinMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noJoinMessages.remove(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             }
 
-            break;
+
 
         // Leave Messages
         case 2:
@@ -278,12 +280,14 @@ public class Preferences implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noLeaveMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noLeaveMessages.remove(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             }
 
         // Tips
@@ -307,12 +311,14 @@ public class Preferences implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noTipMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noTipMessages.remove(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             }
 
 
@@ -337,12 +343,14 @@ public class Preferences implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noAdvertisementMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noAdvertisementMessages.remove(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             }
 
 
@@ -368,12 +376,14 @@ public class Preferences implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noPrivateMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             } else {
                 event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noPrivateMessages.remove(event.getWhoClicked().getName());
                 player.closeInventory();
+                break;
             }
 
 
