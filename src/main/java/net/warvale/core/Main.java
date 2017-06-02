@@ -7,19 +7,24 @@ import net.warvale.core.commands.CommandHandler;
 import net.warvale.core.config.ConfigManager;
 import net.warvale.core.connect.JoinServer;
 import net.warvale.core.connect.LeaveServer;
+import net.warvale.core.connect.PingListener;
+import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.TeamManager;
+import net.warvale.core.game.scoreboards.LobbyScoreboard;
+import net.warvale.core.map.GameMap;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
+import net.warvale.core.tasks.LobbyTask;
+import net.warvale.core.tasks.ScoreboardTask;
 import net.warvale.core.utils.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.files.PropertiesFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,8 +65,12 @@ public class Main extends JavaPlugin implements Listener {
 		MessageManager.getInstance().setup();
 
 		board = new BoardManager(this);
+		board.setup();
+
 		teams = new TeamManager(this, board);
 		teams.setup();
+
+		Game.getInstance().setup();
 
     	new JoinServer(this);
     	new LeaveServer(this);
@@ -69,18 +78,41 @@ public class Main extends JavaPlugin implements Listener {
     	new TeamSelect(this);
     	new ClassSelect(this);
     	new Preferences(this);
+    	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
+
+
 
     	for (BroadcastType type : BroadcastType.values()) {
-    		type.autoBroadcast(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
+    		switch (type) {
+				case TIP:
+					BroadcastType.autoBroadcastTip(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
+					break;
+				case ADVERTISEMENT:
+					BroadcastType.autoBroadcastAdvertisement(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
+					break;
+    		}
+
 		}
 
 		//register commands
 		commandHandler = new CommandHandler(this);
     	commandHandler.registerCommands();
 
+
 		/* Register AbilityManager */
 
 		Bukkit.getServer().getPluginManager().registerEvents(new AbilityManager(), this);
+    	//register scoreboards
+		ScoreboardTask.getInstance().runTaskTimer(this, 0, 20);
+		LobbyTask.getInstance().runTaskTimer(this, 0, 20);
+
+		//load the maps
+		try {
+			GameMap.getMaps().put("Redwood Forest", new GameMap("Redwood Forest"));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
     }
 
     @Override
@@ -141,6 +173,9 @@ public class Main extends JavaPlugin implements Listener {
 		getTeams().getBlueTeam().unregister();
 		getTeams().getRedTeam().unregister();
 		getTeams().getSpectatorTeam().unregister();
+
+		//unregister scoreboard specific teams
+		LobbyScoreboard.getInstance().shutdown();
 
 		getLogger().log(Level.INFO, "Closing connection to database...");
 

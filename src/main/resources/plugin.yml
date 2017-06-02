@@ -3,6 +3,7 @@ name: GameCore
 version: 1.1.4
 author: Warvale
 description: A CTF plugin.
+depend: [StaffCore]
 commands:
   gamever:
     description: Test if the core of the plugin is functioning.
@@ -16,3 +17,9 @@ commands:
     description: List all classes.
   map:
     description: manage maps
+  teststart:
+    description: Tests the bossbar countdown.
+  msg:
+    description: Send another player a private message.
+  r:
+    description: Send a message to the player you most recently sent a message to.

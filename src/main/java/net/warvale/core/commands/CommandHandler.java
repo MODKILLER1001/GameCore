@@ -5,13 +5,13 @@ import java.util.List;
 
 import net.warvale.core.Main;
 import net.warvale.core.commands.admin.MapCommand;
-import net.warvale.core.commands.game.ClassesCommand;
-import net.warvale.core.commands.game.LeaveCommand;
-import net.warvale.core.commands.game.StartCommand;
-import net.warvale.core.commands.game.VersionCommand;
+import net.warvale.core.commands.game.*;
 import net.warvale.core.commands.team.JoinCommand;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
+import net.warvale.core.message.PrivateMessages;
+import net.warvale.core.message.ReplyMessages;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 
@@ -122,11 +122,14 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         cmds.add(new MapCommand());
 
         // basic
+        Bukkit.getPluginCommand("msg").setExecutor(new PrivateMessages());
+        Bukkit.getPluginCommand("r").setExecutor(new ReplyMessages());
 
         //game
         cmds.add(new ClassesCommand());
         cmds.add(new LeaveCommand());
         cmds.add(new StartCommand());
+        cmds.add(new TestStartCommand());
         cmds.add(new VersionCommand());
 
         //team
