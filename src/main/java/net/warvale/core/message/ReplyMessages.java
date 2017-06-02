@@ -1,6 +1,7 @@
 package net.warvale.core.message;
 
 import net.warvale.core.spec.Preferences;
+import net.warvale.staffcore.users.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
@@ -50,8 +51,8 @@ public class ReplyMessages implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + target.getName() + ChatColor.DARK_GRAY + " has private messages disabled!");
                         return false;
                     } else {
-                        target.sendMessage(ChatColor.AQUA + "From " + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ":" + ChatColor.GRAY + message);
-                        sender.sendMessage(ChatColor.AQUA + "To " + ChatColor.WHITE + target.getName() + ChatColor.GRAY + ":" + ChatColor.GRAY + message);
+                        target.sendMessage(ChatColor.translateAlternateColorCodes('&',ChatColor.AQUA + "From " + UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ":" + ChatColor.GRAY + message));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',ChatColor.AQUA + "To " + UserManager.getUser(target.getUniqueId()).getPrefix() + ChatColor.WHITE + target.getName() + ChatColor.GRAY + ":" + ChatColor.GRAY + message));
                         PrivateMessages.lastMessaged.put(target.getName(), sender);
                         return true;
                     }
