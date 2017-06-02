@@ -1,39 +1,39 @@
-package net.warvale.core.classes.abilities;
+ package net.warvale.core.classes.abilities;
 
-import net.warvale.core.Main;
-import net.warvale.core.classes.Class;
-import net.warvale.core.classes.ClassManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
+        import net.warvale.core.Main;
+        import net.warvale.core.classes.Class;
+        import net.warvale.core.classes.ClassManager;
+        import org.bukkit.Bukkit;
+        import org.bukkit.ChatColor;
+        import org.bukkit.Location;
+        import org.bukkit.Material;
+        import org.bukkit.block.Block;
+        import org.bukkit.entity.Arrow;
+        import org.bukkit.entity.Entity;
+        import org.bukkit.entity.LivingEntity;
+        import org.bukkit.entity.Player;
+        import org.bukkit.event.EventHandler;
+        import org.bukkit.event.Listener;
+        import org.bukkit.event.block.Action;
+        import org.bukkit.event.entity.EntityDamageByEntityEvent;
+        import org.bukkit.event.entity.EntityTargetEvent;
+        import org.bukkit.event.entity.ProjectileHitEvent;
+        import org.bukkit.event.player.PlayerInteractEvent;
+        import org.bukkit.event.player.PlayerMoveEvent;
+        import org.bukkit.inventory.ItemStack;
+        import org.bukkit.plugin.Plugin;
+        import org.bukkit.potion.PotionEffect;
+        import org.bukkit.potion.PotionEffectType;
+        import org.bukkit.util.Vector;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+        import java.lang.reflect.Array;
+        import java.util.ArrayList;
+        import java.util.Arrays;
+        import java.util.List;
+        import java.util.Set;
 
-import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
-import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
+        import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
+        import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 
 /**
  * Created by Ron on 22/5/2017.
@@ -46,6 +46,8 @@ public class AbilityManager implements Listener {
     private ArrayList<Player> ArcherArrow = new ArrayList<>();
     private ArrayList<Player> freeze = new ArrayList<>();
     private ArrayList<Player> MusicianJukebox = new ArrayList<>();
+    private ArrayList<Entity> blueTeamMobs = new ArrayList<Entity>();
+    private ArrayList<Entity> redTeamMobs = new ArrayList<Entity>();
 
 
 
@@ -103,6 +105,17 @@ public class AbilityManager implements Listener {
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
                 this.Pyromaniac(p);
                 break;
+
+            case "Necromancer":
+                if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
+                this.Necromancer(p);
+                break;
+
+            /*case "Earthbender":
+                if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
+                this.Earthbender(p);
+                break;*/
+
             case "Medic":
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
                 this.Medic(p);
@@ -132,6 +145,19 @@ public class AbilityManager implements Listener {
         Arrays.sort(dim);
         if (player.getLocation().getZ() > dim[1] || player.getLocation().getZ() < dim[0]) return false;
         return true;
+    }
+
+    public Player closestPlayer(Set list) {
+        double closest = Double.MAX_VALUE;
+        Player closestp = null;
+        for(Player i : list){
+            double dist = i.getLocation().distance(event.getPlayer().getLocation());
+            if (closest == Double.MAX_VALUE || dist < closest){
+                closest = dist;
+                closestp = i;
+            }
+        }
+        return closestp;
     }
 
     @EventHandler
@@ -231,7 +257,7 @@ public class AbilityManager implements Listener {
             public void run() {
                 block.setType(type);
             }
-        }, 100);
+        }, 200);
     }
 
     private void Pyromaniac (Player p) {
@@ -244,6 +270,46 @@ public class AbilityManager implements Listener {
         }, 100);
     }
 
+    private void Necromancer (Player p) {
+        Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
+        Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
+        Location loc = player.getLocation();
+        List<Entity> entities = new ArrayList<Entity>();
+        entities.add(location.getWorld().spawnEntity(loc.substract(1, 0, 1), CreatureType.ZOMBIE))
+                .add(location.getWorld().spawnEntity(loc.substract(1, 0, 0).add(0, 0, 1), CreatureType.ZOMBIE))
+                .add(location.getWorld().spawnEntity(loc.substract(0, 0, 1).add(1, 0, 0), CreatureType.ZOMBIE))
+                .add(location.getWorld().spawnEntity(loc.add(1, 0, 1), CreatureType.ZOMBIE));
+        if (blueteamplayers.contains(p.getName())) {
+            for (Entity e : entities) {
+                blueTeamMobs.add(e);
+            }
+        } else if (redteamplayers.contains(p.getName())) {
+            for (Entity e : entities) {
+                redTeamMobs.add(e);
+            }
+        }
+    }
+
+    /*private void Earthbender (Player p) {
+        
+    }*/
+
+    @EventHandler
+    public void onTarget(EntityTargetEvent event){
+        if(!(event.getTarget() instanceof Player)) return;
+
+        Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
+        Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
+
+        if(blueTeamMobs.contains(event.getEntity())){
+            if (blueteamplayers.contains(event.getTarget())) {
+                event.setTarget(closestPlayer(redteamplayers));
+            } else if (redteamplayers.contains(event.getTarget())) {
+                event.setTarget(closestPlayer(blueteamplayers));
+            }
+        }
+    }
+
     private void Medic (Player p) {
         List<Entity> entities = p.getNearbyEntities(10, 10, 10);
         for(Entity e : entities){
@@ -254,7 +320,7 @@ public class AbilityManager implements Listener {
             Set<String> RedTeam = Main.getTeams().getRedTeam().getEntries();
             Set<String> teammates = ((BlueTeam.contains(p.getName())) ? BlueTeam : RedTeam);
             if(!teammates.contains(nbp.getName())) return;
-            nbp.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 100, 100));
+            nbp.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 100, 7));
         }
     }
 
@@ -271,7 +337,6 @@ public class AbilityManager implements Listener {
         ArcherArrow.remove(p);
     }
 
-
     @EventHandler
     public void MusicianInteract(PlayerInteractEvent e) {
         Action action = e.getAction();
@@ -279,11 +344,12 @@ public class AbilityManager implements Listener {
         Player p = e.getPlayer();
 
         if (!(action.equals(RIGHT_CLICK_BLOCK))) return;
-            /* Need to check if it is the right block that was clicked using a object, for example: {player:block, player:block}
-            * Give healing for players in a radius of 10 blocks here.
-            *
-            * */
-
+        if (p.getInventory().getItemInHand().getType() == Material.GREEN_RECORD && blockFacing.getType() == MATERIAL.JUKEBOX) {
+            Collection<Entity> entities = blockFacing.getWorld().getNearbyEntities(blockFacing.getLocation(), 10, 10, 10);
+            for (Entity e : entities) {
+                e.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 100, 7));
+            }
+        }
 
     }
 
