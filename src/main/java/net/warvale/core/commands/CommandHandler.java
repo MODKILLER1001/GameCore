@@ -10,6 +10,7 @@ import net.warvale.core.commands.team.JoinCommand;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.core.message.PrivateMessages;
+import net.warvale.core.message.ReplyMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
@@ -122,6 +123,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
         // basic
         Bukkit.getPluginCommand("msg").setExecutor(new PrivateMessages());
+        Bukkit.getPluginCommand("r").setExecutor(new ReplyMessages());
 
         //game
         cmds.add(new ClassesCommand());

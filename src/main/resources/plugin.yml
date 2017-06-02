@@ -21,3 +21,5 @@ commands:
     description: Tests the bossbar countdown.
   msg:
     description: Send another player a private message.
+  r:
+    description: Send a message to the player you most recently sent a message to.

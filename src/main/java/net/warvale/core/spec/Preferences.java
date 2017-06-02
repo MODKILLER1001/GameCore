@@ -20,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Wool;
 import org.bukkit.potion.PotionEffect;
-import net.warvale.core.PermissionManager;
 
 import net.md_5.bungee.api.ChatColor;
 import net.warvale.core.Main;

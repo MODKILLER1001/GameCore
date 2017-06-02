@@ -7,12 +7,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
+import java.util.HashMap;
 
 
 /**
  * Created By AAces on 6/1/17
  */
 public class PrivateMessages implements CommandExecutor {
+
+    public static HashMap<String, Player> lastMessaged = new HashMap<>();
 
     public boolean onCommand(CommandSender player, Command command, String label, String[] args){
         if (label.equalsIgnoreCase("msg")) {
@@ -50,9 +53,10 @@ public class PrivateMessages implements CommandExecutor {
                     sender.sendMessage(ChatColor.RED + target.getName() + ChatColor.DARK_GRAY + " has private messages disabled!");
                     return false;
                 } else {
-
                     target.sendMessage(ChatColor.AQUA + "From " + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ":" + ChatColor.GRAY + message);
                     sender.sendMessage(ChatColor.AQUA + "To " + ChatColor.WHITE + target.getName() + ChatColor.GRAY + ":" + ChatColor.GRAY + message);
+                    lastMessaged.put(sender.getName(), target);
+                    lastMessaged.put(target.getName(), sender);
                     return true;
                 }
             }
