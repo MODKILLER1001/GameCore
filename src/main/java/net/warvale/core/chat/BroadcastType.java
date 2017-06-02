@@ -1,10 +1,14 @@
 package net.warvale.core.chat;
 
+import net.warvale.core.spec.Preferences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import net.warvale.core.Main;
 import net.warvale.core.utils.NumberUtils;
+
+import java.util.ArrayList;
 
 /**
  * Created by Draem on 5/16/2017.
@@ -31,16 +35,40 @@ public enum BroadcastType {
         this.messages = messages;
     }
 
-    public void broadcast() {
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',
-                this.prefix + "&f " + this.messages[NumberUtils.random(this.messages.length - 1, 0)]));
+    public static void broadcastTip() {
+        for (Player target : Bukkit.getServer().getOnlinePlayers()){
+            if (!Preferences.noTipMessages.contains(target.getName())){
+                target.sendMessage(ChatColor.translateAlternateColorCodes('&',"&b&l[!]" + "&f " + TIP.messages[NumberUtils.random(TIP.messages.length - 1, 0)]));
+            }
+        }
+
+
     }
 
-    public void autoBroadcast(long delay, long period) {
+    public static void autoBroadcastTip(long delay, long period) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                broadcast();
+                broadcastTip();
+            }
+
+        }.runTaskTimerAsynchronously(Main.get(), delay, period);
+    }
+    public static void broadcastAdvertisement() {
+        for (Player target : Bukkit.getServer().getOnlinePlayers()){
+            if (!Preferences.noAdvertisementMessages.contains(target.getName())){
+                target.sendMessage(ChatColor.translateAlternateColorCodes('&',"&2&l[!]" + "&f " + ADVERTISEMENT.messages[NumberUtils.random(ADVERTISEMENT.messages.length - 1, 0)]));
+            }
+        }
+
+
+    }
+
+    public static void autoBroadcastAdvertisement(long delay, long period) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                broadcastAdvertisement();
             }
 
         }.runTaskTimerAsynchronously(Main.get(), delay, period);

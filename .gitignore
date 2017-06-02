@@ -30,3 +30,4 @@ hs_err_pid*
 GameCore\.iml
 
 dependency-reduced-pom\.xml
+/dependency-reduced-pom.xml
