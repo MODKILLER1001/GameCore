@@ -23,15 +23,16 @@ public class ReplyMessages implements CommandExecutor {
 
             Player sender = (Player) player;
 
+            if (args.length == 0){
+                player.sendMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Usage: " + ChatColor.RED + "/r <message>");
+                return false;
+            }
+
             if (!PrivateMessages.lastMessaged.containsKey(sender.getName())){
                 sender.sendMessage(ChatColor.RED + "You have not messaged anyone recently!");
                 return false;
             }
 
-            if (args.length == 0){
-                player.sendMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Usage: " + ChatColor.RED + "/r <message>");
-                return false;
-            }
             Player t = PrivateMessages.lastMessaged.get(sender.getName());
 
             if (!Bukkit.getServer().getOnlinePlayers().contains(t)){

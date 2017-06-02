@@ -24,7 +24,6 @@ import net.warvale.core.utils.files.PropertiesFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -80,8 +79,18 @@ public class Main extends JavaPlugin implements Listener {
     	new Preferences(this);
     	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
 
+
+
     	for (BroadcastType type : BroadcastType.values()) {
-    		type.autoBroadcast(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
+    		switch (type) {
+				case TIP:
+					BroadcastType.autoBroadcastTip(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
+					break;
+				case ADVERTISEMENT:
+					BroadcastType.autoBroadcastAdvertisement(NumberUtils.random(100, 1), NumberUtils.random(7000, 6000));
+					break;
+    		}
+
 		}
 
 		//register commands
