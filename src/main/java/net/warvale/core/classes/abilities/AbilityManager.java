@@ -8,10 +8,7 @@
         import org.bukkit.Location;
         import org.bukkit.Material;
         import org.bukkit.block.Block;
-        import org.bukkit.entity.Arrow;
-        import org.bukkit.entity.Entity;
-        import org.bukkit.entity.LivingEntity;
-        import org.bukkit.entity.Player;
+        import org.bukkit.entity.*;
         import org.bukkit.event.EventHandler;
         import org.bukkit.event.Listener;
         import org.bukkit.event.block.Action;
@@ -26,11 +23,7 @@
         import org.bukkit.potion.PotionEffectType;
         import org.bukkit.util.Vector;
 
-        import java.lang.reflect.Array;
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.List;
-        import java.util.Set;
+        import java.util.*;
 
         import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
         import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
@@ -147,11 +140,15 @@ public class AbilityManager implements Listener {
         return true;
     }
 
-    public Player closestPlayer(Set list) {
+    public Player closestPlayer(Set lol, Entity aentity) {
+        if (!(aentity instanceof Player)) return null;
+        Player aplayer = (Player) aentity;
+
         double closest = Double.MAX_VALUE;
         Player closestp = null;
-        for(Player i : list){
-            double dist = i.getLocation().distance(event.getPlayer().getLocation());
+        for(Object ii : lol){
+            Player i = Bukkit.getServer().getPlayer(String.valueOf(ii));
+            double dist = i.getLocation().distance(aplayer.getLocation());
             if (closest == Double.MAX_VALUE || dist < closest){
                 closest = dist;
                 closestp = i;
@@ -251,7 +248,7 @@ public class AbilityManager implements Listener {
         /*getNearbyEntities(Location location,
         double x,
         double y,
-        double z)*/
+        double z)No*/
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
             public void run() {
@@ -263,22 +260,22 @@ public class AbilityManager implements Listener {
     private void Pyromaniac (Player p) {
         fireCooldown.add(p);
         p.sendMessage(ChatColor.GREEN + "You can now hit a player to light them on fire!");
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
-            public void run() {
-                fireCooldown.remove(p);
-            }
-        }, 100);
-    }
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, () -> fireCooldown.remove(p), 100);
+     }
 
     private void Necromancer (Player p) {
         Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
         Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
-        Location loc = player.getLocation();
+        Location loc = p.getLocation();
         List<Entity> entities = new ArrayList<Entity>();
-        entities.add(location.getWorld().spawnEntity(loc.substract(1, 0, 1), CreatureType.ZOMBIE))
-                .add(location.getWorld().spawnEntity(loc.substract(1, 0, 0).add(0, 0, 1), CreatureType.ZOMBIE))
-                .add(location.getWorld().spawnEntity(loc.substract(0, 0, 1).add(1, 0, 0), CreatureType.ZOMBIE))
-                .add(location.getWorld().spawnEntity(loc.add(1, 0, 1), CreatureType.ZOMBIE));
+        Location locOne = loc.subtract(1, 0, 1);
+        Location locTwo = loc.subtract(1, 0, 0);
+        Location locThree = loc.subtract(0, 0, 1);
+        Location locFour = loc.subtract(1, 0, 1);
+        entities.add(loc.getWorld().spawnEntity(locOne, EntityType.ZOMBIE));
+        entities.add(loc.getWorld().spawnEntity(locTwo, EntityType.ZOMBIE));
+        entities.add(loc.getWorld().spawnEntity(locThree, EntityType.ZOMBIE));
+        entities.add(loc.getWorld().spawnEntity(locFour, EntityType.ZOMBIE));
         if (blueteamplayers.contains(p.getName())) {
             for (Entity e : entities) {
                 blueTeamMobs.add(e);
@@ -303,9 +300,9 @@ public class AbilityManager implements Listener {
 
         if(blueTeamMobs.contains(event.getEntity())){
             if (blueteamplayers.contains(event.getTarget())) {
-                event.setTarget(closestPlayer(redteamplayers));
+                event.setTarget(closestPlayer(redteamplayers, event.getEntity()));
             } else if (redteamplayers.contains(event.getTarget())) {
-                event.setTarget(closestPlayer(blueteamplayers));
+                event.setTarget(closestPlayer(blueteamplayers, event.getEntity()));
             }
         }
     }
@@ -344,10 +341,13 @@ public class AbilityManager implements Listener {
         Player p = e.getPlayer();
 
         if (!(action.equals(RIGHT_CLICK_BLOCK))) return;
-        if (p.getInventory().getItemInHand().getType() == Material.GREEN_RECORD && blockFacing.getType() == MATERIAL.JUKEBOX) {
+
+        if (p.getEquipment().getItemInMainHand().getType() == Material.GREEN_RECORD && blockFacing.getType().equals(Material.JUKEBOX)) {
             Collection<Entity> entities = blockFacing.getWorld().getNearbyEntities(blockFacing.getLocation(), 10, 10, 10);
-            for (Entity e : entities) {
-                e.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 100, 7));
+            for (Entity eee : entities) {
+                if (!(eee instanceof Player)) return;
+                Player eep = (Player) eee;
+                eep.setHealth(eep.getHealth() + 3);
             }
         }
 
