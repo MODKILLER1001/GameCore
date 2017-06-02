@@ -18,4 +18,6 @@ commands:
   map:
     description: manage maps
   teststart:
-    description: tests the bossbar countdown
+    description: Tests the bossbar countdown.
+  msg:
+    description: Send another player a private message.
