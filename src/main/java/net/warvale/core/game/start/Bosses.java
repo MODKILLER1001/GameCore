@@ -39,8 +39,10 @@ public class Bosses {
                 this.BossGrometator(bossLocation);
                 break;
             case 4:
+                this.BossCruitionator(bossLocation);
                 break;
             case 5:
+                this.BossHertopal(bossLocation);
                 break;
 
         }
@@ -83,9 +85,22 @@ public class Bosses {
         Grometator.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
     }
     private void BossCruitionator(Location bossLocation) {
-
+        Spider Cruitionator = (Spider) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.SPIDER);
+        Cruitionator.setCustomNameVisible(true);
+        Cruitionator.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eCruitionator"));
+        Cruitionator.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+        Cruitionator.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
+        Cruitionator.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 1000000, 1, false, false, Color.RED));
+        Cruitionator.getEquipment().setItemInMainHand(new ItemStack(Material.WOOD_SWORD));
+        Cruitionator.getEquipment().setItemInOffHandDropChance(0);
     }
     private void BossHertopal(Location bossLocation) {
+        PolarBear Hertopal = (PolarBear) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.POLAR_BEAR);
+        Hertopal.setCustomNameVisible(true);
+        Hertopal.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eHertopal"));
+        Hertopal.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(25);
+        Hertopal.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+        Hertopal.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 1000000, 1, false, false, Color.RED));
 
     }
 
