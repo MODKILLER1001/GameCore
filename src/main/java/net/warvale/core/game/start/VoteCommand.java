@@ -28,6 +28,7 @@ public class VoteCommand implements CommandExecutor {
 
             if(!Main.getTeams().getBlueTeam().hasPlayer(sender) || Main.getTeams().getRedTeam().hasPlayer(sender)){
                 sender.sendMessage(ChatColor.RED + "You must be on a team to vote!");
+                return false;
             }
 
             if (GameStart.voted.contains(sender.getName())){
