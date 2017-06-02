@@ -7,6 +7,7 @@ import net.warvale.core.Main;
 import net.warvale.core.commands.admin.MapCommand;
 import net.warvale.core.commands.game.*;
 import net.warvale.core.commands.team.JoinCommand;
+import net.warvale.core.game.start.VoteCommand;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.core.message.PrivateMessages;
@@ -131,6 +132,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         cmds.add(new StartCommand());
         cmds.add(new TestStartCommand());
         cmds.add(new VersionCommand());
+        Bukkit.getPluginCommand("vote").setExecutor(new VoteCommand());
 
         //team
         cmds.add(new JoinCommand());

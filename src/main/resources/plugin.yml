@@ -23,3 +23,5 @@ commands:
     description: Send another player a private message.
   r:
     description: Send a message to the player you most recently sent a message to.
+  vote:
+    description: Use this to vote for which map is played.
