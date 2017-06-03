@@ -1,0 +1,40 @@
+<map>
+    <name>Volcano Island</name>
+
+    <authors>Piinoy, Fruitified, Pixelific, Draem</authors>
+
+    <lobby>
+        <exact>-48 27 -29</exact>
+        <region>-58 25 -18 -38 32 -39</region>
+        <yaw>45</yaw>
+        <pitch>0</pitch>
+    </lobby>
+
+    <center>
+        <exact>-48 27 -29</exact>
+        <radius>-58 25 -18 -38 32 -39</radius>
+    </center>
+
+    <team>
+        <spawns>
+            <blue>
+                <exact>34 41 55</exact>
+                <radius>6 1 22 59 100 78</radius>
+            </blue>
+            <red>
+                <exact>-130 41 -113</exact>
+                <radius>-155 100 -136 -103 31 -80</radius>
+            </red>
+        </spawns>
+        <cores>
+            <red>
+                <region>-114 1 -100 -142 36 -133</region>
+                <exact>-128 15 -114</exact>
+            </red>
+            <blue>
+                <region>18 1 42 46 36 75</region>
+                <exact>32 15 56</exact>
+            </blue>
+        </cores>
+    </team>
+</map>

@@ -1,0 +1,40 @@
+<map>
+    <name>Redwood Forest</name>
+
+    <authors>Piinoy, Pixelific, Vics, rewrr, lightyar1</authors>
+
+    <lobby>
+        <exact>11 24 11</exact>
+        <region>-2 1 24 24 30 -2</region>
+        <yaw>-135</yaw>
+        <pitch>0</pitch>
+    </lobby>
+
+    <center>
+        <exact>11 24 11</exact>
+        <radius>-2 1 24 24 30 -2</radius>
+    </center>
+
+    <team>
+        <spawns>
+            <blue>
+                <exact>109 38 101</exact>
+                <radius>98 1 90 120 100 112</radius>
+            </blue>
+            <red>
+                <exact>-87 38 -79</exact>
+                <radius>-76 1 -68 -98 100 -90</radius>
+            </red>
+        </spawns>
+        <cores>
+            <red>
+                <region>-77 1 -82 -92 21 -65</region>
+                <exact>-85 17 -74</exact>
+            </red>
+            <blue>
+                <region>115 1 88 100 21 105</region>
+                <exact>107 17 96</exact>
+            </blue>
+        </cores>
+    </team>
+</map>

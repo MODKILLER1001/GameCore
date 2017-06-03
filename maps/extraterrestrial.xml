@@ -1,0 +1,40 @@
+<map>
+    <name>Extraterrestrial</name>
+
+    <authors>Pixelific, Fruitified, Draem, rewrr, CommandG_2, MODKILLER1001, DatZebra, Vics</authors>
+
+    <lobby>
+        <exact>18 35 20</exact>
+        <region>3 20 62 33 55 -31</region>
+        <yaw>180</yaw>
+        <pitch>0</pitch>
+    </lobby>
+
+    <center>
+        <exact>18 35 20</exact>
+        <radius>3 20 62 33 55 -31</radius>
+    </center>
+
+    <team>
+        <spawns>
+            <blue>
+                <exact>134 62 18</exact>
+                <radius>153 47 0 121 88 28</radius>
+            </blue>
+            <red>
+                <exact>-98 62 18</exact>
+                <radius>-77 47 0 -110 90 29</radius>
+            </red>
+        </spawns>
+        <cores>
+            <red>
+                <region>-74 70 38 -65 80 29</region>
+                <exact>-69 75 33</exact>
+            </red>
+            <blue>
+                <region>110 70 38 101 80 29</region>
+                <exact>105 75 33</exact>
+            </blue>
+        </cores>
+    </team>
+</map>
