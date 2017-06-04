@@ -48,8 +48,8 @@ public class AbilityManager implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if(!Game.isRunning()){
-            e.setCancelled(true);
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
         }
         Player p = e.getPlayer();
         if (!(e.getAction() == RIGHT_CLICK_AIR || e.getAction() == RIGHT_CLICK_BLOCK)) return;
