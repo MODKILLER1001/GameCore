@@ -18,4 +18,10 @@ public class EmberManager {
         SQLUtil.update(Main.getDB(), "users", "embers", set.getInt("embers") + amount, new SQLUtil.Where(new SQLUtil.WhereVar("uuid", player.getUniqueId().toString()).getWhere()));
     }
 
+    public static void takeEmbers(Player player, Integer amount) throws SQLException, ClassNotFoundException {
+        ResultSet set = SQLUtil.query(Main.getDB(), "users", "embers", new SQLUtil.Where(new SQLUtil.WhereVar("uuid", player.getUniqueId().toString()).getWhere()));
+        set.next();
+        SQLUtil.update(Main.getDB(), "users", "embers", set.getInt("embers") - amount, new SQLUtil.Where(new SQLUtil.WhereVar("uuid", player.getUniqueId().toString()).getWhere()));
+    }
+
 }
