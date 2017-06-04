@@ -108,7 +108,10 @@ public class Main extends JavaPlugin implements Listener {
 
 		//load the maps
 		try {
-			GameMap.getMaps().put("Redwood Forest", new GameMap("Redwood Forest"));
+			GameMap.getMaps().put("Redwood Forest", new GameMap("redwood_forest"));
+			GameMap.getMaps().put("Volcano Island", new GameMap("volcano_island"));
+			GameMap.getMaps().put("Pagoda Everglade", new GameMap("pagoda_everglade"));
+			GameMap.getMaps().put("Extraterrestrial", new GameMap("extraterrestrial"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
