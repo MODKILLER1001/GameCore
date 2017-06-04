@@ -1,20 +1,26 @@
 package net.warvale.core;
 
+import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.utils.NumberUtils;
+import net.warvale.core.utils.chat.ChatUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -174,6 +180,21 @@ public class GlobalEvent implements Listener {
         if (event.getItem().getItemStack().getType().equals(Material.EYE_OF_ENDER)) {
             event.setCancelled(true);    
         }
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event){
+        event.setDeathMessage("");
+        Player vName = event.getEntity();
+        Player kName = vName.getKiller();
+       ChatColor gray = ChatColor.GRAY;
+        String victim = (Main.getTeams().getBlueTeam().hasPlayer(vName) ? ChatColor.DARK_AQUA + vName.getName() : (Main.getTeams().getRedTeam().hasPlayer(vName) ? ChatColor.RED + vName.getName() : ChatColor.AQUA + vName.getName()));
+        String killer = (Main.getTeams().getBlueTeam().hasPlayer(kName) ? ChatColor.DARK_AQUA + kName.getName() : (Main.getTeams().getRedTeam().hasPlayer(kName) ? ChatColor.RED + kName.getName() : ChatColor.AQUA + kName.getName()));
+        ArrayList<String> deathMessages = new ArrayList<>();
+        deathMessages.addAll(Arrays.asList(killer + gray + " squished " + victim + gray + " like a bug.", killer + gray + " delivered the final coup de grâce to " + victim, killer + gray + " assassinated " + victim, killer + gray + " put " + victim + gray + " out of their misery.", killer + gray + " showed no mercy to " + victim, killer + gray + " back-stabbed " + victim, killer + gray + " slayed " + victim, killer + gray + " brutally beat " + victim, killer + gray + " rearranged " + victim + gray + "'s face.", killer + gray + " ended " + victim + gray + "'s pitiful existence.", killer + gray + " removed the limbs of " + victim, killer + gray + " answered " + victim + "'s plea for death.", gray + "Thanks to " + killer + gray + ", " + victim + gray + " no longer exists.", killer + gray + " proved that " + victim + gray + " was no match for them.", killer + gray + " sent " + victim + gray + " to their grave."));
+        int r = NumberUtils.random(deathMessages.size() - 1, 0);
+        vName.sendMessage(deathMessages.get(r));
+        kName.sendMessage(deathMessages.get(r));
     }
 
 
