@@ -1,20 +1,26 @@
 package net.warvale.core;
 
+import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.utils.NumberUtils;
+import net.warvale.core.utils.chat.ChatUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -174,6 +180,19 @@ public class GlobalEvent implements Listener {
         if (event.getItem().getItemStack().getType().equals(Material.EYE_OF_ENDER)) {
             event.setCancelled(true);    
         }
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event){
+        Player vName = event.getEntity();
+        Player kName = vName.getKiller();
+       ChatColor gray = ChatColor.GRAY;
+        String victim = (Main.getTeams().getBlueTeam().hasPlayer(vName) ? ChatColor.BLUE + vName.getName() : (Main.getTeams().getRedTeam().hasPlayer(vName) ? ChatColor.RED + vName.getName() : ChatColor.AQUA + vName.getName()));
+        String killer = (Main.getTeams().getBlueTeam().hasPlayer(kName) ? ChatColor.BLUE + kName.getName() : (Main.getTeams().getRedTeam().hasPlayer(kName) ? ChatColor.RED + kName.getName() : ChatColor.AQUA + kName.getName()));
+        ArrayList<String> deathMessages = new ArrayList<>();
+        deathMessages.addAll(Arrays.asList(killer + gray + " squished " + victim + gray + " like a bug.", victim + gray + " never even saw " + killer + gray + " coming.", killer + gray + " delivered the final coup de grâce to " + victim, killer + gray + " assassinated " + victim, victim + gray + " was put out of their misery by " + killer, killer + gray + " showed no mercy to " + victim, victim + gray + " was back-stabbed by " + killer, victim + gray + " was slain by " + killer, victim + gray + " was brutally beaten by " + killer, killer + gray + " rearranged " + victim + gray + "'s face.", killer + gray + " ended " + victim + gray + "'s pitiful existence.", victim + gray + " had their limbs removed by " + killer, victim + gray + "'s plea for death was answered by " + killer, victim + gray + " thought they could take on " + killer + gray + ". " + victim + gray + " was wrong.", victim + gray + " no longer exists, thanks to " + killer, victim + gray + " has died at " + killer + gray + "'s will.", victim + gray + " was no match for " + killer, killer + gray + " sent " + victim + gray + " to their grave."));
+        int r = NumberUtils.random(deathMessages.size() - 1, 0);
+        event.setDeathMessage(deathMessages.get(r));
     }
 
 
