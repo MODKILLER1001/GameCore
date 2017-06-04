@@ -3,6 +3,7 @@
         import net.warvale.core.Main;
         import net.warvale.core.classes.Class;
         import net.warvale.core.classes.ClassManager;
+        import net.warvale.core.game.Game;
         import org.bukkit.Bukkit;
         import org.bukkit.ChatColor;
         import org.bukkit.Location;
@@ -47,6 +48,9 @@ public class AbilityManager implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
+        if(!Game.isRunning()){
+            e.setCancelled(true);
+        }
         Player p = e.getPlayer();
         if (!(e.getAction() == RIGHT_CLICK_AIR || e.getAction() == RIGHT_CLICK_BLOCK)) return;
         if (cooldown.contains(p)) return;
@@ -298,12 +302,12 @@ public class AbilityManager implements Listener {
         Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
         Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
 
-        if(blueTeamMobs.contains(event.getEntity())){
-            if (blueteamplayers.contains(event.getTarget())) {
-                event.setTarget(closestPlayer(redteamplayers, event.getEntity()));
-            } else if (redteamplayers.contains(event.getTarget())) {
-                event.setTarget(closestPlayer(blueteamplayers, event.getEntity()));
-            }
+        if(blueTeamMobs.contains(event.getEntity()) && redteamplayers.contains(event.getTarget())){
+            event.setTarget(closestPlayer(blueteamplayers, event.getEntity()));
+        }
+
+        if(redTeamMobs.contains(event.getEntity()) && blueteamplayers.contains(event.getTarget())){
+            event.setTarget(closestPlayer(redteamplayers, event.getEntity()));
         }
     }
 
