@@ -1,5 +1,7 @@
 package net.warvale.core;
 
+import net.warvale.core.game.Game;
+import net.warvale.core.game.State;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.chat.ChatUtils;
@@ -34,6 +36,11 @@ public class GlobalEvent implements Listener {
     
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         if (event.getBlock().getType().equals(Material.IRON_ORE)) {
             event.getPlayer().giveExp(10);
             for (int i = 0; i < NumberUtils.random(3, 1); i++) {
@@ -168,6 +175,11 @@ public class GlobalEvent implements Listener {
 
     @EventHandler
     public void onItemPickup(PlayerPickupItemEvent event) {
+
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         if (event.getItem().getItemStack().getType().equals(Material.IRON_NUGGET)) {
             event.setCancelled(true);
         }
@@ -184,6 +196,11 @@ public class GlobalEvent implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event){
+
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         event.setDeathMessage("");
         Player vName = event.getEntity();
         Player kName = vName.getKiller();

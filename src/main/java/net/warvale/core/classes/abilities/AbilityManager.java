@@ -4,6 +4,7 @@
         import net.warvale.core.classes.Class;
         import net.warvale.core.classes.ClassManager;
         import net.warvale.core.game.Game;
+        import net.warvale.core.game.State;
         import org.bukkit.Bukkit;
         import org.bukkit.ChatColor;
         import org.bukkit.Location;
@@ -163,6 +164,11 @@ public class AbilityManager implements Listener {
 
     @EventHandler
     public void onEntityDamage (EntityDamageByEntityEvent e) {
+
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         LivingEntity entity = (LivingEntity)e.getEntity();
         Player playerEntity = (Player)entity;
         if (entity.getLastDamageCause().getEntity() instanceof Player) {
@@ -181,6 +187,11 @@ public class AbilityManager implements Listener {
 
     @EventHandler
     public void onMove (PlayerMoveEvent e) {
+
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         if (!freeze.contains(e.getPlayer())) return;
         if (!electroCooldown.contains(e.getPlayer())) return;
         Location from = e.getFrom();
@@ -196,6 +207,11 @@ public class AbilityManager implements Listener {
 
     @EventHandler
     public void onEntityTarget(EntityTargetEvent event) {
+
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         Entity entity = event.getEntity();
         Entity target = event.getTarget();
     }
@@ -297,6 +313,10 @@ public class AbilityManager implements Listener {
 
     @EventHandler
     public void onTarget(EntityTargetEvent event){
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         if(!(event.getTarget() instanceof Player)) return;
 
         Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
@@ -329,6 +349,11 @@ public class AbilityManager implements Listener {
     //         For Archer class.
     @EventHandler
     public void ArcherProjectileHit (ProjectileHitEvent e) {
+
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         if (!(e.getEntity() instanceof Arrow)) return;
         Arrow arrow = (Arrow)e.getEntity();
         if (!(arrow.getShooter() instanceof Player)) return;
@@ -340,6 +365,11 @@ public class AbilityManager implements Listener {
 
     @EventHandler
     public void MusicianInteract(PlayerInteractEvent e) {
+
+        if(!Game.getInstance().isState(State.INGAME)){
+            return;
+        }
+
         Action action = e.getAction();
         Block blockFacing = e.getClickedBlock();
         Player p = e.getPlayer();
