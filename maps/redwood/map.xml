@@ -3,6 +3,8 @@
 
     <authors>Piinoy, Pixelific, Vics, rewrr, lightyar1</authors>
 
+    <world>staffmap2</world>
+
     <lobby>
         <exact>11 24 11</exact>
         <region>-2 1 24 24 30 -2</region>

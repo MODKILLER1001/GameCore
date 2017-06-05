@@ -3,6 +3,8 @@
 
     <authors>Pixelific, Piinoy, Ceboo, rewrr</authors>
 
+    <world>staffmap4</world>
+
     <lobby>
         <exact>-7 34 -7</exact>
         <region>6 60 -20 -19 1 5</region>

@@ -3,6 +3,8 @@
 
     <authors>Piinoy, Fruitified, Pixelific, Draem</authors>
 
+    <world>staffmap3</world>
+
     <lobby>
         <exact>-48 27 -29</exact>
         <region>-58 25 -18 -38 32 -39</region>
