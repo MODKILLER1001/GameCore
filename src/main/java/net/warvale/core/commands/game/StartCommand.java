@@ -4,7 +4,6 @@ package net.warvale.core.commands.game;
 import net.warvale.core.commands.AbstractCommand;
 import net.warvale.core.exceptions.CommandException;
 import net.warvale.core.game.Game;
-import net.warvale.core.tasks.StartTask;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -3,8 +3,6 @@ package net.warvale.core.game.start;
 import net.warvale.core.Main;
 import net.warvale.core.game.MatchInfo;
 import net.warvale.core.map.GameMap;
-import net.warvale.core.tasks.BossbarCountdownTask;
-import net.warvale.core.tasks.StartTask;
 import net.warvale.core.utils.chat.ChatUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.OfflinePlayer;
@@ -57,8 +55,8 @@ public class Initialization {
         players.forEach(player -> {
             player.addPotionEffects(
                     Arrays.asList(
-                            new PotionEffect(PotionEffectType.SLOW, 100000, 128, false),
-                            new PotionEffect(PotionEffectType.JUMP, 100000, 250, false)));
+                            new PotionEffect(PotionEffectType.SLOW, 100000, 128, false, false),
+                            new PotionEffect(PotionEffectType.JUMP, 100000, 250, false, false)));
             String team = player.getScoreboard().getTeam(player.getName()).getName();
             player.sendMessage((String[]) Arrays.asList("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
                     ChatUtils.divider,

@@ -32,9 +32,6 @@ public class ScoreboardTask extends BukkitRunnable {
                 if (BossbarCountdownTask.getCountdown() >= 60) {
                     LobbyScoreboard.getInstance().newScoreboard(player, ChatColor.RED + "Warvale");
                 } else {
-                    if (BossbarCountdownTask.getCountdown() <= 10) {
-                        BarManager.broadcastSound(Sound.BLOCK_NOTE_PLING);
-                    }
                     LobbyScoreboard.getInstance().newScoreboard(player, ChatColor.WHITE + "Starting in " + ChatColor.GREEN +
                     BossbarCountdownTask.getCountdown() + " seconds");
                 }

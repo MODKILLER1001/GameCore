@@ -148,8 +148,6 @@ public class GameStart {
                 break;
 
         }
-
-
         MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "Voting is now closed!");
     }
 
