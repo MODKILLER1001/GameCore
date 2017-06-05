@@ -26,7 +26,7 @@ public class ScoreboardTask extends BukkitRunnable {
     @Override
     public void run() {
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 
             if (Game.getInstance().isState(State.COUNTDOWN)) {
                 if (BossbarCountdownTask.getCountdown() >= 60) {

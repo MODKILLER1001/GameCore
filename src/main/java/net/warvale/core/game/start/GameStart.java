@@ -1,15 +1,12 @@
 package net.warvale.core.game.start;
 
 import net.warvale.core.Main;
-import net.warvale.core.game.Game;
 import net.warvale.core.game.MatchInfo;
-import net.warvale.core.game.State;
 import net.warvale.core.map.GameMap;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
-import net.warvale.core.tasks.StartTask;
+import net.warvale.core.tasks.BossbarCountdownTask;
 import net.warvale.core.utils.NumberUtils;
-import net.warvale.core.game.start.Initialization;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,10 +25,11 @@ public class GameStart {
     public static HashMap<String, Integer> votes = new HashMap<>();
     private static HashMap<Integer, String> mapNumbers = new HashMap<>();
     public static boolean initActive = false;
-    private static GameMap map;
+    public static GameMap map;
+    public static MatchInfo info = new MatchInfo(teamBlue.size() + teamRed.size(), teamRed.size(), teamBlue.size());
 
 
-    public static void startCountdown() { //runs when there is at least one player on each team (change in TeamSelect lines 113 and 133)
+    public void startCountdown() { //runs when there is at least one player on each team (change in TeamSelect lines 113 and 133)
         map = null;
 
         mapNumbers.put(1, "Redwood Forest");
@@ -44,8 +42,6 @@ public class GameStart {
         votes.put("pagoda_everglade", 0);
         votes.put("extraterrestrial", 0);
 
-
-        new Game().setState(State.COUNTDOWN);
 
         initActive = true;
 
@@ -75,7 +71,7 @@ public class GameStart {
                     "\n3: Pagoda Everglade" +
                     "\n4: Extraterrestrial");
         }
-        for (int i = 0; i < teamRed.size(); i++){
+        for (int i = 0; i < teamRed.size(); i++) {
             Player p = teamRed.get(i);
             p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "/vote #" + ChatColor.BLUE.toString() + ChatColor.BOLD + " to vote for a map!" + ChatColor.DARK_BLUE +
                     "\n1: Redwood Forest" +
@@ -83,9 +79,10 @@ public class GameStart {
                     "\n3: Pagoda Everglade" +
                     "\n4: Extraterrestrial");
         }
-        new StartTask(map).run();
-
+        info = new MatchInfo(teamBlue.size() + teamRed.size(), teamRed.size(), teamBlue.size());
+        new BossbarCountdownTask().runTaskTimer(Main.get(), 0, 20);
     }
+
 
     public static void voteTally(){
         votingActive = false;
@@ -152,10 +149,8 @@ public class GameStart {
 
         }
 
-        MatchInfo info = new MatchInfo(teamBlue.size() + teamRed.size(), teamRed.size(), teamBlue.size());
-        new Initialization(map, info).startGame();
+
         MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "Voting is now closed!");
-        MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + map.getName());
     }
 
 

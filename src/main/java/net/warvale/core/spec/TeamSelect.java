@@ -118,7 +118,7 @@ public class TeamSelect implements Listener {
                             "\n4: Extraterrestrial");
                 }
                 if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive) {
-                    GameStart.startCountdown();
+                    new GameStart().startCountdown();
                 }
                 event.setCancelled(true);
                 player.closeInventory();
@@ -146,7 +146,7 @@ public class TeamSelect implements Listener {
                             "\n4: Extraterrestrial");
                 }
                 if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){
-                    GameStart.startCountdown();
+                    new GameStart().startCountdown();
                 }
                 event.setCancelled(true);
                 player.closeInventory();

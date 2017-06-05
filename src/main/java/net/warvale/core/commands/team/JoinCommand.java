@@ -4,6 +4,7 @@ package net.warvale.core.commands.team;
 import net.warvale.core.Main;
 import net.warvale.core.commands.AbstractCommand;
 import net.warvale.core.exceptions.CommandException;
+import net.warvale.core.game.start.GameStart;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -45,6 +46,16 @@ public class JoinCommand extends AbstractCommand {
                 for (PotionEffect effect : player.getActivePotionEffects()) {
                     player.removePotionEffect(effect.getType());
                 }
+                if (GameStart.initActive){
+                    player.sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote #" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!" + org.bukkit.ChatColor.DARK_BLUE +
+                            "\n1: Redwood Forest" +
+                            "\n2: Volcano Island" +
+                            "\n3: Pagoda Everglade" +
+                            "\n4: Extraterrestrial");
+                }
+                if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){
+                    new GameStart().startCountdown();
+                }
                 return true;
             }
         }
@@ -61,6 +72,16 @@ public class JoinCommand extends AbstractCommand {
                 sender.sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
                 for (PotionEffect effect : player.getActivePotionEffects()) {
                     player.removePotionEffect(effect.getType());
+                }
+                if (GameStart.initActive){
+                    player.sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote #" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!" + org.bukkit.ChatColor.DARK_BLUE +
+                            "\n1: Redwood Forest" +
+                            "\n2: Volcano Island" +
+                            "\n3: Pagoda Everglade" +
+                            "\n4: Extraterrestrial");
+                }
+                if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){
+                    new GameStart().startCountdown();
                 }
                 return true;
             }

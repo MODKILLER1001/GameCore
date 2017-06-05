@@ -17,6 +17,7 @@ import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
+import net.warvale.core.tasks.BossbarCountdownTask;
 import net.warvale.core.tasks.LobbyTask;
 import net.warvale.core.tasks.ScoreboardTask;
 import net.warvale.core.utils.sql.SQLConnection;
@@ -108,9 +109,9 @@ public class Main extends JavaPlugin implements Listener {
 
 		//load the maps
 		try {
-			GameMap.getMaps().put("Redwood Forest", new GameMap("redwood_forest"));
-			GameMap.getMaps().put("Volcano Island", new GameMap("volcano_island"));
-			GameMap.getMaps().put("Pagoda Everglade", new GameMap("pagoda_everglade"));
+			GameMap.getMaps().put("Redwood Forest", new GameMap("redwood"));
+			GameMap.getMaps().put("Volcano Island", new GameMap("volcano"));
+			GameMap.getMaps().put("Pagoda Everglade", new GameMap("pagoda"));
 			GameMap.getMaps().put("Extraterrestrial", new GameMap("extraterrestrial"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -194,6 +195,8 @@ public class Main extends JavaPlugin implements Listener {
     public static Main get() {
 		return instance;
 	}
+
+
 
 	private static void setupClasses() {
 		new Class("Soldier", 0,

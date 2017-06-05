@@ -3,6 +3,7 @@ package net.warvale.core.game.start;
 import net.warvale.core.Main;
 import net.warvale.core.game.MatchInfo;
 import net.warvale.core.map.GameMap;
+import net.warvale.core.tasks.BossbarCountdownTask;
 import net.warvale.core.tasks.StartTask;
 import net.warvale.core.utils.chat.ChatUtils;
 import org.apache.commons.lang.StringUtils;
@@ -72,7 +73,7 @@ public class Initialization {
                     ChatUtils.yellow + "5." + ChatUtils.gray + " During the last stage of the game, cores will be broken instantly!",
                     ChatUtils.divider).toArray());
 
-            new StartTask(this.map).runTaskTimer(Main.get(), 0, 20);
+
         });
 
     }
