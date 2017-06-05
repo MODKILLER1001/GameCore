@@ -1,6 +1,7 @@
 package net.warvale.core.tasks;
 
 import net.warvale.core.config.ConfigManager;
+import net.warvale.core.game.logic.StageSystem.Stages;
 import net.warvale.core.map.GameMap;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
@@ -29,6 +30,7 @@ public class StartTask extends BukkitRunnable {
                 return;
             }
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + this.map.getName());
+            new Stages().initStages();
         }
 
     }

@@ -1,4 +1,4 @@
-package net.warvale.core.game.start;
+package net.warvale.core.game.logic.StageSystem;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -15,7 +15,7 @@ public class Bosses {
 
 
     /*
-    * Bosses class - spawns 'bosses' when launched (Launched from Initialization class)
+    * Bosses class - spawns 'bosses' when launched
     */
 
     int randomWithRange(int min, int max)
@@ -53,6 +53,9 @@ public class Bosses {
 
 
         Skeleton Wizard = (Skeleton) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.SKELETON);
+        ItemStack diamonds = new ItemStack(Material.DIAMOND, 25);
+        Wizard.getEquipment().setItemInOffHand(diamonds);
+        Wizard.getEquipment().setItemInOffHandDropChance(100);
         Wizard.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 100));
         Wizard.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eWizard"));
         Wizard.setCustomNameVisible(true);
@@ -67,6 +70,9 @@ public class Bosses {
     private void BossFarborf(Location bossLocation) {
         /* Thanks MatrixTunnel for the name! - http://i.imgur.com/4qSg1Hf.png */
         Silverfish Farborf = (Silverfish) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.SILVERFISH);
+        ItemStack diamonds = new ItemStack(Material.DIAMOND, 25);
+        Farborf.getEquipment().setItemInOffHand(diamonds);
+        Farborf.getEquipment().setItemInOffHandDropChance(100);
         Farborf.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eFarborf"));
         Farborf.setCustomNameVisible(true);
         Farborf.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(15);
@@ -78,6 +84,9 @@ public class Bosses {
     /* Thanks CommandFox for all of the names below. */
     private void BossGrometator(Location bossLocation) {
         IronGolem Grometator = (IronGolem) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.IRON_GOLEM);
+        ItemStack diamonds = new ItemStack(Material.DIAMOND, 25);
+        Grometator.getEquipment().setItemInOffHand(diamonds);
+        Grometator.getEquipment().setItemInOffHandDropChance(100);
         Grometator.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eGrometator"));
         Grometator.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 1000000, 1, false, false, Color.RED));
 
@@ -86,6 +95,9 @@ public class Bosses {
     }
     private void BossCruitionator(Location bossLocation) {
         Spider Cruitionator = (Spider) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.SPIDER);
+        ItemStack diamonds = new ItemStack(Material.DIAMOND, 25);
+        Cruitionator.getEquipment().setItemInOffHand(diamonds);
+        Cruitionator.getEquipment().setItemInOffHandDropChance(100);
         Cruitionator.setCustomNameVisible(true);
         Cruitionator.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eCruitionator"));
         Cruitionator.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
@@ -96,6 +108,9 @@ public class Bosses {
     }
     private void BossHertopal(Location bossLocation) {
         PolarBear Hertopal = (PolarBear) bossLocation.getWorld().spawnEntity(bossLocation, EntityType.POLAR_BEAR);
+        ItemStack diamonds = new ItemStack(Material.DIAMOND, 25);
+        Hertopal.getEquipment().setItemInOffHand(diamonds);
+        Hertopal.getEquipment().setItemInOffHandDropChance(100);
         Hertopal.setCustomNameVisible(true);
         Hertopal.setCustomName(ChatColor.translateAlternateColorCodes('&', "&eHertopal"));
         Hertopal.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(25);
