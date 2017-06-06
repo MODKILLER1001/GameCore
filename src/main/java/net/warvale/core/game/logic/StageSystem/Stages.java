@@ -1,6 +1,7 @@
 package net.warvale.core.game.logic.StageSystem;
 
 import net.warvale.core.Main;
+import net.warvale.core.game.end.EndGame;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -62,7 +63,7 @@ public class Stages {
 
             @Override
             public void run() {
-            /* end game, I'll be on the look for the class that does that. */
+                EndGame.tieEnd();
             }
 
         }.runTaskLater(this.pl, 72000);

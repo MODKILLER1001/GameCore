@@ -55,7 +55,7 @@ public class CoreBlock implements Listener {
 
         if(e.getBlock().getLocation().equals(coreBlue) && redteamplayers.contains(p)) {
             if(redBlocksBroken == coreHP){
-                EndGame.coreBrokenEnd("red");
+                EndGame.coreBrokenEnd(Main.getTeams().getRedTeam());
             }
 
             redBlocksBroken += 1;
@@ -64,7 +64,7 @@ public class CoreBlock implements Listener {
 
         if(e.getBlock().getLocation().equals(coreRed) && blueteamplayers.contains(p)) {
             if(blueBlocksBroken == coreHP){
-                EndGame.coreBrokenEnd("blue");
+                EndGame.coreBrokenEnd(Main.getTeams().getBlueTeam());
             }
 
             blueBlocksBroken += 1;
