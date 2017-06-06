@@ -55,6 +55,11 @@
                                     <shadedPattern>org.jooq</shadedPattern>
                                 </relocation>
 
+                                <relocation>
+                                    <pattern>com.jcraft.jsch</pattern>
+                                    <shadedPattern>com.jcraft.jsch</shadedPattern>
+                                </relocation>
+
                             </relocations>
                         </configuration>
                     </execution>
@@ -124,6 +129,11 @@
             <artifactId>StaffCore</artifactId>
             <version>1.0-DEV</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.53</version>
         </dependency>
     </dependencies>
 
