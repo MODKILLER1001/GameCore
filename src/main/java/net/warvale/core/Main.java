@@ -217,7 +217,7 @@ public class Main extends JavaPlugin implements Listener {
 
 		//FTP connection type
 		java.lang.Class<? extends AbstractFileConnection> fileConnectionClass;
-		switch (propertiesFile.getString("fileConnection-type")){
+		switch (fileProperties.getString("fileConnection-type")){
 			case "FTP":
 			case "TLS":
 			case "SSL":
