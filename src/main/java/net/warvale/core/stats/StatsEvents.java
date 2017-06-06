@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class StatsEvents implements Listener {
 
-    StatsEvents(Main plugin) {
+    public StatsEvents(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     

@@ -23,7 +23,9 @@ import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
+import net.warvale.core.stats.StatsEvents;
 import net.warvale.core.stats.StatsManager;
+import net.warvale.core.stats.StatsUtil;
 import net.warvale.core.tasks.LobbyTask;
 import net.warvale.core.tasks.ScoreboardTask;
 import net.warvale.core.utils.NumberUtils;
@@ -82,6 +84,9 @@ public class Main extends JavaPlugin implements Listener {
     	new ClassSelect(this);
     	new Preferences(this);
     	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
+    	Bukkit.getPluginManager().registerEvents(new StatsEvents(this), this);
+    	Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
+    	Bukkit.getPluginManager().registerEvents(new StatsUtil(this), this);
 
 
 

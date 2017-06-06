@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 
 public class StatsUtil implements Listener {
 
-    StatsUtil(Main plugin) {
+    public StatsUtil(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     
