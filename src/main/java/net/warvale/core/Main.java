@@ -18,7 +18,9 @@ import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
+import net.warvale.core.map.ConquestMap;
 import net.warvale.core.map.GameMap;
+import net.warvale.core.maps.MapData;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
@@ -26,6 +28,11 @@ import net.warvale.core.spec.TeamSelect;
 import net.warvale.core.stats.StatsManager;
 import net.warvale.core.tasks.LobbyTask;
 import net.warvale.core.tasks.ScoreboardTask;
+import net.warvale.core.utils.ftp.AbstractFileConnection;
+import net.warvale.core.utils.ftp.SSHFileConnection;
+import net.warvale.core.utils.ftp.FTPFileConnection;
+import net.warvale.core.utils.mc.menu.Menu;
+import net.warvale.core.utils.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.files.PropertiesFile;
 import net.warvale.core.utils.sql.SQLConnection;
@@ -37,15 +44,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import java.io.File;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import java.util.logging.Level;
 
 public class Main extends JavaPlugin implements Listener {
 
+	private static final Random random = new Random();
 	private static boolean shutdown = false;
   	private static Main instance;
 
   	//sql stuff
 	private final File sqlpropertiesfile = new File("connect.properties");
+	private final File filePropertiesFile = new File("ftp.properties");
 	private PropertiesFile propertiesFile;
+	private PropertiesFile fileProperties;
 	private static SQLConnection db;
 
 	//scoreboard stuff
@@ -57,6 +75,12 @@ public class Main extends JavaPlugin implements Listener {
 
 	//map dir
 	private static File mapDir = new File("maps");
+
+	//file stuff
+	private AbstractFileConnection fileConnection;
+
+	//menus
+	private Set<Menu> registeredMenus = new HashSet<>();
 
 	@Override
     public void onEnable() {
@@ -175,6 +199,63 @@ public class Main extends JavaPlugin implements Listener {
 			mapDir.mkdir();
 		}
 
+		if (!filePropertiesFile.exists()) {
+			try {
+				PropertiesFile.generateFresh(filePropertiesFile, new String[]{"fileConnection-ip","fileConnection-port","fileConnection-type","fileConnection-user","fileConnection-password"}, new String[]{"localhost","21","FTP","root","NONE"});
+			} catch (Exception e) {
+				getLogger().log(Level.WARNING, "Could not generate fresh properties file");
+			}
+		}
+
+		try {
+			fileProperties = new PropertiesFile(filePropertiesFile);
+		} catch (Exception e) {
+			getLogger().log(Level.SEVERE, "Could not load File properties file", e);
+			endSetup("Exception occurred when loading properties");
+		}
+
+		//FTP connection type
+		java.lang.Class<? extends AbstractFileConnection> fileConnectionClass;
+		switch (propertiesFile.getString("fileConnection-type")){
+			case "FTP":
+			case "TLS":
+			case "SSL":
+				fileConnectionClass = FTPFileConnection.class;
+				break;
+			case "SSH":
+			case "SFTP":
+				fileConnectionClass = SSHFileConnection.class;
+				break;
+			default:
+				getLogger().log(Level.WARNING, "Invalid fileConnection-type");
+				endSetup("Invalid fileconnection");
+				return;
+		}
+
+		//FTP info
+		try{
+			fileConnection = AbstractFileConnection.create(fileConnectionClass, fileProperties.getString("fileConnection-ip"), fileProperties.getNumber("fileConnection-port").intValue());
+		} catch (ParseException ex) {
+			getLogger().log(Level.WARNING, "Could not load fileConnection information", ex);
+			endSetup("Invalid fileConnection port");
+		} catch (Exception ex) {
+			getLogger().log(Level.WARNING, "Could not load fileConnection information", ex);
+			endSetup("Invalid configuration");
+		}
+
+		//Connecting to FTP
+		try{
+			getFileConnection().connect();
+			getFileConnection().login(fileProperties.getString("fileConnection-user"), (temp = fileProperties.getString("fileConnection-password")).equals("NONE") ? null : temp);
+			getFileConnection().close();
+			getFileConnection().connect();
+			getFileConnection().login(fileProperties.getString("fileConnection-user"), (temp = fileProperties.getString("fileConnection-password")).equals("NONE") ? null : temp);
+		}
+		catch (Exception ex){
+			getLogger().log(Level.WARNING, "Could not connect to FTP", ex);
+			endSetup("Could not establish connection to fileConnection");
+		}
+
 	}
 
     @Override
@@ -199,7 +280,17 @@ public class Main extends JavaPlugin implements Listener {
 			getLogger().log(Level.SEVERE, "Could not close database connection", e);
 		}
 
+		try {
+			if (getFileConnection().isConnected()) {
+				getFileConnection().close();
+			}
+		} catch (Exception ex) {
+			getLogger().log(Level.SEVERE, "Could not close FTP connection", ex);
+		}
+
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warvale: Conquest Gamecore " + ChatColor.GRAY + "Reloading plugin...");
+
+		unregisterMenus();
     }
 
     public static Main get() {
@@ -308,4 +399,42 @@ public class Main extends JavaPlugin implements Listener {
 		return mapDir;
 	}
 
+	public PropertiesFile getFileProperties() {
+		return fileProperties;
+	}
+
+	public AbstractFileConnection getFileConnection() {
+		return fileConnection;
+	}
+
+	public net.warvale.core.maps.GameMap loadMap(String name, MapData data, File yml, File zip) {
+		return new ConquestMap(name, data, yml, zip);
+	}
+
+	public static Random getRandom() {
+		return random;
+	}
+
+	public void registerMenu(Menu menu) {
+		if (registeredMenus.contains(menu)) {
+			throw new IllegalArgumentException("Menu already registered");
+		}
+		registeredMenus.add(menu);
+	}
+
+	public void unregisterMenu(Menu menu) {
+		if (registeredMenus.contains(menu)) {
+			registeredMenus.remove(menu);
+		} else {
+			throw new IllegalArgumentException("Menu not registered");
+		}
+	}
+
+	public void unregisterMenus() {
+		registeredMenus.clear();
+	}
+
+	public Set<Menu> listMenu() {
+		return new HashSet<>(registeredMenus);
+	}
 }
