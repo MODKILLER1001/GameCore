@@ -137,10 +137,10 @@ public class GameMap {
         return (Element) ((Element) getTeamInfo().getElementsByTagName("spawns").item(0)).getElementsByTagName(team);
     }
 
-    public HashMap<String, Integer> getSpawnInfo(String team) throws IOException, SAXException, ParserConfigurationException {
-        HashMap<String, Integer> spawn = new HashMap<>();
-        spawn.put("exact", Integer.valueOf(getSpawnElement(team).getElementsByTagName("exact").item(0).getTextContent()));
-        spawn.put("radius", Integer.valueOf(getSpawnElement(team).getElementsByTagName("radius").item(0).getTextContent()));
+    public HashMap<String, String> getSpawnInfo(String team) throws IOException, SAXException, ParserConfigurationException {
+        HashMap<String, String> spawn = new HashMap<>();
+        spawn.put("exact", getSpawnElement(team).getElementsByTagName("exact").item(0).getTextContent());
+        spawn.put("radius", getSpawnElement(team).getElementsByTagName("radius").item(0).getTextContent());
         return spawn;
     }
 
@@ -148,10 +148,10 @@ public class GameMap {
         return (Element) ((Element) getTeamInfo().getElementsByTagName("cores").item(0)).getElementsByTagName(team);
     }
 
-    public HashMap<String, Integer> getCoreInfo(String team) throws IOException, SAXException, ParserConfigurationException {
-        HashMap<String, Integer> core = new HashMap<>();
-        core.put("exact", Integer.valueOf(getCoreElement(team).getElementsByTagName("exact").item(0).getTextContent()));
-        core.put("radius", Integer.valueOf(getCoreElement(team).getElementsByTagName("radius").item(0).getTextContent()));
+    public HashMap<String, String> getCoreInfo(String team) throws IOException, SAXException, ParserConfigurationException {
+        HashMap<String, String> core = new HashMap<>();
+        core.put("exact", getCoreElement(team).getElementsByTagName("exact").item(0).getTextContent());
+        core.put("radius", getCoreElement(team).getElementsByTagName("radius").item(0).getTextContent());
         return core;
     }
 

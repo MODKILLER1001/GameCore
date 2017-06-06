@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -20,10 +21,11 @@ import java.util.*;
 public class GameStart {
     public static boolean votingActive = false;
     public static ArrayList<String> voted = new ArrayList<>();
-    private static ArrayList<Player> teamBlue = new ArrayList<>();
-    private static ArrayList<Player> teamRed = new ArrayList<>();
+    public static ArrayList<Player> teamBlue = new ArrayList<>();
+    public static ArrayList<Player> teamRed = new ArrayList<>();
+    public static ArrayList<Player> inGame = new ArrayList<>();
     public static HashMap<String, Integer> votes = new HashMap<>();
-    private static HashMap<Integer, String> mapNumbers = new HashMap<>();
+    public static HashMap<Integer, String> mapNumbers = new HashMap<>();
     public static boolean initActive = false;
     public static GameMap map;
     public static MatchInfo info = new MatchInfo(teamBlue.size() + teamRed.size(), teamRed.size(), teamBlue.size());
@@ -79,7 +81,9 @@ public class GameStart {
                     "\n3: Pagoda Everglade" +
                     "\n4: Extraterrestrial");
         }
-        info = new MatchInfo(teamBlue.size() + teamRed.size(), teamRed.size(), teamBlue.size());
+        inGame.addAll(teamBlue);
+        inGame.addAll(teamRed);
+        info = new MatchInfo(inGame.size(), teamRed.size(), teamBlue.size());
         new BossbarCountdownTask().runTaskTimer(Main.get(), 0, 20);
     }
 
