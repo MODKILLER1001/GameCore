@@ -456,8 +456,8 @@ public class Main extends JavaPlugin implements Listener {
 					"CREATE TABLE `maps` (" +
 							"`id` BIGINT NOT NULL AUTO_INCREMENT, " +
 							"`map` VARCHAR(255) NOT NULL," +
-							"`value` TEXT NOT NULL," +
 							"`key` TEXT NOT NULL," +
+							"`value` TEXT NOT NULL," +
 							"PRIMARY KEY (`id`)," +
 							"INDEX `map_key` (`map`)" +
 							");");
