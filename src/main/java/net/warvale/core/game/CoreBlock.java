@@ -1,5 +1,6 @@
 package net.warvale.core.game;
 
+import net.warvale.core.game.end.EndGame;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import net.warvale.core.Main;
@@ -54,7 +55,7 @@ public class CoreBlock implements Listener {
 
         if(e.getBlock().getLocation().equals(coreBlue) && redteamplayers.contains(p)) {
             if(redBlocksBroken == coreHP){
-                /* Red Wins */
+                EndGame.coreBrokenEnd("red");
             }
 
             redBlocksBroken += 1;
@@ -63,7 +64,7 @@ public class CoreBlock implements Listener {
 
         if(e.getBlock().getLocation().equals(coreRed) && blueteamplayers.contains(p)) {
             if(blueBlocksBroken == coreHP){
-                /* Blue Wins */
+                EndGame.coreBrokenEnd("blue");
             }
 
             blueBlocksBroken += 1;
