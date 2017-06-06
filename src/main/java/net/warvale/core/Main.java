@@ -1,5 +1,11 @@
 package net.warvale.core;
 
+import java.io.File;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.logging.Level;
+
 import net.warvale.core.chat.BroadcastType;
 import net.warvale.core.classes.Class;
 import net.warvale.core.classes.abilities.AbilityManager;
@@ -17,24 +23,20 @@ import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
-import net.warvale.core.tasks.BossbarCountdownTask;
+import net.warvale.core.stats.StatsManager;
 import net.warvale.core.tasks.LobbyTask;
 import net.warvale.core.tasks.ScoreboardTask;
-import net.warvale.core.utils.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.files.PropertiesFile;
+import net.warvale.core.utils.sql.SQLConnection;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.logging.Level;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -116,6 +118,11 @@ public class Main extends JavaPlugin implements Listener {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
+		//Load online players stats if any are on
+		for(Player p : Bukkit.getOnlinePlayers()){
+			StatsManager.loadPlayer(p);
+		}
 
     }
 
@@ -172,6 +179,9 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+    	
+    	//save players stats
+    	StatsManager.onDisableSavePlayer();
 
 		//unregister teams
 		getTeams().getBlueTeam().unregister();
