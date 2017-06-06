@@ -37,6 +37,7 @@ import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.files.PropertiesFile;
 import net.warvale.core.utils.sql.SQLConnection;
 
+import net.warvale.core.utils.sql.SQLUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -256,6 +257,13 @@ public class Main extends JavaPlugin implements Listener {
 			endSetup("Could not establish connection to fileConnection");
 		}
 
+		//load the maps table
+		try {
+			loadMapsTable();
+		} catch (Exception ex) {
+			getLogger().log(Level.SEVERE, "Could not load maps table", ex);
+			endSetup("Could not load maps table");
+		}
 	}
 
     @Override
@@ -436,5 +444,26 @@ public class Main extends JavaPlugin implements Listener {
 
 	public Set<Menu> listMenu() {
 		return new HashSet<>(registeredMenus);
+	}
+
+	public void loadMapsTable() throws SQLException, ClassNotFoundException {
+
+		//check if the maps table exists
+		if (!SQLUtil.tableExists(getDB(), "maps")) {
+
+			//create the maps table
+			getDB().executeSQL(
+					"CREATE TABLE `maps` (" +
+							"`map` VARCHAR(255) NOT NULL," +
+							"`value` TEXT NOT NULL," +
+							"`key` TEXT NOT NULL," +
+							"INDEX `map_key` (`map`)" +
+							");");
+
+			//log successful createion
+			getLogger().log(Level.INFO, "Maps table created successfully!");
+
+		}
+
 	}
 }
