@@ -23,7 +23,7 @@ public class StatsManager implements Listener{
 	public StatsManager(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         mysql = new StatsSQL(Main.getDB().getHostname(), "" + Main.getDB().getPort(), Main.getDB().getDatabase(), Main.getDB().getUser(), Main.getDB().getPassword());
-        PreparedStatement stats = mysql.prepareStatement("CREATE TABLE IF NOT EXISTS Stats(UUID varchar(36) NOT NULL, NAME VARCHAR(16) NOT NULL, KILLS INT(20) NOT NULL, DEATHS INT(20) NOT NULL, WINS INT(20) NOT NULL, CORES_BROKEN INT(20) NOT NULL, KDR INT(20) NOT NULL, LONGEST_SNIPE INT(20) NOT NULL, PRIMARY KEY(UUID))");
+        PreparedStatement stats = mysql.prepareStatement("CREATE TABLE IF NOT EXISTS stats(UUID varchar(36) NOT NULL, NAME VARCHAR(16) NOT NULL, KILLS INT(20) NOT NULL, DEATHS INT(20) NOT NULL, WINS INT(20) NOT NULL, CORES_BROKEN INT(20) NOT NULL, KDR INT(20) NOT NULL, LONGEST_SNIPE INT(20) NOT NULL, PRIMARY KEY(UUID))");
     
         mysql.update(stats);
 	}
@@ -35,9 +35,9 @@ public class StatsManager implements Listener{
 	public static HashMap<UUID, Integer> KDR = new HashMap<UUID, Integer>();
 	public static HashMap<UUID, Integer> LongestSnipe = new HashMap<UUID, Integer>();
 
-    private static final String INSERT = "INSERT INTO Stats VALUES(?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE NAME=?";
-    private static final String SELECT = "SELECT * FROM Stats WHERE UUID=?";
-    private static final String SAVE = "UPDATE Stats SET KILLS=?, DEATHS=?, WINS=?, CORES_BROKEN=?, KDR=?, LONGEST_SNIPE=? WHERE UUID=?";
+    private static final String INSERT = "INSERT INTO stats VALUES(?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE NAME=?";
+    private static final String SELECT = "SELECT * FROM stats WHERE UUID=?";
+    private static final String SAVE = "UPDATE stats SET KILLS=?, DEATHS=?, WINS=?, CORES_BROKEN=?, KDR=?, LONGEST_SNIPE=? WHERE UUID=?";
     
     private static void addPlayer(Player p, Integer kills, Integer deaths, Integer wins, Integer coresBroken, Integer kdr, Integer longestSnipe) {
         removePlayer(p);
