@@ -33,6 +33,7 @@ import net.warvale.core.tasks.ScoreboardTask;
 import net.warvale.core.utils.ftp.AbstractFileConnection;
 import net.warvale.core.utils.ftp.SSHFileConnection;
 import net.warvale.core.utils.ftp.FTPFileConnection;
+import net.warvale.core.utils.mc.items.EnchantGlow;
 import net.warvale.core.utils.mc.menu.Menu;
 import net.warvale.core.utils.sql.SQLConnection;
 import net.warvale.core.utils.NumberUtils;
@@ -153,6 +154,8 @@ public class Main extends JavaPlugin implements Listener {
 		for(Player p : Bukkit.getOnlinePlayers()){
 			StatsManager.loadPlayer(p);
 		}
+
+		EnchantGlow.getGlow();
 
     }
 

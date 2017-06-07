@@ -92,8 +92,7 @@ public class GameMap {
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(this.mapXML);
         doc.getDocumentElement().normalize();
 
-        return Arrays
-                .asList(doc.getElementsByTagName("authors").item(0).getTextContent().replaceAll(",", "").split(" "));
+        return Arrays.asList(doc.getElementsByTagName("authors").item(0).getTextContent().replaceAll(",", "").split(" "));
     }
 
     public HashMap<String, Integer> getLobby() throws ParserConfigurationException, IOException, SAXException {

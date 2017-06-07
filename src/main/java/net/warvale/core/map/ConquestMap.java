@@ -19,29 +19,14 @@ public class ConquestMap extends net.warvale.core.maps.GameMap {
     public Map loadSetting(ConfigurationSection configurationSection) {
         Map map = new HashMap<>();
 
-        Set<Cord> blueTeamCords = new HashSet<>();
-        Set<Cord> redTeamCords = new HashSet<>();
 
-        map.put("blueTeamCords", blueTeamCords);
-        map.put("redTeamCords", redTeamCords);
-
-        LocationObject blueSpawn = LocationUtil.fromConfig(configurationSection.getConfigurationSection("blueSpawn"));
+        LocationObject blueSpawn = LocationUtil.fromConfig(configurationSection.getConfigurationSection("spawns.blue"));
         map.put("blueSpawn", blueSpawn);
 
-        LocationObject redSpawn = LocationUtil.fromConfig(configurationSection.getConfigurationSection("redSpawn"));
+        LocationObject redSpawn = LocationUtil.fromConfig(configurationSection.getConfigurationSection("spawns.red"));
         map.put("redSpawn", redSpawn);
 
         return map;
-    }
-
-    @SuppressWarnings("unchecked")
-    public Set<Cord> getBlueTeamCords() {
-        return (Set<Cord>) getSettings().get("blueTeamCords");
-    }
-
-    @SuppressWarnings("unchecked")
-    public Set<Cord> getRedTeamCords() {
-        return (Set<Cord>) getSettings().get("redTeamCords");
     }
 
     @SuppressWarnings("unchecked")
