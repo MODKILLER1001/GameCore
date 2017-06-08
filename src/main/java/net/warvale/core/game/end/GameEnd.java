@@ -17,7 +17,7 @@ import java.sql.SQLException;
 /**
  * Created by AAces on 6/6/2017.
  */
-public class EndGame {
+public class GameEnd {
 
     private static ChatColor colorChat;
     private static BarColor colorBar;
