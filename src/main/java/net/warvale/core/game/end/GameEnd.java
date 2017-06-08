@@ -37,31 +37,33 @@ public class GameEnd {
             colorBar = BarColor.RED;
             losingTeam = blueTeam;
         }
+        if (winningTeam == redTeam || (winningTeam == blueTeam)) {
 
-        MessageManager.broadcast(PrefixType.MAIN, colorChat + winningTeam.getDisplayName() + ChatColor.GRAY + " has won the game!");
-        BarManager.broadcast(colorBar, ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + colorChat + winningTeam.getDisplayName() + ChatColor.GRAY + " has won the game!");
-        BarManager.getAnnounceBar().setVisible(true);
-        BarManager.getAnnounceBar().setProgress(1);
+            MessageManager.broadcast(PrefixType.MAIN, colorChat + winningTeam.getDisplayName() + ChatColor.GRAY + " has won the game!");
+            BarManager.broadcast(colorBar, ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + colorChat + winningTeam.getDisplayName() + ChatColor.GRAY + " has won the game!");
+            BarManager.getAnnounceBar().setVisible(true);
+            BarManager.getAnnounceBar().setProgress(1);
 
-        for (String p : winningTeam.getEntries()){
-            try {
-                EmberManager.giveEmbers(Bukkit.getPlayer(p), 500);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            for (String p : winningTeam.getEntries()) {
+                try {
+                    EmberManager.giveEmbers(Bukkit.getPlayer(p), 500);
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                StatsManager.addWins(Bukkit.getPlayer(p), 1);
+                Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 2, 2, 2));
+                Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
+                winningTeam.removeEntry(p);
+                spectatorTeam.addEntry(p);
             }
-            StatsManager.addWins(Bukkit.getPlayer(p), 1);
-            Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 2, 2, 2));
-            Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
-            winningTeam.removeEntry(p);
-            spectatorTeam.addEntry(p);
-        }
-        for (String p : losingTeam.getEntries()){
-            Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 2, 2, 2));
-            Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
-            losingTeam.removeEntry(p);
-            spectatorTeam.addEntry(p);
+            for (String p : losingTeam.getEntries()) {
+                Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 2, 2, 2));
+                Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
+                losingTeam.removeEntry(p);
+                spectatorTeam.addEntry(p);
+            }
+        } else {
+            System.out.println("Invalid Team Won");
         }
     }
 
