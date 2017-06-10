@@ -89,7 +89,6 @@ public class BossbarCountdownTask extends BukkitRunnable {
             new Stages().initStages();
             this.cancel();
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + GameStart.map.getName() + ChatColor.GRAY + "!");
-            //Insert method to start the game.
             BarManager.getAnnounceBar().setVisible(false);
             for (Player player : GameStart.inGame){
                 player.removePotionEffect(PotionEffectType.SLOW);

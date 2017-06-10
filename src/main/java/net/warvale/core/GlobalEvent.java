@@ -3,12 +3,10 @@ package net.warvale.core;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
 import net.warvale.core.game.logic.TeamManager;
+import net.warvale.core.spec.Preferences;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.chat.ChatUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -16,6 +14,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -204,7 +204,7 @@ public class GlobalEvent implements Listener {
         event.setDeathMessage("");
         Player vName = event.getEntity();
         Player kName = vName.getKiller();
-       ChatColor gray = ChatColor.GRAY;
+        ChatColor gray = ChatColor.GRAY;
         String victim = (Main.getTeams().getBlueTeam().hasPlayer(vName) ? ChatColor.DARK_AQUA + vName.getName() : (Main.getTeams().getRedTeam().hasPlayer(vName) ? ChatColor.RED + vName.getName() : ChatColor.AQUA + vName.getName()));
         String killer = (Main.getTeams().getBlueTeam().hasPlayer(kName) ? ChatColor.DARK_AQUA + kName.getName() : (Main.getTeams().getRedTeam().hasPlayer(kName) ? ChatColor.RED + kName.getName() : ChatColor.AQUA + kName.getName()));
         ArrayList<String> deathMessages = new ArrayList<>();
@@ -212,6 +212,22 @@ public class GlobalEvent implements Listener {
         int r = NumberUtils.random(deathMessages.size() - 1, 0);
         vName.sendMessage(deathMessages.get(r));
         kName.sendMessage(deathMessages.get(r));
+    }
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event){
+        String message = event.getMessage();
+        event.setCancelled(true);
+        for (Player player : Bukkit.getServer().getOnlinePlayers()){
+            if (message.contains(player.getName()) && !(Preferences.noChatPings.contains(player.getName())) && !(player == event.getPlayer())){
+                String newMessage = message.replaceAll(player.getName(), ChatColor.YELLOW + player.getName() + ChatColor.WHITE);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
+                player.sendMessage(newMessage);
+            } else {
+                player.sendMessage(message);
+            }
+
+        }
     }
 
 

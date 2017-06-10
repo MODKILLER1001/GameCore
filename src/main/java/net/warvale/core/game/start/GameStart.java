@@ -7,6 +7,7 @@ import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.core.tasks.BossbarCountdownTask;
 import net.warvale.core.utils.NumberUtils;
+import net.warvale.staffcore.bossbar.BarManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -155,6 +156,49 @@ public class GameStart {
         MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "Voting is now closed!");
     }
 
+    public static void stopCountdown(StopReason reason){
+        map = null;
+        BarManager.getAnnounceBar().setVisible(false);
+        mapNumbers.put(1, "Redwood Forest");
+        mapNumbers.put(2, "Volcano Island");
+        mapNumbers.put(3, "Pagoda Everglade");
+        mapNumbers.put(4, "Extraterrestrial");
 
+        votes.put("redwood_forest", 0);
+        votes.put("volcano_island", 0);
+        votes.put("pagoda_everglade", 0);
+        votes.put("extraterrestrial", 0);
+
+
+        initActive = false;
+
+        for (Player player : Bukkit.getServer().getOnlinePlayers()){
+            if (player.isOp()){
+                player.sendMessage(ChatColor.DARK_RED + "[STAFF]" + ChatColor.WHITE + " The countdown has been stopped!");
+            }
+        }
+
+        votingActive = false;
+        voted.clear();
+
+        for (int i = 0; i < teamBlue.size(); i++) {
+            Player p = teamBlue.get(i);
+            if (reason == StopReason.PLAYER_LEFT) {
+                p.sendMessage(ChatColor.GRAY + "A player has left the game, and there are no longer enough players!");
+            } else if (reason == StopReason.MODERATOR_STOPPED){
+                p.sendMessage(ChatColor.GRAY + "A moderator has stopped the countdown!");
+            }
+        }
+        for (int i = 0; i < teamRed.size(); i++) {
+            Player p = teamRed.get(i);
+            if (reason == StopReason.PLAYER_LEFT) {
+                p.sendMessage(ChatColor.GRAY + "A player has left the game, and there are no longer enough players!");
+            } else if (reason == StopReason.MODERATOR_STOPPED){
+                p.sendMessage(ChatColor.GRAY + "A moderator has stopped the countdown!");
+            }
+        }
+
+        new BossbarCountdownTask().cancel();
+    }
 
 }

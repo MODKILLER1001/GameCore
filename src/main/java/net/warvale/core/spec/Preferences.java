@@ -40,6 +40,7 @@ public class Preferences implements Listener {
     public static ArrayList<String> noTipMessages = new ArrayList<>();
     public static ArrayList<String> noAdvertisementMessages = new ArrayList<>();
     public static ArrayList<String> noPrivateMessages = new ArrayList<>();
+    public static ArrayList<String> noChatPings = new ArrayList<>();
     
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
@@ -120,6 +121,18 @@ public class Preferences implements Listener {
         privatemessagesprefmeta.setLore(lorePrivate);
         privatemessagespref.setItemMeta(privatemessagesprefmeta);
 
+        List<String> lorePing = new ArrayList<>();
+        ItemStack pingmessagespref = new ItemStack(Material.GLOWSTONE);
+        ItemMeta pingmessagesprefmeta = privatemessagespref.getItemMeta();
+        privatemessagesprefmeta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Name Pings");
+        if (noChatPings.contains(player.getName())){
+            lorePrivate.add(ChatColor.RED.toString() + ChatColor.UNDERLINE + "DISABLED");
+        } else {
+            lorePrivate.add(ChatColor.GREEN.toString() + ChatColor.UNDERLINE + "ENABLED");
+        }
+        pingmessagesprefmeta.setLore(lorePing);
+        pingmessagespref.setItemMeta(pingmessagesprefmeta);
+
         ItemStack prefTrue = new ItemStack(Material.STAINED_CLAY, 1, (short) 5);
         ItemMeta prefTruemeta = prefTrue.getItemMeta();
         prefTruemeta.setDisplayName(ChatColor.GREEN.toString() + ChatColor.UNDERLINE + "Click to Enable");
@@ -157,11 +170,17 @@ public class Preferences implements Listener {
         closemenumeta.setDisplayName(ChatColor.AQUA + "Close selector");
         closemenu.setItemMeta(closemenumeta);
 
+        ItemStack nextpage = new ItemStack(Material.ARROW);
+        ItemMeta nextpagemeta = nextpage.getItemMeta();
+        nextpagemeta.setDisplayName(ChatColor.AQUA + "Next Page");
+        nextpage.setItemMeta(nextpagemeta);
+
         inv.setItem(0, joinpref);
         inv.setItem(2, leavepref);
         inv.setItem(4, tipspref);
         inv.setItem(6, advertisementspref);
         inv.setItem(8, privatemessagespref);
+        inv.setItem(27, pingmessagespref);
 
         if (!noJoinMessages.contains(player.getName())) {
             inv.setItem(9, prefFalse);
@@ -188,12 +207,18 @@ public class Preferences implements Listener {
         } else {
             inv.setItem(17, prefTrue);
         }
+        if (!noChatPings.contains(player.getName())){
+            inv.setItem(36, prefFalse);
+        } else {
+            inv.setItem(36, prefTrue);
+        }
 
         inv.setItem(47, forumslink);
         inv.setItem(48, discordlink);
         inv.setItem(49, twitterlink);
         inv.setItem(50, storelink);
         inv.setItem(51, closemenu);
+        inv.setItem(53, nextpage);
 
         player.openInventory(inv);
     }
@@ -386,6 +411,38 @@ public class Preferences implements Listener {
                 break;
             }
 
+        // Join Messages
+        case 27:
+            event.setCancelled(true);
+            event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Chat Pings"
+                    + ChatColor.RESET + ChatColor.GRAY + ": Toggle whether you hear a ding if your name is said in chat.");
+            if (!noChatPings.contains(event.getWhoClicked().getName())){
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.GREEN + "ENABLED");
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Current Status: " + ChatColor.RED + "DISABLED");
+            }
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
+            player.closeInventory();
+            break;
+
+        case 36:
+            event.setCancelled(true);
+            if (!noChatPings.contains(event.getWhoClicked().getName())){
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Chat Pings"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
+                noChatPings.add(event.getWhoClicked().getName());
+                player.closeInventory();
+                break;
+            } else {
+                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Chat Pings"
+                        + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
+                noChatPings.remove(event.getWhoClicked().getName());
+                player.closeInventory();
+                break;
+            }
+
 
         // Links
         case 47:
@@ -419,6 +476,12 @@ public class Preferences implements Listener {
         case 51:
             event.setCancelled(true);
             player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_CLOSE, 1, 1);
+            player.closeInventory();
+            break;
+        case 53:
+            event.setCancelled(true);
+            event.getWhoClicked().sendMessage(ChatColor.GRAY + "There is currently only 1 page!");
+            player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
             player.closeInventory();
             break;
         default:

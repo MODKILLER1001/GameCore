@@ -37,8 +37,7 @@ public class GameEnd {
             colorBar = BarColor.RED;
             losingTeam = blueTeam;
         }
-        if (winningTeam == redTeam || (winningTeam == blueTeam)) {
-
+        if (winningTeam == redTeam || winningTeam == blueTeam) {
             MessageManager.broadcast(PrefixType.MAIN, colorChat + winningTeam.getDisplayName() + ChatColor.GRAY + " has won the game!");
             BarManager.broadcast(colorBar, ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + colorChat + winningTeam.getDisplayName() + ChatColor.GRAY + " has won the game!");
             BarManager.getAnnounceBar().setVisible(true);
@@ -51,13 +50,13 @@ public class GameEnd {
                     e.printStackTrace();
                 }
                 StatsManager.addWins(Bukkit.getPlayer(p), 1);
-                Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 2, 2, 2));
+                Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
                 Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
                 winningTeam.removeEntry(p);
                 spectatorTeam.addEntry(p);
             }
             for (String p : losingTeam.getEntries()) {
-                Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 2, 2, 2));
+                Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
                 Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
                 losingTeam.removeEntry(p);
                 spectatorTeam.addEntry(p);
@@ -74,13 +73,13 @@ public class GameEnd {
         BarManager.getAnnounceBar().setVisible(true);
         BarManager.getAnnounceBar().setProgress(1);
         for (String p : blueTeam.getEntries()){
-            Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 2, 2, 2));
+            Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
             Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
             blueTeam.removeEntry(p);
             spectatorTeam.addEntry(p);
         }
         for (String p : redTeam.getEntries()){
-            Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 2, 2, 2));
+            Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
             Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
             redTeam.removeEntry(p);
             spectatorTeam.addEntry(p);
