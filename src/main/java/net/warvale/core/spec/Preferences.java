@@ -57,7 +57,7 @@ public class Preferences implements Listener {
         }
     }
 
-    private static void tsGUI(Player player) {
+    public static void tsGUI(Player player) {
         inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
 
         // Actual preferences
