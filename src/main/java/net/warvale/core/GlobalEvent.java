@@ -215,8 +215,8 @@ public class GlobalEvent implements Listener {
         kName.sendMessage(deathMessages.get(r));
     }
 
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event){
+    //@EventHandler
+    /*public void onPlayerChat(AsyncPlayerChatEvent event){
         Player sender = event.getPlayer();
         String message = event.getMessage();
         event.setCancelled(true);
@@ -230,7 +230,7 @@ public class GlobalEvent implements Listener {
             }
 
         }
-    }
+    }*/
 
 
 }
