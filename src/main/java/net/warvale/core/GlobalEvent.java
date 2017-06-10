@@ -6,6 +6,7 @@ import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.chat.ChatUtils;
+import net.warvale.staffcore.users.UserManager;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -216,15 +217,16 @@ public class GlobalEvent implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event){
+        Player sender = event.getPlayer();
         String message = event.getMessage();
         event.setCancelled(true);
         for (Player player : Bukkit.getServer().getOnlinePlayers()){
-            if (message.contains(player.getName()) && !(Preferences.noChatPings.contains(player.getName())) && !(player == event.getPlayer())){
+            if (message.toLowerCase().contains(player.getName().toLowerCase()) && !(Preferences.noChatPings.contains(player.getName())) && !(player == sender)){
                 String newMessage = message.replaceAll(player.getName(), ChatColor.YELLOW + player.getName() + ChatColor.WHITE);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
-                player.sendMessage(newMessage);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
             } else {
-                player.sendMessage(message);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + message));
             }
 
         }

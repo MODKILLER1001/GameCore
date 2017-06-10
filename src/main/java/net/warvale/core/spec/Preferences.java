@@ -1,5 +1,6 @@
 package net.warvale.core.spec;
 
+import net.warvale.core.commands.admin.BuildCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -510,7 +511,7 @@ public class Preferences implements Listener {
 
     @EventHandler
     public void onPlaceAttempt(BlockPlaceEvent event) {
-        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName()) && !(BuildCommand.canBuild.contains(event.getPlayer()))) {
             event.setCancelled(true);
         } else {
             event.setCancelled(false);

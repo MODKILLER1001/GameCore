@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.warvale.core.Main;
+import net.warvale.core.commands.admin.BuildCommand;
 import net.warvale.core.commands.admin.MapCommand;
 import net.warvale.core.commands.admin.SetStateCommand;
 import net.warvale.core.commands.game.*;
@@ -123,6 +124,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         //admin
         cmds.add(new MapCommand());
         cmds.add(new SetStateCommand());
+        Bukkit.getPluginCommand("allowbuild").setExecutor(new BuildCommand());
 
         // basic
         Bukkit.getPluginCommand("msg").setExecutor(new PrivateMessages());
