@@ -224,6 +224,7 @@ public class GlobalEvent implements Listener {
         event.setCancelled(true);
         if (new ChatListener().isMuted() && !sender.isOp()){
             sender.sendMessage(ChatColor.RED + "Chat is currently disabled.");
+            return;
         }
         for (Player player : Bukkit.getServer().getOnlinePlayers()){
             if (message.toLowerCase().contains(player.getName().toLowerCase()) && !(Preferences.noChatPings.contains(player.getName())) && !(player == sender)){

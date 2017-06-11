@@ -20,7 +20,8 @@ public enum BroadcastType {
                     "Traps are a very effective way to kill enemies secretively!",
                     "On each map, there is a monster spawner hidden on each team's side!",
                     "Your core is invincible for the first 10 minutes of the game!",
-                    "You can change what color you see your name in chat as via " + ChatColor.AQUA + " /chatnamecolor" + ChatColor.WHITE + "!"}), ADVERTISEMENT(
+                    "You can change what color you see your name in chat as via &b/chatnamecolor&f, or disable them completely in the &bPreferences&f!",
+                    "&bPreferences&f can be accessed via &b/settings&f!"}), ADVERTISEMENT(
                             "&2&l[!]",
                             new String[] {
                                     "Follow @warvalenetwork on Twitter for giveaways and news at" + ChatColor.AQUA
