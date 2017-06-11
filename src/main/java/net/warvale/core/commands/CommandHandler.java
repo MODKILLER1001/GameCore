@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.warvale.core.Main;
+import net.warvale.core.chat.ChatNameColorCommand;
 import net.warvale.core.commands.admin.BuildCommand;
 import net.warvale.core.commands.admin.MapCommand;
 import net.warvale.core.commands.admin.SetStateCommand;
@@ -131,6 +132,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         Bukkit.getPluginCommand("msg").setExecutor(new PrivateMessages());
         Bukkit.getPluginCommand("r").setExecutor(new ReplyMessages());
         Bukkit.getPluginCommand("settings").setExecutor(new PreferencesCommand());
+        Bukkit.getPluginCommand("chatnamecolor").setExecutor(new ChatNameColorCommand());
 
         //game
         cmds.add(new ClassesCommand());

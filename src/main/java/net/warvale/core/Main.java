@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 
 import net.warvale.core.chat.BroadcastType;
+import net.warvale.core.chat.ChatNameColorGUI;
 import net.warvale.core.classes.Class;
 import net.warvale.core.classes.abilities.AbilityManager;
 import net.warvale.core.commands.CommandHandler;
@@ -109,6 +110,7 @@ public class Main extends JavaPlugin implements Listener {
     	new TeamSelect(this);
     	new ClassSelect(this);
     	new Preferences(this);
+    	new ChatNameColorGUI(this);
     	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
     	Bukkit.getPluginManager().registerEvents(new StatsEvents(this), this);
     	Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);

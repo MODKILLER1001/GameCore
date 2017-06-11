@@ -124,12 +124,12 @@ public class Preferences implements Listener {
 
         List<String> lorePing = new ArrayList<>();
         ItemStack pingmessagespref = new ItemStack(Material.GLOWSTONE);
-        ItemMeta pingmessagesprefmeta = privatemessagespref.getItemMeta();
-        privatemessagesprefmeta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Name Pings");
+        ItemMeta pingmessagesprefmeta = pingmessagespref.getItemMeta();
+        pingmessagesprefmeta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Name Pings");
         if (noChatPings.contains(player.getName())){
-            lorePrivate.add(ChatColor.RED.toString() + ChatColor.UNDERLINE + "DISABLED");
+            lorePing.add(ChatColor.RED.toString() + ChatColor.UNDERLINE + "DISABLED");
         } else {
-            lorePrivate.add(ChatColor.GREEN.toString() + ChatColor.UNDERLINE + "ENABLED");
+            lorePing.add(ChatColor.GREEN.toString() + ChatColor.UNDERLINE + "ENABLED");
         }
         pingmessagesprefmeta.setLore(lorePing);
         pingmessagespref.setItemMeta(pingmessagesprefmeta);
@@ -267,14 +267,14 @@ public class Preferences implements Listener {
         case 9:
             event.setCancelled(true);
             if (!noJoinMessages.contains(event.getWhoClicked().getName())){
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noJoinMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
                 break;
             } else {
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "User Join Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noJoinMessages.remove(event.getWhoClicked().getName());
@@ -301,14 +301,14 @@ public class Preferences implements Listener {
         case 11:
             event.setCancelled(true);
             if (!noLeaveMessages.contains(event.getWhoClicked().getName())){
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noLeaveMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
                 break;
             } else {
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "User Leave Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noLeaveMessages.remove(event.getWhoClicked().getName());
@@ -332,14 +332,14 @@ public class Preferences implements Listener {
 
         case 13:
             if (!noTipMessages.contains(event.getWhoClicked().getName())){
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noTipMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
                 break;
             } else {
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "Tip Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noTipMessages.remove(event.getWhoClicked().getName());
@@ -364,14 +364,14 @@ public class Preferences implements Listener {
 
         case 15:
             if (!noAdvertisementMessages.contains(event.getWhoClicked().getName())){
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noAdvertisementMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
                 break;
             } else {
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "Advertisement Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noAdvertisementMessages.remove(event.getWhoClicked().getName());
@@ -397,14 +397,14 @@ public class Preferences implements Listener {
 
         case 17:
             if (!noPrivateMessages.contains(event.getWhoClicked().getName())){
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noPrivateMessages.add(event.getWhoClicked().getName());
                 player.closeInventory();
                 break;
             } else {
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "Private Messages"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noPrivateMessages.remove(event.getWhoClicked().getName());
@@ -412,7 +412,7 @@ public class Preferences implements Listener {
                 break;
             }
 
-        // Join Messages
+        // Chat Pings
         case 27:
             event.setCancelled(true);
             event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Chat Pings"
@@ -429,14 +429,14 @@ public class Preferences implements Listener {
         case 36:
             event.setCancelled(true);
             if (!noChatPings.contains(event.getWhoClicked().getName())){
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Chat Pings"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "Chat Pings"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.RED + "disabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_FENCE_GATE_CLOSE, 1, 2);
                 noChatPings.add(event.getWhoClicked().getName());
                 player.closeInventory();
                 break;
             } else {
-                event.getWhoClicked().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "Chat Pings"
+                event.getWhoClicked().sendMessage(org.bukkit.ChatColor.DARK_GRAY + "[" + org.bukkit.ChatColor.DARK_RED + "Warvale" + org.bukkit.ChatColor.DARK_GRAY + "] " + ChatColor.AQUA.toString() + ChatColor.BOLD + "Chat Pings"
                         + ChatColor.RESET + ChatColor.GRAY + " have been set to " + ChatColor.GREEN + "enabled!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 2);
                 noChatPings.remove(event.getWhoClicked().getName());

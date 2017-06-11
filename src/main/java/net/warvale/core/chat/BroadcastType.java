@@ -19,7 +19,8 @@ public enum BroadcastType {
                     "You can change disable join and leave messages in the &bPreferences.",
                     "Traps are a very effective way to kill enemies secretively!",
                     "On each map, there is a monster spawner hidden on each team's side!",
-                    "Your core is invincible for the first 10 minutes of the game!" }), ADVERTISEMENT(
+                    "Your core is invincible for the first 10 minutes of the game!",
+                    "You can change what color you see your name in chat as via " + ChatColor.AQUA + " /chatnamecolor" + ChatColor.WHITE + "!"}), ADVERTISEMENT(
                             "&2&l[!]",
                             new String[] {
                                     "Follow @warvalenetwork on Twitter for giveaways and news at" + ChatColor.AQUA

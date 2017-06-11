@@ -1,11 +1,13 @@
 package net.warvale.core;
 
+import net.warvale.core.chat.ChatNameColorGUI;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.chat.ChatUtils;
+import net.warvale.staffcore.listeners.ChatListener;
 import net.warvale.staffcore.users.UserManager;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -215,22 +217,31 @@ public class GlobalEvent implements Listener {
         kName.sendMessage(deathMessages.get(r));
     }
 
-    //@EventHandler
-    /*public void onPlayerChat(AsyncPlayerChatEvent event){
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event){
         Player sender = event.getPlayer();
         String message = event.getMessage();
         event.setCancelled(true);
+        if (new ChatListener().isMuted() && !sender.isOp()){
+            sender.sendMessage(ChatColor.RED + "Chat is currently disabled.");
+        }
         for (Player player : Bukkit.getServer().getOnlinePlayers()){
             if (message.toLowerCase().contains(player.getName().toLowerCase()) && !(Preferences.noChatPings.contains(player.getName())) && !(player == sender)){
-                String newMessage = message.replaceAll(player.getName(), ChatColor.YELLOW + player.getName() + ChatColor.WHITE);
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
+                if (ChatNameColorGUI.playerChatColor.containsKey(player)){
+                    String newMessage = message.replaceAll(player.getName(), ChatNameColorGUI.playerChatColor.get(player) + player.getName() + ChatColor.WHITE);
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
+                } else {
+                    String newMessage = message.replaceAll(player.getName(), ChatColor.YELLOW + player.getName() + ChatColor.WHITE);
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
+                }
             } else {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + message));
             }
 
         }
-    }*/
+    }
 
 
 }
