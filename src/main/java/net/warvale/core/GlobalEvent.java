@@ -1,10 +1,8 @@
 package net.warvale.core;
 
-import net.warvale.core.chat.ChatNameColorGUI;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
 import net.warvale.core.game.logic.TeamManager;
-import net.warvale.core.spec.Preferences;
 import net.warvale.core.utils.NumberUtils;
 import net.warvale.core.utils.chat.ChatUtils;
 import net.warvale.staffcore.listeners.ChatListener;
@@ -217,35 +215,5 @@ public class GlobalEvent implements Listener {
         vName.sendMessage(deathMessages.get(r));
         kName.sendMessage(deathMessages.get(r));
     }
-
-    @EventHandler //TODO: Move to StaffCore
-    public void onPlayerChat(AsyncPlayerChatEvent event){
-        Player sender = event.getPlayer();
-        String message = event.getMessage();
-        event.setCancelled(true);
-        if (new ChatListener().isMuted() && !sender.isOp()){
-            sender.sendMessage(ChatColor.RED + "Chat is currently disabled.");
-            return;
-        }
-        for (Player player : Bukkit.getServer().getOnlinePlayers()){
-            User user = UserManager.getUser(player.getUniqueId());
-
-            if (message.toLowerCase().contains(player.getName().toLowerCase()) && !(Preferences.noChatPings.contains(player.getName())) && !(player == sender)){
-                if (ChatNameColorGUI.playerChatColor.containsKey(player)){
-                    String newMessage = message.replaceAll(player.getName(), ChatNameColorGUI.playerChatColor.get(player) + player.getName() + ChatColor.WHITE);
-                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', user.getPrefix() + user.getNameColor() + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
-                } else {
-                    String newMessage = message.replaceAll(player.getName(), ChatColor.YELLOW + player.getName() + ChatColor.WHITE);
-                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', user.getPrefix() + user.getNameColor() + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
-                }
-            } else {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', user.getPrefix() + user.getNameColor() + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + message));
-            }
-
-        }
-    }
-
 
 }
