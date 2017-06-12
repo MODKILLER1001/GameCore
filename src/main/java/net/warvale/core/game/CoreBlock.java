@@ -43,17 +43,20 @@ public class CoreBlock implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
 
+        e.setCancelled(true);
+
+        Player p = e.getPlayer();
+        Block b = e.getBlock();
+
+        Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
+        Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
+
         if(coreState == UNBREAKABLE) {
-            e.setCancelled(true);
             return;
+
         } else if (coreState == BREAKABLE){
-            Player p = e.getPlayer();
-            Block b = e.getBlock();
 
-            Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
-            Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
-
-            if(e.getBlock().getLocation().equals(coreBlue) && redteamplayers.contains(p)) {
+            if(b.getLocation().equals(coreBlue) && redteamplayers.contains(p)) {
                 if(blueCoresBroken == coreHP){
                     GameEnd.coreBrokenEnd(Main.getTeams().getRedTeam());
                 }
@@ -62,7 +65,7 @@ public class CoreBlock implements Listener {
                 p.teleport(spawnRed);
             }
 
-            if(e.getBlock().getLocation().equals(coreRed) && blueteamplayers.contains(p)) {
+            if(b.getLocation().equals(coreRed) && blueteamplayers.contains(p)) {
                 if(redCoresBroken == coreHP){
                     GameEnd.coreBrokenEnd(Main.getTeams().getBlueTeam());
                 }
@@ -70,14 +73,10 @@ public class CoreBlock implements Listener {
                 redCoresBroken = redCoresBroken + 1;
                 p.teleport(spawnBlue);
             }
+
         } else if (coreState == SPEED_BREAK){
-            Player p = e.getPlayer();
-            Block b = e.getBlock();
 
-            Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
-            Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
-
-            if(e.getBlock().getLocation().equals(coreBlue) && redteamplayers.contains(p)) {
+            if(b.getLocation().equals(coreBlue) && redteamplayers.contains(p)) {
                 if(blueCoresBroken >= coreHP){
                     GameEnd.coreBrokenEnd(Main.getTeams().getRedTeam());
                 }
@@ -86,7 +85,7 @@ public class CoreBlock implements Listener {
                 p.teleport(spawnRed);
             }
 
-            if(e.getBlock().getLocation().equals(coreRed) && blueteamplayers.contains(p)) {
+            if(b.getLocation().equals(coreRed) && blueteamplayers.contains(p)) {
                 if(redCoresBroken >= coreHP){
                     GameEnd.coreBrokenEnd(Main.getTeams().getBlueTeam());
                 }
@@ -94,12 +93,8 @@ public class CoreBlock implements Listener {
                 redCoresBroken = redCoresBroken + 2;
                 p.teleport(spawnBlue);
             }
-        } else if (coreState == INSTANT_BREAK){
-            Player p = e.getPlayer();
-            Block b = e.getBlock();
 
-            Set<String> blueteamplayers = Main.getTeams().getBlueTeam().getEntries();
-            Set<String> redteamplayers = Main.getTeams().getRedTeam().getEntries();
+        } else if (coreState == INSTANT_BREAK){
 
             if(e.getBlock().getLocation().equals(coreBlue) && redteamplayers.contains(p)) {
                 GameEnd.coreBrokenEnd(Main.getTeams().getRedTeam());
@@ -111,8 +106,5 @@ public class CoreBlock implements Listener {
                 p.teleport(spawnBlue);
             }
         }
-
-
-
     }
 }
