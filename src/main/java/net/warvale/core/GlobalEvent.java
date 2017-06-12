@@ -231,14 +231,14 @@ public class GlobalEvent implements Listener {
                 if (ChatNameColorGUI.playerChatColor.containsKey(player)){
                     String newMessage = message.replaceAll(player.getName(), ChatNameColorGUI.playerChatColor.get(player) + player.getName() + ChatColor.WHITE);
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + UserManager.getUser(sender.getUniqueId()).getNameColor() + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
                 } else {
                     String newMessage = message.replaceAll(player.getName(), ChatColor.YELLOW + player.getName() + ChatColor.WHITE);
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + UserManager.getUser(sender.getUniqueId()).getNameColor() + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + newMessage));
                 }
             } else {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + ChatColor.WHITE + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + message));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', UserManager.getUser(sender.getUniqueId()).getPrefix() + UserManager.getUser(sender.getUniqueId()).getNameColor() + sender.getName() + ChatColor.GRAY + ": " + ChatColor.WHITE + message));
             }
 
         }
