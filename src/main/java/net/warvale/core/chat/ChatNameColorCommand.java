@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
  */
 public class ChatNameColorCommand implements CommandExecutor {
 
+
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("chatnamecolor")) {
             if (!(sender instanceof Player)) {

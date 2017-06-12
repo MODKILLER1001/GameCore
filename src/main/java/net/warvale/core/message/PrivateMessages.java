@@ -16,6 +16,7 @@ import java.util.HashMap;
  */
 public class PrivateMessages implements CommandExecutor {
 
+
     public static HashMap<String, Player> lastMessaged = new HashMap<>();
 
     public boolean onCommand(CommandSender player, Command command, String label, String[] args){

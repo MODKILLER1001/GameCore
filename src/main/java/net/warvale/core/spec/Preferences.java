@@ -30,6 +30,7 @@ import java.util.List;
 
 public class Preferences implements Listener {
 
+
     public Preferences(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

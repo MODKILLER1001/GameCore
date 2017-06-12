@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
  */
 public class ReplyMessages implements CommandExecutor {
 
+
     public boolean onCommand(CommandSender player, Command command, String label, String[] args){
         if (label.equalsIgnoreCase("r")) {
             if (!(player instanceof Player)){

@@ -20,6 +20,7 @@ import java.util.HashMap;
  * Created by AAces on 6/10/2017.
  */
 
+
 public class ChatNameColorGUI implements Listener {
     public ChatNameColorGUI(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);

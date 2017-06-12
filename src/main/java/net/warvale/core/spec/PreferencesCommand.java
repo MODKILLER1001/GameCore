@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
  * Created by AAces on 6/10/2017.
  */
 public class PreferencesCommand implements CommandExecutor {
+
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("settings")) {
             if (!(sender instanceof Player)) {
