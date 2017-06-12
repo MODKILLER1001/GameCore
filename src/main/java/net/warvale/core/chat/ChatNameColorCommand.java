@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
  * Created by AAces on 6/10/2017.
  */
 public class ChatNameColorCommand implements CommandExecutor {
-
+    //TODO: Move to StaffCore
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("chatnamecolor")) {
             if (!(sender instanceof Player)) {

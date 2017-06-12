@@ -27,7 +27,7 @@ import net.warvale.core.Main;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO: Move to StaffCore
 public class Preferences implements Listener {
 
     public Preferences(Main plugin) {

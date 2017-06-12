@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
  * Created By AAces on 6/1/17
  */
 public class ReplyMessages implements CommandExecutor {
-
+    //TODO: Move to StaffCore
     public boolean onCommand(CommandSender player, Command command, String label, String[] args){
         if (label.equalsIgnoreCase("r")) {
             if (!(player instanceof Player)){

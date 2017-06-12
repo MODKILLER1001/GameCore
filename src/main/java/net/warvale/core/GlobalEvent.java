@@ -218,7 +218,7 @@ public class GlobalEvent implements Listener {
         kName.sendMessage(deathMessages.get(r));
     }
 
-    @EventHandler
+    @EventHandler //TODO: Move to StaffCore
     public void onPlayerChat(AsyncPlayerChatEvent event){
         Player sender = event.getPlayer();
         String message = event.getMessage();

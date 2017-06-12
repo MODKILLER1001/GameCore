@@ -15,7 +15,7 @@ import java.util.HashMap;
  * Created By AAces on 6/1/17
  */
 public class PrivateMessages implements CommandExecutor {
-
+    //TODO: Move to StaffCore
     public static HashMap<String, Player> lastMessaged = new HashMap<>();
 
     public boolean onCommand(CommandSender player, Command command, String label, String[] args){

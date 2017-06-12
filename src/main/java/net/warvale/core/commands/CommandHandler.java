@@ -129,10 +129,10 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         Bukkit.getPluginCommand("allowbuild").setExecutor(new BuildCommand());
 
         // basic
-        Bukkit.getPluginCommand("msg").setExecutor(new PrivateMessages());
-        Bukkit.getPluginCommand("r").setExecutor(new ReplyMessages());
-        Bukkit.getPluginCommand("settings").setExecutor(new PreferencesCommand());
-        Bukkit.getPluginCommand("chatnamecolor").setExecutor(new ChatNameColorCommand());
+        Bukkit.getPluginCommand("msg").setExecutor(new PrivateMessages()); //TODO: Move to StaffCore
+        Bukkit.getPluginCommand("r").setExecutor(new ReplyMessages()); //TODO: Move to StaffCore
+        Bukkit.getPluginCommand("settings").setExecutor(new PreferencesCommand()); //TODO: Move to StaffCore
+        Bukkit.getPluginCommand("chatnamecolor").setExecutor(new ChatNameColorCommand()); //TODO: Move to StaffCore
 
         //game
         cmds.add(new ClassesCommand());
