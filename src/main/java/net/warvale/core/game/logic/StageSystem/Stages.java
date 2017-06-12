@@ -1,6 +1,8 @@
 package net.warvale.core.game.logic.StageSystem;
 
 import net.warvale.core.Main;
+import net.warvale.core.game.CoreBlock;
+import net.warvale.core.game.CoreState;
 import net.warvale.core.game.end.GameEnd;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -16,8 +18,8 @@ public class Stages {
 
     public void initStages() {
         CurrentStage = Stage.INVINCIBLE_CORE;
-        /* game_start
-        <Start CommandFox's invincible cores> */
+        // game_start
+        new CoreBlock().setCoreState(CoreState.UNBREAKABLE);
 
         /* 10 minutes in */
         new BukkitRunnable() {
@@ -25,8 +27,8 @@ public class Stages {
             @Override
             public void run() {
            new Bosses().initBoss();
-            /* <stop  CommandFox's invincible cores */
-            CurrentStage = Stage.BOSS_DIAMOND;
+           new CoreBlock().setCoreState(CoreState.BREAKABLE);
+           CurrentStage = Stage.BOSS_DIAMOND;
             }
 
         }.runTaskLater(this.pl, 12000);
@@ -38,10 +40,10 @@ public class Stages {
             @Override
             public void run() {
             CurrentStage = Stage.CORE_BREAK_FAST;
-            /* <insert CommandFox's core break speed multiplier and set to 2x */
+            new CoreBlock().setCoreState(CoreState.SPEED_BREAK);
             }
 
-        }.runTaskLater(this.pl, 12000);
+        }.runTaskLater(this.pl, 36000);
 
 
 
@@ -52,7 +54,7 @@ public class Stages {
             @Override
             public void run() {
             CurrentStage = Stage.DEATHMATCH;
-            /* <insert CommandFox's core break speed multiplier and set to 100x */
+            new CoreBlock().setCoreState(CoreState.INSTANT_BREAK);
             }
 
         }.runTaskLater(this.pl, 48000);
