@@ -34,7 +34,7 @@ public class JoinServer implements Listener {
         return is;
     }
 
-
+ 
     private static ItemStackBuilder mapselection = new ItemStackBuilder(Material.PAPER).withName(ChatColor.DARK_AQUA + "Maps").withLore(ChatColor.GRAY + "Click to vote for a map");
     private static int KITSLOT = 0, MAPSLOT = 1;
 

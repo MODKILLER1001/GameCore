@@ -425,6 +425,7 @@ public class Main extends JavaPlugin implements Listener {
 		return new ConquestMap(name, data, yml, zip);
 	}
 
+
 	public static Random getRandom() {
 		return random;
 	}
