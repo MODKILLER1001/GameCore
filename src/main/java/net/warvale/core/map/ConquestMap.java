@@ -8,10 +8,10 @@ import java.io.File;
 import java.util.*;
 import net.warvale.core.maps.*;
 
-public class ConquestMap extends net.warvale.core.maps.GameMap {
+public class ConquestMap extends GameMap {
 
-    public ConquestMap(String name, MapData data, File yml, File zip) {
-        super(name, data, yml, zip);
+    public ConquestMap(String name) {
+        super(name);
     }
 
 
