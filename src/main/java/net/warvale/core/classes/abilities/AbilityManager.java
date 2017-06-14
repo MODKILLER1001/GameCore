@@ -291,12 +291,7 @@ public class AbilityManager implements Listener {
         item.getItemMeta().getLore().add(ChatColor.translateAlternateColorCodes('&', "&7Use this in the Jukebox below you."));
         p.getInventory().addItem(item);
         MusicianJukebox.add(p);
-        // (Give player a disc -- DONE-- ) and when the player inserts the disc into the jukebox, give healing in a radius of ten blocks
 
-        /*getNearbyEntities(Location location,
-        double x,
-        double y,
-        double z)No*/
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
             public void run() {
