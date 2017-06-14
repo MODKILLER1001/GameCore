@@ -5,10 +5,7 @@
         import net.warvale.core.classes.ClassManager;
         import net.warvale.core.game.Game;
         import net.warvale.core.game.State;
-        import org.bukkit.Bukkit;
-        import org.bukkit.ChatColor;
-        import org.bukkit.Location;
-        import org.bukkit.Material;
+        import org.bukkit.*;
         import org.bukkit.block.Block;
         import org.bukkit.entity.*;
         import org.bukkit.event.EventHandler;
@@ -20,6 +17,7 @@
         import org.bukkit.event.player.PlayerInteractEvent;
         import org.bukkit.event.player.PlayerMoveEvent;
         import org.bukkit.inventory.ItemStack;
+        import org.bukkit.material.MaterialData;
         import org.bukkit.plugin.Plugin;
         import org.bukkit.potion.PotionEffect;
         import org.bukkit.potion.PotionEffectType;
@@ -35,7 +33,7 @@
  */
 public class AbilityManager implements Listener {
 
-    private ArrayList<Player> cooldown = new ArrayList<>();
+    private ArrayList<String> cooldown = new ArrayList<>();
     private ArrayList<Player> electroCooldown = new ArrayList<>();
     private ArrayList<Player> fireCooldown = new ArrayList<>();
     private ArrayList<Player> ArcherArrow = new ArrayList<>();
@@ -54,7 +52,7 @@ public class AbilityManager implements Listener {
         }
         Player p = e.getPlayer();
         if (!(e.getAction() == RIGHT_CLICK_AIR || e.getAction() == RIGHT_CLICK_BLOCK)) return;
-        if (cooldown.contains(p)) return;
+        if (cooldown.contains(p.getName())) return;
 
         Class classCheck = ClassManager.getClassForPlayer(p.getName());
 
@@ -109,10 +107,10 @@ public class AbilityManager implements Listener {
                 this.Necromancer(p);
                 break;
 
-            /*case "Earthbender":
+            case "Earthbender":
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
                 this.Earthbender(p);
-                break;*/
+                break;
 
             case "Medic":
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
@@ -120,10 +118,10 @@ public class AbilityManager implements Listener {
                 break;
         }
 
-        cooldown.add(p);
+        cooldown.add(p.getName());
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, new Runnable() {
             public void run() {
-                cooldown.remove(p);
+                cooldown.remove(p.getName());
                 p.sendMessage(ChatColor.GREEN + "You can use your ability now!");
             }
         }, 200);
@@ -239,7 +237,37 @@ public class AbilityManager implements Listener {
     private void Spy (Player p) {
         p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 100));
     }
+    private void Earthbender(Player p) {
 
+        List<Entity> nearByEntities = p.getNearbyEntities(5, 5, 5);
+        List<Player> nearByPlayers = new ArrayList<Player>();
+        for(Entity target : nearByEntities) {
+            if (!(target instanceof Player)) return;
+            Player playerTarget = (Player) target;
+            nearByPlayers.add(playerTarget);
+        }
+
+
+        for (Player target : nearByPlayers) {
+            target.playSound(target.getLocation(), Sound.BLOCK_ANVIL_PLACE, SoundCategory.HOSTILE, 100, 100);
+            Block targetBlock = target.getLocation().getWorld().getBlockAt(target.getLocation().subtract(0, 1, 0));
+            List<Block> changedBlocks = new ArrayList<Block>();
+
+            changedBlocks.add(targetBlock);
+
+            for (Block bt : changedBlocks) {
+                bt.setType(Material.AIR);
+                FallingBlock fblock = target.getLocation().getWorld().spawnFallingBlock(bt.getLocation(), new MaterialData(bt.getType()));
+                fblock.setVelocity(new Vector(0, 3, 0));
+                fblock.setHurtEntities(true);
+
+            }
+
+
+
+        }
+
+    }
     private void Technician (Player p) {
         electroCooldown.add(p);
         p.sendMessage(ChatColor.GREEN + "You can now hit a player to paralyze them!");
@@ -307,9 +335,7 @@ public class AbilityManager implements Listener {
         }
     }
 
-    /*private void Earthbender (Player p) {
-        
-    }*/
+
 
     @EventHandler
     public void onTarget(EntityTargetEvent event){
