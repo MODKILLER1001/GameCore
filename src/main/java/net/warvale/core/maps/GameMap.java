@@ -37,7 +37,6 @@ public abstract class GameMap {
 
     public static void doMaps() {
         try {
-            loadMaps();
             extractMaps();
             setupMaps();
         } catch (Exception e) {
@@ -45,23 +44,6 @@ public abstract class GameMap {
         }
     }
 
-    public static void loadMaps() throws SQLException, ClassNotFoundException {
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-        for (Map.Entry<String, MapData> data : MapData.loadData().entrySet()) {
-            File downloadto = new File(folder + File.separator + data.getKey());
-            File zip = new File(downloadto + ".zip");
-            File yml = new File(downloadto + ".yml");
-            try {
-                DownloadUtil.download(zip, data.getValue().getZip(), Main.get().getFileConnection());
-                DownloadUtil.download(yml, data.getValue().getYaml(), Main.get().getFileConnection());
-            } catch (Exception e) {
-                Main.get().getLogger().log(Level.WARNING, "Could not download map", e);
-            }
-            registerMap(Main.get().loadMap(data.getKey(), data.getValue(), yml, zip));
-        }
-    }
 
     public static void registerMap(GameMap map) {
         getMaps().add(map);
@@ -114,18 +96,16 @@ public abstract class GameMap {
     }
 
     private static List<GameMap> maps = new ArrayList<>();
-    private static File folder = new File("Maps");
     private File yml, zip;
-    private MapData data;
     private String name;
+    private String authors;
     private Map settings;
 
-    public GameMap(String name, MapData data, File yml, File zip) {
+    public GameMap(String name) {
         this.name = name;
-        this.data = data;
-        this.yml = yml;
-        this.zip = zip;
-        settings = loadSetting(YamlConfiguration.loadConfiguration(yml).getConfigurationSection("settings"));
+        yml = new File(Main.getMapDir(), name + ".yml");
+        zip = new File(Main.getMapDir(), name + ".zip");
+        settings =  loadSetting(YamlConfiguration.loadConfiguration(yml).getConfigurationSection("settings"));
     }
 
     public Map getSettings() {
@@ -146,15 +126,7 @@ public abstract class GameMap {
         return zip;
     }
 
-    public MapData getData() {
-        return data;
-    }
-
-    public String[] getDescription() {
-        try {
-            return getData().getString(MapData.DESCRIPTION).split(",");
-        } catch (InvalidBaseException e) {
-            return new String[0];
-        }
+    public String getAuthors() {
+        return authors;
     }
 }

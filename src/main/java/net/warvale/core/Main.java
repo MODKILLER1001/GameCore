@@ -77,7 +77,7 @@ public class Main extends JavaPlugin implements Listener {
 	private static CommandHandler commandHandler;
 
 	//map dir
-	private static File mapDir = new File("maps");
+	private static File mapDir = new File("Maps");
 
 	//file stuff
 	private AbstractFileConnection fileConnection;
