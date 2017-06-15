@@ -4,24 +4,23 @@ import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
 import net.warvale.core.game.logic.StageSystem.Stages;
 import net.warvale.core.game.start.GameStart;
-import net.warvale.core.map.GameMap;
+import net.warvale.core.map.ConquestMap;
+import net.warvale.core.maps.GameMap;
+import net.warvale.core.maps.VoteMenu;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.core.utils.chat.ChatUtils;
 import net.warvale.core.utils.dates.DateUtils;
 import net.warvale.staffcore.bossbar.BarManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.Arrays;
 
 
@@ -31,6 +30,7 @@ public class BossbarCountdownTask extends BukkitRunnable {
     private static String chosenMap;
     private String coordsRed;
     private String coordsBlue;
+    private GameMap map;
 
     public BossbarCountdownTask() {
         countdown = 1 * 60 + 1;
@@ -42,22 +42,9 @@ public class BossbarCountdownTask extends BukkitRunnable {
         Game.getInstance().setState(State.COUNTDOWN);
         BarManager.getAnnounceBar().setVisible(true);
         if (countdown == 15){
-            GameStart.voteTally();
-            switch (GameStart.map.getName()){
-                case "redwood":
-                    chosenMap = ChatColor.RED + "Redwood Forest";
-                    break;
-                case "pagoda":
-                    chosenMap = ChatColor.RED + "Pagoda Everglade";
-                    break;
-                case "volcano":
-                    chosenMap = ChatColor.RED + "Volcano Island";
-                    break;
-                case "extraterrestrial":
-                    chosenMap = ChatColor.RED + "Extraterrestrial";
-                    break;
-            }
-            MessageManager.broadcast(PrefixType.MAIN, chosenMap + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
+            map = VoteMenu.calculateMap();
+            GameStart.map = map;
+            MessageManager.broadcast(PrefixType.MAIN, map.getName() + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
         }
         if (countdown == 10){
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + ChatColor.RED + countdown + ChatColor.GRAY + (countdown == 1 ? " second." : " seconds."));
@@ -88,19 +75,20 @@ public class BossbarCountdownTask extends BukkitRunnable {
         if (countdown <= 0){
             new Stages().initStages();
             this.cancel();
-            MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + GameStart.map.getName() + ChatColor.GRAY + "!");
+            MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + map.getName() + ChatColor.GRAY + "!");
             BarManager.getAnnounceBar().setVisible(false);
             for (Player player : GameStart.inGame){
                 player.removePotionEffect(PotionEffectType.SLOW);
                 player.removePotionEffect(PotionEffectType.JUMP);
-
             }
 
             for (Player player : GameStart.teamBlue){
-                //tp player to blue spawn in the map GameStart.map
+                player.teleport(new ConquestMap(GameStart.map.getName()).getBlueSpawn().toLocation(Bukkit.getWorld(map.getName())));
+                //TODO: Give player their class
             }
             for (Player player : GameStart.teamRed){
-                //tp player to red spawn in the map GameStart.map
+                player.teleport(new ConquestMap(GameStart.map.getName()).getRedSpawn().toLocation(Bukkit.getWorld(map.getName())));
+                //TODO: Give player their class
             }
 
             return;

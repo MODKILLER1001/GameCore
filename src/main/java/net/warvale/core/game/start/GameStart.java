@@ -2,7 +2,7 @@ package net.warvale.core.game.start;
 
 import net.warvale.core.Main;
 import net.warvale.core.game.MatchInfo;
-import net.warvale.core.map.GameMap;
+import net.warvale.core.maps.GameMap;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.core.tasks.BossbarCountdownTask;
@@ -35,15 +35,19 @@ public class GameStart {
     public void startCountdown() { //runs when there is at least one player on each team (change in TeamSelect lines 113 and 133)
         map = null;
 
+        GameMap.doMaps();
+
         mapNumbers.put(1, "Redwood Forest");
         mapNumbers.put(2, "Volcano Island");
         mapNumbers.put(3, "Pagoda Everglade");
         mapNumbers.put(4, "Extraterrestrial");
+        mapNumbers.put(5, "Canyon Brook");
 
         votes.put("redwood_forest", 0);
         votes.put("volcano_island", 0);
         votes.put("pagoda_everglade", 0);
         votes.put("extraterrestrial", 0);
+        votes.put("canyon_brook", 0);
 
 
         initActive = true;
@@ -68,19 +72,11 @@ public class GameStart {
         //send voting message
         for (int i = 0; i < teamBlue.size(); i++){
             Player p = teamBlue.get(i);
-            p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "/vote #" + ChatColor.BLUE.toString() + ChatColor.BOLD + " to vote for a map!" + ChatColor.DARK_BLUE +
-                    "\n1: Redwood Forest" +
-                    "\n2: Volcano Island" +
-                    "\n3: Pagoda Everglade" +
-                    "\n4: Extraterrestrial");
+            p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "/vote" + ChatColor.BLUE.toString() + ChatColor.BOLD + " to vote for a map!");
         }
         for (int i = 0; i < teamRed.size(); i++) {
             Player p = teamRed.get(i);
-            p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "/vote #" + ChatColor.BLUE.toString() + ChatColor.BOLD + " to vote for a map!" + ChatColor.DARK_BLUE +
-                    "\n1: Redwood Forest" +
-                    "\n2: Volcano Island" +
-                    "\n3: Pagoda Everglade" +
-                    "\n4: Extraterrestrial");
+            p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "/vote" + ChatColor.BLUE.toString() + ChatColor.BOLD + " to vote for a map!");
         }
         inGame.addAll(teamBlue);
         inGame.addAll(teamRed);
@@ -95,64 +91,11 @@ public class GameStart {
         int vi = votes.get("volcano_island");
         int pe = votes.get("pagoda_everglade");
         int et = votes.get("extraterrestrial");
+        int cb = votes.get("canyon_brook");
 
-        int n = NumberUtils.random(4,1);
+        int n = NumberUtils.random(5,1);
 
-        switch (n){
-            case 1:
-                if (rf >= vi && rf >= pe && rf >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(1));
-                } else if (vi >= rf && vi >= pe && vi >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(2));
-                } else if (pe >= rf && pe >= vi && pe >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(3));
-                } else if (et >= rf && et >= vi && et >= pe){
-                    map = GameMap.getMaps().get(mapNumbers.get(4));
-                } else {
-                    map = GameMap.getMaps().get(mapNumbers.get(NumberUtils.random(4, 1)));
-                }
-                break;
-            case 2:
-                if (vi >= rf && vi >= pe && vi >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(2));
-                } else if (pe >= rf && pe >= vi && pe >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(3));
-                } else if (et >= rf && et >= vi && et >= pe){
-                    map = GameMap.getMaps().get(mapNumbers.get(4));
-                } else if (rf >= vi && rf >= pe && rf >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(1));
-                } else {
-                    map = GameMap.getMaps().get(mapNumbers.get(NumberUtils.random(4, 1)));
-                }
-                break;
-            case 3:
-                if (pe >= rf && pe >= vi && pe >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(3));
-                } else if (et >= rf && et >= vi && et >= pe){
-                    map = GameMap.getMaps().get(mapNumbers.get(4));
-                } else if (rf >= vi && rf >= pe && rf >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(1));
-                } else if (vi >= rf && vi >= pe && vi >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(2));
-                } else {
-                    map = GameMap.getMaps().get(mapNumbers.get(NumberUtils.random(4, 1)));
-                }
-                break;
-            case 4:
-                if (et >= rf && et >= vi && et >= pe){
-                    map = GameMap.getMaps().get(mapNumbers.get(4));
-                } else if (rf >= vi && rf >= pe && rf >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(1));
-                } else if (vi >= rf && vi >= pe && vi >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(2));
-                } else if (pe >= rf && pe >= vi && pe >= et){
-                    map = GameMap.getMaps().get(mapNumbers.get(3));
-                } else {
-                    map = GameMap.getMaps().get(mapNumbers.get(NumberUtils.random(4, 1)));
-                }
-                break;
 
-        }
         MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "Voting is now closed!");
     }
 
@@ -163,11 +106,13 @@ public class GameStart {
         mapNumbers.put(2, "Volcano Island");
         mapNumbers.put(3, "Pagoda Everglade");
         mapNumbers.put(4, "Extraterrestrial");
+        mapNumbers.put(5, "Canyon Brook");
 
         votes.put("redwood_forest", 0);
         votes.put("volcano_island", 0);
         votes.put("pagoda_everglade", 0);
         votes.put("extraterrestrial", 0);
+        votes.put("canyon_brook", 0);
 
 
         initActive = false;

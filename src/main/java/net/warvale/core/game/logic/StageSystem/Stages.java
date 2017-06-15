@@ -33,7 +33,6 @@ public class Stages {
 
         }.runTaskLater(this.pl, 12000);
 
-
         /* 30 minutes in */
         new BukkitRunnable() {
 
@@ -45,9 +44,6 @@ public class Stages {
 
         }.runTaskLater(this.pl, 36000);
 
-
-
-
         /* 40 minutes in */
         new BukkitRunnable() {
 
@@ -58,7 +54,6 @@ public class Stages {
             }
 
         }.runTaskLater(this.pl, 48000);
-
 
         /* 1 hour in */
         new BukkitRunnable() {

@@ -14,15 +14,17 @@ import net.warvale.core.config.ConfigManager;
 import net.warvale.core.connect.JoinServer;
 import net.warvale.core.connect.LeaveServer;
 import net.warvale.core.connect.PingListener;
+import net.warvale.core.game.CoreBlock;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.map.ConquestMap;
-import net.warvale.core.map.GameMap;
+import net.warvale.core.maps.GameMap;
 import net.warvale.core.maps.MapData;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.spec.ClassSelect;
+import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
 import net.warvale.core.stats.StatsEvents;
 import net.warvale.core.stats.StatsManager;
@@ -107,10 +109,12 @@ public class Main extends JavaPlugin implements Listener {
     	new GlobalEvent(this);
     	new TeamSelect(this);
     	new ClassSelect(this);
+    	new Preferences(this);
     	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
     	Bukkit.getPluginManager().registerEvents(new StatsEvents(this), this);
     	Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
     	Bukkit.getPluginManager().registerEvents(new StatsUtil(this), this);
+    	Bukkit.getPluginManager().registerEvents(new CoreBlock(), this);
 
 
 
@@ -139,14 +143,13 @@ public class Main extends JavaPlugin implements Listener {
 		LobbyTask.getInstance().runTaskTimer(this, 0, 20);
 
 		//load the maps
-		try {
-			GameMap.getMaps().put("Redwood Forest", new GameMap("redwood"));
-			GameMap.getMaps().put("Volcano Island", new GameMap("volcano"));
-			GameMap.getMaps().put("Pagoda Everglade", new GameMap("pagoda"));
-			GameMap.getMaps().put("Extraterrestrial", new GameMap("extraterrestrial"));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+
+		GameMap.registerMap(new ConquestMap("Redwood_Forest"));
+		GameMap.registerMap(new ConquestMap("Pagoda_Everglade"));
+		GameMap.registerMap(new ConquestMap("Volcano_Island"));
+		GameMap.registerMap(new ConquestMap("Extraterrestrial"));
+		GameMap.registerMap(new ConquestMap("Canyon_Brook"));
+
 		
 		//Load online players stats if any are on
 		for(Player p : Bukkit.getOnlinePlayers()){
@@ -357,8 +360,8 @@ public class Main extends JavaPlugin implements Listener {
 		return fileConnection;
 	}
 
-	public net.warvale.core.maps.GameMap loadMap(String name, MapData data, File yml, File zip) {
-		return new ConquestMap(name, data, yml, zip);
+	public net.warvale.core.maps.GameMap loadMap(String name) {
+		return new ConquestMap(name);
 	}
 
 

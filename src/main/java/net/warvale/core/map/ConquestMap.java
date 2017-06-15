@@ -39,4 +39,14 @@ public class ConquestMap extends GameMap {
         return (LocationObject) getSettings().get("redSpawn");
     }
 
+    @SuppressWarnings("unchecked")
+    public LocationObject getBlueCore() {
+        return (LocationObject) getSettings().get("blueCore");
+    }
+
+    @SuppressWarnings("unchecked")
+    public LocationObject getRedCore() {
+        return (LocationObject) getSettings().get("redCore");
+    }
+
 }

@@ -37,35 +37,9 @@ public class VoteCommand implements CommandExecutor {
         }
 
         if (args.length == 0){
-            sender.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "Usage:" + ChatColor.GRAY + " /vote <map number>");
-            return false;
+            //open inv
         }
 
-        switch (args[0]){
-            case "1":
-                sender.sendMessage(ChatColor.BLUE + "You voted for: " + ChatColor.GOLD + "REDWOOD FOREST" + ChatColor.BLUE + "!");
-                GameStart.voted.add(sender.getName());
-                GameStart.votes.put("redwood_forest", GameStart.votes.get("redwood_forest") + 1);
-                break;
-            case "2":
-                sender.sendMessage(ChatColor.BLUE + "You voted for: " + ChatColor.GOLD + "VOLCANO ISLAND" + ChatColor.BLUE + "!");
-                GameStart.voted.add(sender.getName());
-                GameStart.votes.put("volcano_island", GameStart.votes.get("volcano_island") + 1);
-                break;
-            case "3":
-                sender.sendMessage(ChatColor.BLUE + "You voted for: " + ChatColor.GOLD + "PAGODA EVERGLADE" + ChatColor.BLUE + "!");
-                GameStart.voted.add(sender.getName());
-                GameStart.votes.put("pagoda_everglade", GameStart.votes.get("pagoda_everglade") + 1);
-                break;
-            case "4":
-                sender.sendMessage(ChatColor.BLUE + "You voted for: " + ChatColor.GOLD + "EXTRATERRESTRIAL" + ChatColor.BLUE + "!");
-                GameStart.voted.add(sender.getName());
-                GameStart.votes.put("extraterrestrial", GameStart.votes.get("extraterrestrial") + 1);
-                break;
-            default:
-                sender.sendMessage(ChatColor.RED + "Unknown map!");
-                break;
-        }
          return false;
         }
 

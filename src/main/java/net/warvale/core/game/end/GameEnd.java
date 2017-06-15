@@ -64,6 +64,7 @@ public class GameEnd {
         } else {
             System.out.println("Invalid Team Won");
         }
+        //TODO: Reset Map
     }
 
 
@@ -84,6 +85,7 @@ public class GameEnd {
             redTeam.removeEntry(p);
             spectatorTeam.addEntry(p);
         }
+        //TODO: Reset Map
     }
 
 }
