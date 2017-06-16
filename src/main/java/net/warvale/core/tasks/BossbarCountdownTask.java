@@ -5,7 +5,10 @@ import net.warvale.core.classes.Class;
 import net.warvale.core.classes.ClassManager;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
+import net.warvale.core.game.logic.GameRunnable;
 import net.warvale.core.game.logic.StageSystem.Stages;
+import net.warvale.core.game.scoreboards.GameScoreboard;
+import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.game.start.GameStart;
 import net.warvale.core.map.ConquestMap;
 import net.warvale.core.maps.GameMap;
@@ -76,7 +79,7 @@ public class BossbarCountdownTask extends BukkitRunnable {
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + ChatColor.RED + countdown + ChatColor.GRAY + (countdown == 1 ? " second." : " seconds."));
 
             BarManager.broadcastSound(Sound.BLOCK_NOTE_PLING);
-        }1
+        }
         if (countdown <= 0){
             new Stages().initStages();
             this.cancel();
@@ -95,6 +98,14 @@ public class BossbarCountdownTask extends BukkitRunnable {
                 player.teleport(new ConquestMap(GameStart.map.getName()).getRedSpawn().toLocation(Bukkit.getWorld(map.getName())));
                 player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                LobbyScoreboard.getInstance().removeScoreboard(player);
+                GameScoreboard.getInstance().addScoreboard(player);
+            }
+
+            Game.getInstance().setState(State.INGAME);
+            new GameRunnable().runTaskTimer(Main.get(), 20, 20);
 
             return;
         }

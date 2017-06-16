@@ -2,6 +2,7 @@ package net.warvale.core.connect;
 
 import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
+import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.maps.VoteMenu;
 import net.warvale.core.message.MessageManager;

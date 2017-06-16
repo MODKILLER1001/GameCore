@@ -3,6 +3,7 @@ package net.warvale.core.tasks;
 
 import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
+import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.staffcore.StaffCore;
 import net.warvale.staffcore.bossbar.BarManager;
@@ -35,6 +36,8 @@ public class ScoreboardTask extends BukkitRunnable {
                     LobbyScoreboard.getInstance().newScoreboard(player, ChatColor.WHITE + "Starting in " + ChatColor.GREEN +
                     BossbarCountdownTask.getCountdown() + " seconds");
                 }
+            } else if (Game.getInstance().isState(State.INGAME)) {
+                GameScoreboard.getInstance().newScoreboard(player);
             } else {
                 LobbyScoreboard.getInstance().newScoreboard(player);
             }
