@@ -14,6 +14,7 @@
         import org.bukkit.event.entity.EntityDamageByEntityEvent;
         import org.bukkit.event.entity.EntityTargetEvent;
         import org.bukkit.event.entity.ProjectileHitEvent;
+        import org.bukkit.event.player.PlayerDropItemEvent;
         import org.bukkit.event.player.PlayerInteractEvent;
         import org.bukkit.event.player.PlayerMoveEvent;
         import org.bukkit.inventory.ItemStack;
@@ -44,7 +45,22 @@ public class AbilityManager implements Listener {
 
 
 
-
+    @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent e) {
+        ItemStack dropped = e.getItemDrop().getItemStack();
+        List<ItemStack> abilityItems = new ArrayList<ItemStack>();
+        abilityItems.add(new ItemStack(Material.FIREWORK_CHARGE));
+        abilityItems.add(new ItemStack(Material.MAGMA_CREAM));
+        abilityItems.add(new ItemStack(Material.IRON_PICKAXE));
+        abilityItems.add(new ItemStack(Material.SULPHUR));
+        abilityItems.add(new ItemStack(Material.GLASS_BOTTLE));
+        abilityItems.add(new ItemStack(Material.REDSTONE_TORCH_ON));
+        abilityItems.add(new ItemStack(Material.RECORD_8));
+        abilityItems.add(new ItemStack(Material.FIREBALL));
+        for (ItemStack ai : abilityItems) {
+            if (dropped.equals(ai)) e.setCancelled(true);
+        }
+    }
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if(!Game.getInstance().isState(State.INGAME)){

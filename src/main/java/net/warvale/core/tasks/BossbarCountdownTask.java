@@ -1,5 +1,8 @@
 package net.warvale.core.tasks;
 
+import net.warvale.core.Main;
+import net.warvale.core.classes.Class;
+import net.warvale.core.classes.ClassManager;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
 import net.warvale.core.game.logic.StageSystem.Stages;
@@ -17,6 +20,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -70,8 +74,9 @@ public class BossbarCountdownTask extends BukkitRunnable {
         }
         if (countdown <= 9 && countdown >= 1){
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + ChatColor.RED + countdown + ChatColor.GRAY + (countdown == 1 ? " second." : " seconds."));
+
             BarManager.broadcastSound(Sound.BLOCK_NOTE_PLING);
-        }
+        }1
         if (countdown <= 0){
             new Stages().initStages();
             this.cancel();
@@ -84,11 +89,11 @@ public class BossbarCountdownTask extends BukkitRunnable {
 
             for (Player player : GameStart.teamBlue){
                 player.teleport(new ConquestMap(GameStart.map.getName()).getBlueSpawn().toLocation(Bukkit.getWorld(map.getName())));
-                //TODO: Give player their class
+                player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
             for (Player player : GameStart.teamRed){
                 player.teleport(new ConquestMap(GameStart.map.getName()).getRedSpawn().toLocation(Bukkit.getWorld(map.getName())));
-                //TODO: Give player their class
+                player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
 
             return;
