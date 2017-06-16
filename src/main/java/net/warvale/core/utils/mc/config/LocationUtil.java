@@ -14,7 +14,8 @@ public class LocationUtil {
         return new LocationObject(x, y, z);
     }
 
-    private static double getVar(ConfigurationSection section, String var) {
+    public static double getVar(ConfigurationSection section, String var) {
         return section.getDouble(var);
     }
+
 }

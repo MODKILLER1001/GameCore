@@ -44,7 +44,9 @@ public class CoreBlock implements Listener {
         if (b.getLocation().equals(new ConquestMap(GameStart.map.getName()).getBlueCore().toLocation(Bukkit.getWorld(GameStart.map.getName()))) || b.getLocation().equals(new ConquestMap(GameStart.map.getName()).getRedCore().toLocation(Bukkit.getWorld(GameStart.map.getName())))){
             e.setCancelled(true);
         }
-        //TODO: Range Protect
+        if (new ConquestMap(GameStart.map.getName()).crossCheckCoords(b.getLocation().getX(), b.getLocation().getY(), b.getLocation().getZ())){
+            e.setCancelled(true);
+        }
         if(coreState == UNBREAKABLE) {
 
             return;
