@@ -33,7 +33,7 @@ public class Initialization {
                     "\n-> Blue: " + info.BLUE +
                     "\nMap Info: " +
                     "\n->Author: " + StringUtils.join(map.getAuthors(), ", "));
-        } catch (ParserConfigurationException | IOException | SAXException e) {
+        } catch (Exception  e) {
             e.printStackTrace();
         }
         this.map = map;

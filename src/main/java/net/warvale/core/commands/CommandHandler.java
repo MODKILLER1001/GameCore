@@ -6,7 +6,6 @@ import java.util.List;
 import net.warvale.core.Main;
 import net.warvale.core.chat.ChatNameColorCommand;
 import net.warvale.core.commands.admin.BuildCommand;
-import net.warvale.core.commands.admin.MapCommand;
 import net.warvale.core.commands.admin.SetStateCommand;
 import net.warvale.core.commands.game.*;
 import net.warvale.core.commands.team.JoinCommand;

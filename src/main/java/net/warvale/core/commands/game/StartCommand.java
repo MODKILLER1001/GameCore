@@ -29,7 +29,6 @@ public class StartCommand extends AbstractCommand {
 
         player.sendMessage(ChatColor.GRAY + "Starting the game automatically..");
 
-        Game.start(null, null);
 
         return true;
     }
