@@ -91,7 +91,7 @@ public class VoteMenu extends Menu{
         int i = 2;
         for (GameMap map : mapList) {
             ItemStackBuilder builder = VoteMenu.builder.clone().withName(map.getName()).withLore("").withLore(ChatColor.BLUE + "Votes: " + ChatColor.AQUA + votesbymap.get(map)).withLore("");
-            for(String s: map.getDescription()){
+            for(String s: map.getAuthors()){
                 builder.withLore(ChatColor.GRAY + ChatColor.ITALIC.toString() + s);
             }
             is[i] = builder.build();
@@ -135,7 +135,7 @@ public class VoteMenu extends Menu{
             if (votes.get(player.getUniqueId()) == map) {
                 votes.remove(player.getUniqueId());
                 votesbymap.put(map, votesbymap.get(map) - 1);
-                player.spigot().sendMessage(new MessageUtil.MessageBuilder("You cancelled your vote for ").color(ChatColor.BLUE).append(map.getName()).color(ChatColor.AQUA).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(Joiner.on("\n" +ChatColor.GRAY + ChatColor.ITALIC.toString()).join(map.getDescription())))).create());
+                player.spigot().sendMessage(new MessageUtil.MessageBuilder("You cancelled your vote for ").color(ChatColor.BLUE).append(map.getName()).color(ChatColor.AQUA).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(Joiner.on("\n" +ChatColor.GRAY + ChatColor.ITALIC.toString()).join(map.getAuthors())))).create());
             } else {
                 if(votes.containsKey(player.getUniqueId())){
                     GameMap last = votes.get(player.getUniqueId());
@@ -145,7 +145,7 @@ public class VoteMenu extends Menu{
                 }
                 votes.put(player.getUniqueId(), map);
                 votesbymap.put(map, votesbymap.get(map) + 1);
-                player.spigot().sendMessage(new MessageUtil.MessageBuilder("You have voted for ").color(ChatColor.BLUE).append(map.getName()).color(ChatColor.AQUA).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(Joiner.on("\n" + ChatColor.GRAY + ChatColor.ITALIC.toString()).join(map.getDescription())))).create());
+                player.spigot().sendMessage(new MessageUtil.MessageBuilder("You have voted for ").color(ChatColor.BLUE).append(map.getName()).color(ChatColor.AQUA).event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(Joiner.on("\n" + ChatColor.GRAY + ChatColor.ITALIC.toString()).join(map.getAuthors())))).create());
             }
             player.playSound(player.getLocation(), click, 1f, 1f);
             uuid = player.getUniqueId();

@@ -98,7 +98,7 @@ public abstract class GameMap {
     private static List<GameMap> maps = new ArrayList<>();
     private File yml, zip;
     private String name;
-    private String authors;
+    private String[] authors;
     private Map settings;
 
     public GameMap(String name) {
@@ -126,7 +126,7 @@ public abstract class GameMap {
         return zip;
     }
 
-    public String getAuthors() {
+    public String[] getAuthors() {
         return authors;
     }
 }

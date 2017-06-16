@@ -124,7 +124,6 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     public void registerCommands() {
 
         //admin
-        cmds.add(new MapCommand());
         cmds.add(new SetStateCommand());
         Bukkit.getPluginCommand("allowbuild").setExecutor(new BuildCommand());
 

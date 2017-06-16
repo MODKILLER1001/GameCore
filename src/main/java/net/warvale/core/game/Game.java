@@ -5,9 +5,10 @@ import net.warvale.core.Main;
 import net.warvale.core.config.ConfigManager;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.game.start.Initialization;
-import net.warvale.core.map.GameMap;
+import net.warvale.core.maps.GameMap;
 import net.warvale.core.utils.NumberUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 
 /**
  * Created by Draem on 5/20/2017.
@@ -19,6 +20,7 @@ public class Game {
     private int maxPlayer;
     private int minPlayers;
     private int gameLength;
+    private GameMap chosenmap;
 
     public static  Game getInstance() {
         if (instance == null) {
@@ -73,32 +75,6 @@ public class Game {
         return state;
     }
 
-
-    public static void start(GameMap last, GameMap next) {
-        GameMap map = next == null ? getMap(last) : next;
-        running = true;
-        Integer tp = Main.getTeams().getBlueTeam().getSize() + Main.getTeams().getRedTeam().getSize();
-        new Initialization(map, new MatchInfo(tp, Main.getTeams().getRedTeam().getSize(), Main.getTeams().getBlueTeam().getSize())).startGame();
-    }
-
-    public static void end(GameMap next) {
-        running = false;
-    }
-
-    public static void cycle(GameMap map) {
-
-    }
-
-    private static GameMap getMap(GameMap map) {
-        GameMap[] maps = (GameMap[]) GameMap.getMaps().values().toArray();
-        Integer num = NumberUtils.random(maps.length - 1, 0);
-        if (map != null) {
-            return maps[num] == map ? maps[num + 1] : maps[num];
-        } else {
-            return maps[num];
-        }
-    }
-
     public static boolean isRunning() {
         return running;
     }
@@ -114,4 +90,13 @@ public class Game {
     public int getGameLength() {
         return gameLength;
     }
+
+    public void setChosenmap(GameMap map) {
+        this.chosenmap = map;
+    }
+
+    public GameMap getChosenmap() {
+        return chosenmap;
+    }
+
 }

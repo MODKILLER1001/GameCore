@@ -2,7 +2,7 @@ package net.warvale.core.game.start;
 
 import net.warvale.core.Main;
 import net.warvale.core.game.MatchInfo;
-import net.warvale.core.map.GameMap;
+import net.warvale.core.maps.GameMap;
 import net.warvale.core.utils.chat.ChatUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.OfflinePlayer;
