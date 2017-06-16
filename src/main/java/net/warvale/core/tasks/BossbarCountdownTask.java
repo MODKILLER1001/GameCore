@@ -34,9 +34,6 @@ import java.util.Arrays;
 public class BossbarCountdownTask extends BukkitRunnable {
 
     private static int countdown = 1 * 60 + 1;
-    private static String chosenMap;
-    private String coordsRed;
-    private String coordsBlue;
     private GameMap map;
 
     public BossbarCountdownTask() {
@@ -106,7 +103,9 @@ public class BossbarCountdownTask extends BukkitRunnable {
             Game.getInstance().setState(State.INGAME);
             new GameRunnable().runTaskTimer(Main.get(), 20, 20);
 
+            this.cancel();
             return;
+
         }
         BarManager.getAnnounceBar().setTitle(ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + DateUtils.secondsToString(countdown));
         BarManager.getAnnounceBar().setProgress((float)countdown/(float)(60 * 5));
