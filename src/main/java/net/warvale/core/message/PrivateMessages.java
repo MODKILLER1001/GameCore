@@ -1,32 +1,37 @@
 package net.warvale.core.message;
 
+import net.warvale.core.commands.AbstractCommand;
+import net.warvale.core.exceptions.CommandException;
 import net.warvale.core.spec.Preferences;
 import net.warvale.staffcore.users.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
  * Created By AAces on 6/1/17
  */
-public class PrivateMessages implements CommandExecutor {
+public class PrivateMessages extends AbstractCommand {
 
 
     public static HashMap<String, Player> lastMessaged = new HashMap<>();
+    public PrivateMessages() {
+        super("msg", "");
+    }
+    @Override
+    public boolean execute(CommandSender player, String[] args) throws CommandException {
+        if (!(player instanceof Player)){
+            player.sendMessage("This command can only be run by players");
+            return false;
+        }
 
-    public boolean onCommand(CommandSender player, Command command, String label, String[] args){
-        if (label.equalsIgnoreCase("msg")) {
-            if (!(player instanceof Player)){
-                player.sendMessage("This command can only be run by players");
-                return false;
-            }
-
-            Player sender = (Player) player;
+        Player sender = (Player) player;
 
         if (args.length == 0 || args.length == 1){
             player.sendMessage(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Usage: " + ChatColor.RED + "/msg <player> <message>");
@@ -63,9 +68,16 @@ public class PrivateMessages implements CommandExecutor {
                 }
             }
         }
-
-        }
         return false;
     }
+    @Override
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        return new ArrayList<>();
+    }
+
+
+
+
+
 
 }

@@ -124,13 +124,13 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
         //admin
         cmds.add(new SetStateCommand());
-        Bukkit.getPluginCommand("allowbuild").setExecutor(new BuildCommand());
+        cmds.add(new BuildCommand());
 
         // basic
-        Bukkit.getPluginCommand("msg").setExecutor(new PrivateMessages());
-        Bukkit.getPluginCommand("r").setExecutor(new ReplyMessages());
-        Bukkit.getPluginCommand("settings").setExecutor(new PreferencesCommand());
-        Bukkit.getPluginCommand("chatnamecolor").setExecutor(new ChatNameColorCommand());
+        cmds.add(new PrivateMessages());
+        cmds.add(new ReplyMessages());
+        cmds.add(new PreferencesCommand());
+        cmds.add(new ChatNameColorCommand());
 
         //game
         cmds.add(new ClassesCommand());
@@ -138,7 +138,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         cmds.add(new StartCommand());
         cmds.add(new TestStartCommand());
         cmds.add(new VersionCommand());
-        Bukkit.getPluginCommand("vote").setExecutor(new VoteCommand());
+        cmds.add(new VoteCommand());
 
         //team
         cmds.add(new JoinCommand());

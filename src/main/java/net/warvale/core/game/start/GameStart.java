@@ -85,19 +85,7 @@ public class GameStart {
     }
 
 
-    public static void voteTally(){
-        votingActive = false;
-        int rf = votes.get("redwood_forest");
-        int vi = votes.get("volcano_island");
-        int pe = votes.get("pagoda_everglade");
-        int et = votes.get("extraterrestrial");
-        int cb = votes.get("canyon_brook");
 
-        int n = NumberUtils.random(5,1);
-
-
-        MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "Voting is now closed!");
-    }
 
     public static void stopCountdown(StopReason reason){
         map = null;

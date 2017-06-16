@@ -77,7 +77,6 @@ public class BossbarCountdownTask extends BukkitRunnable {
         }
         if (countdown <= 9 && countdown >= 1){
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + ChatColor.RED + countdown + ChatColor.GRAY + (countdown == 1 ? " second." : " seconds."));
-
             BarManager.broadcastSound(Sound.BLOCK_NOTE_PLING);
         }
         if (countdown <= 0){
