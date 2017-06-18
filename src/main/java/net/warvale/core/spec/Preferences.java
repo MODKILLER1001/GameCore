@@ -457,7 +457,7 @@ public class Preferences implements Listener {
         case 48:
             event.setCancelled(true);
             event.getWhoClicked()
-                    .sendMessage(ChatColor.GRAY + "Warvale Discord: " + ChatColor.AQUA + "discord.gg/addlater");
+                    .sendMessage(ChatColor.GRAY + "Warvale Discord: " + ChatColor.AQUA + "discord.gg/GDUenZ2");
             player.playSound(player.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
             player.closeInventory();
             break;
