@@ -1,5 +1,6 @@
 package net.warvale.core.spec;
 
+import net.warvale.core.Main;
 import net.warvale.core.commands.AbstractCommand;
 import net.warvale.core.exceptions.CommandException;
 import org.bukkit.command.CommandSender;
@@ -24,7 +25,7 @@ public class PreferencesCommand extends AbstractCommand {
             return false;
         }
         Player player = (Player) sender;
-        Preferences.tsGUI(player);
+        new Preferences(Main.get()).tsGUI(player);
         return true;
     }
     @Override

@@ -1,8 +1,9 @@
 package net.warvale.core.spec;
 
+import net.md_5.bungee.api.ChatColor;
+import net.warvale.core.Main;
 import net.warvale.core.commands.admin.BuildCommand;
 import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -19,11 +20,6 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.Wool;
-import org.bukkit.potion.PotionEffect;
-
-import net.md_5.bungee.api.ChatColor;
-import net.warvale.core.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +39,7 @@ public class Preferences implements Listener {
     public static ArrayList<String> noAdvertisementMessages = new ArrayList<>();
     public static ArrayList<String> noPrivateMessages = new ArrayList<>();
     public static ArrayList<String> noChatPings = new ArrayList<>();
-    
+
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
@@ -58,7 +54,7 @@ public class Preferences implements Listener {
         }
     }
 
-    public static void tsGUI(Player player) {
+    public void tsGUI(Player player) {
         inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
 
         // Actual preferences
@@ -233,8 +229,9 @@ public class Preferences implements Listener {
         if (a == Action.PHYSICAL || is == null || is.getType() == Material.AIR)
             return;
 
-        if (is.getType() == Material.REDSTONE_COMPARATOR)
-            tsGUI(event.getPlayer());
+        if (is.getType() == Material.REDSTONE_COMPARATOR) {
+            new Preferences(Main.get()).tsGUI(event.getPlayer());
+        }
 
         if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
@@ -520,4 +517,6 @@ public class Preferences implements Listener {
 
     }
 
-}
+
+    }
+
