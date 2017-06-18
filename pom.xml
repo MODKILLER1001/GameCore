@@ -79,13 +79,21 @@
     </build>
 
     <repositories>
+
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+
+        <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+
     </repositories>
 
     <dependencies>
+
         <!-- Spigot API -->
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -124,17 +132,21 @@
             <artifactId>jooq</artifactId>
             <version>3.9.2</version>
         </dependency>
-        <dependency>
-            <groupId>net.warvale.staffcore</groupId>
-            <artifactId>StaffCore</artifactId>
-            <version>1.0-DEV</version>
-            <scope>provided</scope>
-        </dependency>
+
+
         <dependency>
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
             <version>0.1.53</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.warvale</groupId>
+            <artifactId>staffcore</artifactId>
+            <version>master-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
+
 
 </project>
