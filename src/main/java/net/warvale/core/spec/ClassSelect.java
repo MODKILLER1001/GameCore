@@ -29,6 +29,7 @@ public class ClassSelect implements Listener {
     private static HashMap<Integer, Class> slots = new HashMap<>();
     private static Inventory inv;
 
+
     public ClassSelect(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -75,7 +76,7 @@ public class ClassSelect implements Listener {
             return;
 
         if (is.getType() == Material.NETHER_STAR)
-            openGUI(event.getPlayer());
+            new ClassSelect(Main.get()).openGUI(event.getPlayer());
 
         if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
