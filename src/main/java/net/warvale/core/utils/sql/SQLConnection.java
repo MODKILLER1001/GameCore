@@ -131,7 +131,7 @@ public class SQLConnection {
         return database;
     }
 
-    public DSLContext getSql() {
+    public DSLContext getSQL() {
         return sql;
     }
 }

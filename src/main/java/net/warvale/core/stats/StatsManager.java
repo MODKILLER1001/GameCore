@@ -12,6 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.table;
+
 public class StatsManager implements Listener{
 	
 	public static StatsSQL mysql;
@@ -263,17 +266,29 @@ public class StatsManager implements Listener{
     
     public static void savePlayer(final Player p) {
     	try {
-    		PreparedStatement statement = mysql.prepareStatement(SAVE);
-            statement.setInt(1, Kills.get(p.getUniqueId()));
-            statement.setInt(2, Deaths.get(p.getUniqueId()));
-            statement.setInt(3, Wins.get(p.getUniqueId()));
-            statement.setInt(4, CoresBroken.get(p.getUniqueId()));
-            statement.setInt(5, KDR.get(p.getUniqueId()));
-            statement.setInt(6, LongestSnipe.get(p.getUniqueId()));
-            statement.setString(7, p.getUniqueId().toString());
-            mysql.update(statement);
+
+    	    Main.getDB().getSQL()
+                    .insertInto(table("stats"),
+                            field("uuid", String.class),
+                            field("name", String.class),
+                            field("kills", Integer.class),
+                            field("deaths", Integer.class),
+                            field("wins", Integer.class),
+                            field("cores_broken", Integer.class),
+                            field("kdr", Integer.class),
+                            field("longest_snipe", Integer.class))
+                    .values(p.getUniqueId().toString(),
+                            p.getName(),
+                            Kills.get(p.getUniqueId()),
+                            Deaths.get(p.getUniqueId()),
+                            Wins.get(p.getUniqueId()),
+                            CoresBroken.get(p.getUniqueId()),
+                            KDR.get(p.getUniqueId()),
+                            LongestSnipe.get(p.getUniqueId()))
+                    .execute();
+
             removePlayer(p);
-        } catch (SQLException e) {
+        } catch (Exception e) {
         	e.printStackTrace();
         }
     }
