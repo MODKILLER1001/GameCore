@@ -31,7 +31,7 @@ public class Preferences implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    private static Inventory inv;
+    private ArrayList<Inventory> invs = new ArrayList<>();
 
     public static ArrayList<String> noJoinMessages = new ArrayList<>();
     public static ArrayList<String> noLeaveMessages = new ArrayList<>();
@@ -39,6 +39,7 @@ public class Preferences implements Listener {
     public static ArrayList<String> noAdvertisementMessages = new ArrayList<>();
     public static ArrayList<String> noPrivateMessages = new ArrayList<>();
     public static ArrayList<String> noChatPings = new ArrayList<>();
+
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
@@ -55,7 +56,8 @@ public class Preferences implements Listener {
     }
 
     public void tsGUI(Player player) {
-        inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
+
+        Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
 
         // Actual preferences
         List<String> loreJoin = new ArrayList<>();
@@ -217,7 +219,7 @@ public class Preferences implements Listener {
         inv.setItem(50, storelink);
         inv.setItem(51, closemenu);
         inv.setItem(53, nextpage);
-
+        invs.add(inv);
         player.openInventory(inv);
     }
 
@@ -229,20 +231,19 @@ public class Preferences implements Listener {
         if (a == Action.PHYSICAL || is == null || is.getType() == Material.AIR)
             return;
 
-        if (is.getType() == Material.REDSTONE_COMPARATOR) {
-            new Preferences(Main.get()).tsGUI(event.getPlayer());
-        }
 
-        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName()) && is.getType() == Material.REDSTONE_COMPARATOR) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+            new Preferences(Main.get()).tsGUI(event.getPlayer());
+            event.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onMove(InventoryClickEvent event) {
+    public void guiClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-
-        if (!event.getInventory().equals(inv)) {
+        if (!invs.contains(event.getInventory())) {
             return;
         }
 
