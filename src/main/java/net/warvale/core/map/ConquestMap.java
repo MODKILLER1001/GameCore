@@ -194,19 +194,28 @@ public class ConquestMap extends GameMap {
     }
 
 
-    public boolean crossCheckCoords(double x, double y, double z){
+    public boolean crossCheckCoords(double x, double y, double z, String team){
+
         if ((x >= getRedSpawnMinX() && x <= getRedSpawnMaxX()) && (y >= getRedSpawnMinY() && y <= getRedSpawnMaxY()) && (z >= getRedSpawnMinZ() && z <= getRedSpawnMaxZ())){
             return true;
         }
-        if ((x >= getRedCoreMinX() && x <= getRedCoreMaxX()) && (y >= getRedCoreMinY() && y <= getRedCoreMaxY()) && (z >= getRedCoreMinZ() && z <= getRedCoreMaxZ())){
-            return true;
+
+        if (team.equalsIgnoreCase("blue")) {
+            if ((x >= getRedCoreMinX() && x <= getRedCoreMaxX()) && (y >= getRedCoreMinY() && y <= getRedCoreMaxY()) && (z >= getRedCoreMinZ() && z <= getRedCoreMaxZ())) {
+                return true;
+            }
         }
+
         if ((x >= getBlueSpawnMinX() && x <= getBlueSpawnMaxX()) && (y >= getBlueSpawnMinY() && y <= getBlueSpawnMaxY()) && (z >= getBlueSpawnMinZ() && z <= getBlueSpawnMaxZ())){
             return true;
         }
-        if ((x >= getBlueCoreMinX() && x <= getBlueCoreMaxX()) && (y >= getBlueCoreMinY() && y <= getBlueCoreMaxY()) && (z >= getBlueCoreMinZ() && z <= getBlueCoreMaxZ())){
-            return true;
+
+        if (team.equalsIgnoreCase("red")) {
+            if ((x >= getBlueCoreMinX() && x <= getBlueCoreMaxX()) && (y >= getBlueCoreMinY() && y <= getBlueCoreMaxY()) && (z >= getBlueCoreMinZ() && z <= getBlueCoreMaxZ())) {
+                return true;
+            }
         }
+
         return false;
     }
 
