@@ -34,7 +34,7 @@ public class VoteCommand extends AbstractCommand {
             return false;
         }
 
-        if(!(Main.getTeams().getBlueTeam().hasPlayer(sender) || Main.getTeams().getRedTeam().hasPlayer(sender))){
+        if(!(Main.getTeams().getBlueTeam().hasEntry(sender.getName()) || Main.getTeams().getRedTeam().hasEntry(sender.getName()))){
             sender.sendMessage(ChatColor.RED + "You must be on a team to vote!");
             return false;
         }
