@@ -77,6 +77,7 @@ public class BossbarCountdownTask extends BukkitRunnable {
             BarManager.broadcastSound(Sound.BLOCK_NOTE_PLING);
         }
         if (countdown <= 0){
+            this.cancel();
             new Stages().initStages();
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + map.getName() + ChatColor.GRAY + "!");
             BarManager.getAnnounceBar().setVisible(false);
@@ -105,9 +106,7 @@ public class BossbarCountdownTask extends BukkitRunnable {
 
             Game.getInstance().setState(State.INGAME);
             new GameRunnable().runTaskTimer(Main.get(), 20, 20);
-            this.cancel();
             return;
-
         }
         BarManager.getAnnounceBar().setTitle(ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + DateUtils.secondsToString(countdown));
         BarManager.getAnnounceBar().setProgress((float)countdown/(float)(60 * 5));
