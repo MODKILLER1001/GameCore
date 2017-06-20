@@ -41,33 +41,27 @@ public class StartGameTask extends BukkitRunnable {
                 //teleport player
                 player.teleport(new ConquestMap(Game.getInstance().getChosenMap().getName()).getBlueSpawn().toLocation(Bukkit.getWorld(Game.getInstance().getChosenMap().getName())));
                 //give class
-                player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
+                //player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
             for (Player player : GameStart.teamRed) {
                 //teleport player
                 player.teleport(new ConquestMap(Game.getInstance().getChosenMap().getName()).getRedSpawn().toLocation(Bukkit.getWorld(Game.getInstance().getChosenMap().getName())));
                 //give class
-                player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
+                //player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
 
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                LobbyScoreboard.getInstance().removeScoreboard(player);
-                GameScoreboard.getInstance().addScoreboard(player);
-            }
         } catch (Exception ex) {
             Main.get().getLogger().log(Level.SEVERE, "Could not teleport players to chosen map", ex);
         }
 
-        Game.getInstance().setState(State.INGAME);
-
         //configure scoreboards
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             LobbyScoreboard.getInstance().removeScoreboard(player);
             GameScoreboard.getInstance().addScoreboard(player);
         }
 
-        new GameRunnable().runTaskTimer(Main.get(), 20, 20);
-        this.cancel();
+        Game.getInstance().setState(State.INGAME);
+        new GameRunnable(this).runTaskTimer(Main.get(), 20, 20);
     }
 
 

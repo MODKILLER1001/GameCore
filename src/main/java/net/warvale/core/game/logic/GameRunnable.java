@@ -6,6 +6,10 @@ public class GameRunnable extends BukkitRunnable {
 
     private static int seconds = 0;
 
+    public GameRunnable(BukkitRunnable startTask) {
+        startTask.cancel();
+    }
+
     @Override
     public void run() {
         ++seconds;
