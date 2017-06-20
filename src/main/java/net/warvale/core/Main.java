@@ -27,8 +27,6 @@ import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
 import net.warvale.core.stats.StatsEvents;
-import net.warvale.core.stats.StatsManager;
-import net.warvale.core.stats.StatsUtil;
 import net.warvale.core.tasks.LobbyTask;
 import net.warvale.core.tasks.ScoreboardTask;
 import net.warvale.core.utils.ftp.AbstractFileConnection;
@@ -109,9 +107,7 @@ public class Main extends JavaPlugin implements Listener {
     	new ClassSelect(this);
     	new Preferences(this);
     	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
-    	Bukkit.getPluginManager().registerEvents(new StatsEvents(this), this);
-    	Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
-    	Bukkit.getPluginManager().registerEvents(new StatsUtil(this), this);
+    	Bukkit.getPluginManager().registerEvents(new StatsEvents(), this);
     	Bukkit.getPluginManager().registerEvents(new CoreBlock(), this);
 
 
@@ -149,11 +145,6 @@ public class Main extends JavaPlugin implements Listener {
 		GameMap.registerMap(new ConquestMap("Canyon_Brook"));
 
 		Bukkit.getPluginManager().registerEvents(new RegionProtection(), this);
-		
-		//Load online players stats if any are on
-		for(Player p : Bukkit.getOnlinePlayers()){
-			StatsManager.loadPlayer(p);
-		}
 
 		EnchantGlow.getGlow();
 
@@ -212,9 +203,6 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-    	
-    	//save players stats
-    	StatsManager.onDisableSavePlayer();
 
 		//unregister teams
 		getTeams().getBlueTeam().unregister();

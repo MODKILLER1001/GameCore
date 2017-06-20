@@ -168,7 +168,7 @@ public class PlayerStats {
                             PlayerStats.this.setWins(set.getInt("wins"));
                             PlayerStats.this.setCoresBroken(set.getInt("cores_broken"));
                             PlayerStats.this.setLongestSnipe(set.getInt("longest_snipe"));
-                            
+
                         }
                         set.close();
                         stmt.close();

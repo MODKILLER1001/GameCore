@@ -65,6 +65,7 @@ public class JoinServer implements Listener {
             p.setGameMode(GameMode.ADVENTURE);
         }*/
 
+
         p.setAllowFlight(true);
         p.setGameMode(GameMode.ADVENTURE);
 
