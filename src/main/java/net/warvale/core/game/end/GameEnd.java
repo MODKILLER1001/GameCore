@@ -4,6 +4,7 @@ import net.warvale.core.Main;
 import net.warvale.core.embers.EmberManager;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
+import net.warvale.core.stats.PlayerStats;
 import net.warvale.core.stats.StatsManager;
 import net.warvale.staffcore.bossbar.BarManager;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class GameEnd {
     private static Team blueTeam = Main.getTeams().getBlueTeam();
     private static Team spectatorTeam = Main.getTeams().getSpectatorTeam();
 
-    public static void coreBrokenEnd(Team winningTeam){
+    public static void coreBrokenEnd(Team winningTeam){ //called when a team wins
         if (winningTeam == blueTeam){
             colorChat = ChatColor.DARK_AQUA;
             colorBar = BarColor.BLUE;
@@ -49,7 +50,7 @@ public class GameEnd {
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                StatsManager.addWins(Bukkit.getPlayer(p), 1);
+                new PlayerStats(Bukkit.getPlayer(p).getUniqueId()).addWin();
                 Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
                 Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
                 winningTeam.removeEntry(p);
@@ -64,11 +65,10 @@ public class GameEnd {
         } else {
             System.out.println("Invalid Team Won");
         }
-        //TODO: Reset Map
     }
 
 
-    public static void tieEnd(){
+    public static void tieEnd(){ //called if there is a tie
         MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has ended in a tie!");
         BarManager.broadcast(BarColor.PURPLE, ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "The game has ended in a tie!");
         BarManager.getAnnounceBar().setVisible(true);

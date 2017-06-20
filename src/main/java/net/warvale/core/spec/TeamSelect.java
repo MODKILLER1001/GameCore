@@ -181,7 +181,7 @@ public class TeamSelect implements Listener {
             break;
         case 4: //auto join
             if (event.getInventory().equals(inv)){
-                if (Main.getTeams().getBlueTeam().getSize() > Main.getTeams().getRedTeam().getSize()){
+                if (Main.getTeams().getBlueTeam().getEntries().size() > Main.getTeams().getRedTeam().getEntries().size()){
                     //join blue
                     Main.getTeams().getBlueTeam().addEntry(event.getWhoClicked().getName());
                     event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
@@ -197,7 +197,7 @@ public class TeamSelect implements Listener {
                     event.setCancelled(true);
                     player.closeInventory();
                     break;
-                } else if (Main.getTeams().getRedTeam().getSize() > Main.getTeams().getBlueTeam().getSize()){
+                } else if (Main.getTeams().getRedTeam().getEntries().size() > Main.getTeams().getBlueTeam().getEntries().size()){
                     //join red
                     Main.getTeams().getRedTeam().addEntry(event.getWhoClicked().getName());
                     event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
@@ -213,7 +213,7 @@ public class TeamSelect implements Listener {
                     event.setCancelled(true);
                     player.closeInventory();
                     break;
-                } else if (Main.getTeams().getBlueTeam().getSize() == Main.getTeams().getRedTeam().getSize()){
+                } else if (Main.getTeams().getBlueTeam().getEntries().size() == Main.getTeams().getRedTeam().getEntries().size()){
                     int team = NumberUtils.random(2,1);
                     if (team == 1){
                         Main.getTeams().getRedTeam().addEntry(event.getWhoClicked().getName());

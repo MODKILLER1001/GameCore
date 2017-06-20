@@ -2,6 +2,7 @@ package net.warvale.core.maps;
 
 import com.google.common.base.Joiner;
 import net.warvale.core.Main;
+import net.warvale.core.game.start.VoteRandomMap;
 import net.warvale.core.utils.mc.chat.MessageUtil;
 import net.warvale.core.utils.mc.items.EnchantGlow;
 import net.warvale.core.utils.mc.items.ItemStackBuilder;
@@ -75,10 +76,7 @@ public class VoteMenu extends Menu{
         //If it has been reset we can add
         if(mapList.isEmpty()){
             Collections.shuffle(GameMap.getMaps());
-            int size = GameMap.getMaps().size() > 5 ? 5 : GameMap.getMaps().size();
-            for(int i = 0; i < size; i++){
-                mapList.add(GameMap.getMaps().get(i));
-            }
+            mapList.addAll(new VoteRandomMap().getRandomMaps(4));
             for(GameMap map: mapList){
                 votesbymap.put(map, 0);
             }

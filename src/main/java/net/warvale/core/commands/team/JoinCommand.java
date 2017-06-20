@@ -18,7 +18,7 @@ import java.util.List;
 public class JoinCommand extends AbstractCommand {
 
     public JoinCommand() {
-        super("join", "<red|blue>");
+        super("join", "<red|blue|auto>");
     }
 
     @Override
@@ -103,7 +103,7 @@ public class JoinCommand extends AbstractCommand {
         }
 
         if (team.equalsIgnoreCase("auto")){
-            if (Main.getTeams().getBlueTeam().getSize() > Main.getTeams().getRedTeam().getSize()){
+            if (Main.getTeams().getBlueTeam().getPlayers().size() > Main.getTeams().getRedTeam().getPlayers().size()){
                 //join blue
                 Main.getTeams().getBlueTeam().addEntry(player.getName());
                 player.sendMessage(net.md_5.bungee.api.ChatColor.GRAY + "You joined team " + net.md_5.bungee.api.ChatColor.DARK_AQUA + "blue");
@@ -116,7 +116,7 @@ public class JoinCommand extends AbstractCommand {
                 if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){
                     new GameStart().startCountdown();
                 }
-            } else if (Main.getTeams().getRedTeam().getSize() > Main.getTeams().getBlueTeam().getSize()){
+            } else if (Main.getTeams().getRedTeam().getPlayers().size() > Main.getTeams().getBlueTeam().getPlayers().size()){
                 //join red
                 Main.getTeams().getRedTeam().addEntry(player.getName());
                 player.sendMessage(net.md_5.bungee.api.ChatColor.GRAY + "You joined team " + net.md_5.bungee.api.ChatColor.RED + "red");
@@ -129,7 +129,7 @@ public class JoinCommand extends AbstractCommand {
                 if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive) {
                     new GameStart().startCountdown();
                 }
-            } else if (Main.getTeams().getBlueTeam().getSize() == Main.getTeams().getRedTeam().getSize()){
+            } else if (Main.getTeams().getBlueTeam().getPlayers().size() == Main.getTeams().getRedTeam().getPlayers().size()){
                 int rteam = NumberUtils.random(2,1);
                 if (rteam == 1){
                     Main.getTeams().getRedTeam().addEntry(player.getName());

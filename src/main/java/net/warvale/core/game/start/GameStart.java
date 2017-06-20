@@ -17,35 +17,22 @@ import java.util.HashMap;
  * Created by AAces on 6/2/2017.
  */
 public class GameStart {
-    public static boolean votingActive = false;
-    public static ArrayList<String> voted = new ArrayList<>();
+    static boolean votingActive = false;
+    private static ArrayList<String> voted = new ArrayList<>();
     public static ArrayList<Player> teamBlue = new ArrayList<>();
     public static ArrayList<Player> teamRed = new ArrayList<>();
     public static ArrayList<Player> inGame = new ArrayList<>();
-    public static HashMap<String, Integer> votes = new HashMap<>();
-    public static HashMap<Integer, String> mapNumbers = new HashMap<>();
+    private static HashMap<String, Integer> votes = new HashMap<>();
+    private static HashMap<Integer, String> mapNumbers = new HashMap<>();
     public static boolean initActive = false;
     public static GameMap map;
-    public static MatchInfo info = new MatchInfo(teamBlue.size() + teamRed.size(), teamRed.size(), teamBlue.size());
+    static MatchInfo info;
 
 
     public void startCountdown() { //runs when there is at least one player on each team (change in TeamSelect lines 113 and 133)
         map = null;
 
         GameMap.doMaps();
-
-        mapNumbers.put(1, "Redwood Forest");
-        mapNumbers.put(2, "Volcano Island");
-        mapNumbers.put(3, "Pagoda Everglade");
-        mapNumbers.put(4, "Extraterrestrial");
-        mapNumbers.put(5, "Canyon Brook");
-
-        votes.put("redwood_forest", 0);
-        votes.put("volcano_island", 0);
-        votes.put("pagoda_everglade", 0);
-        votes.put("extraterrestrial", 0);
-        votes.put("canyon_brook", 0);
-
 
         initActive = true;
 
@@ -87,18 +74,6 @@ public class GameStart {
     public static void stopCountdown(StopReason reason){
         map = null;
         BarManager.getAnnounceBar().setVisible(false);
-        mapNumbers.put(1, "Redwood Forest");
-        mapNumbers.put(2, "Volcano Island");
-        mapNumbers.put(3, "Pagoda Everglade");
-        mapNumbers.put(4, "Extraterrestrial");
-        mapNumbers.put(5, "Canyon Brook");
-
-        votes.put("redwood_forest", 0);
-        votes.put("volcano_island", 0);
-        votes.put("pagoda_everglade", 0);
-        votes.put("extraterrestrial", 0);
-        votes.put("canyon_brook", 0);
-
 
         initActive = false;
 

@@ -7,6 +7,7 @@ import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
 import net.warvale.core.game.logic.GameRunnable;
 import net.warvale.core.game.logic.StageSystem.Stages;
+import net.warvale.core.game.logic.TeamBalancing;
 import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.game.start.GameStart;
@@ -46,13 +47,12 @@ public class BossbarCountdownTask extends BukkitRunnable {
         Game.getInstance().setState(State.COUNTDOWN);
         BarManager.getAnnounceBar().setVisible(true);
         if (countdown == 15){
-            map = VoteMenu.calculateMap();
-            GameStart.map = map;
-            MessageManager.broadcast(PrefixType.MAIN, map.getName() + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
+            TeamBalancing.balanceTeams();
+            Game.getInstance().setChosenmap(VoteMenu.calculateMap());
+            map = Game.getInstance().getChosenmap();
+            MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED + Game.getInstance().getChosenmap().getName() + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
         }
         if (countdown == 10){
-            MessageManager.broadcast(PrefixType.MAIN, ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + ChatColor.RED + countdown + ChatColor.GRAY + (countdown == 1 ? " second." : " seconds."));
-
             for (Player player : GameStart.inGame){
                 player.addPotionEffects(
                         Arrays.asList(
@@ -66,19 +66,18 @@ public class BossbarCountdownTask extends BukkitRunnable {
                         ChatUtils.yellow + "1." + ChatUtils.gray + " During the first " + ChatUtils.red + "20" + ChatUtils.gray + " minutes of the game, your core is invulnerable!",
                         ChatUtils.yellow + "2." + ChatUtils.gray + " At the end of the first stage, a boss spawns in the middle of the map!",
                         ChatUtils.yellow + "3." + ChatUtils.gray + " After that, diamonds will start to appear at middle. Diamonds can be used to craft the strongest armor in the game!",
-                        ChatUtils.yellow + "4." + ChatUtils.yellow + " Siege mode!" + ChatUtils.gray + " During this stage of the game, core breaking is 2x as powerful1!",
+                        ChatUtils.yellow + "4." + ChatUtils.yellow + " Siege mode!" + ChatUtils.gray + " During this stage of the game, core breaking is 2x as powerful!",
                         ChatUtils.yellow + "5." + ChatUtils.gray + " During the last stage of the game, cores will be broken instantly!",
                         "\n",
                         ChatUtils.divider).toArray());
             }
         }
-        if (countdown <= 9 && countdown >= 1){
+        if (countdown <= 10 && countdown >= 1){
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + ChatColor.RED + countdown + ChatColor.GRAY + (countdown == 1 ? " second." : " seconds."));
             BarManager.broadcastSound(Sound.BLOCK_NOTE_PLING);
         }
         if (countdown <= 0){
             new Stages().initStages();
-            this.cancel();
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + map.getName() + ChatColor.GRAY + "!");
             BarManager.getAnnounceBar().setVisible(false);
             for (Player player : GameStart.inGame){
@@ -87,11 +86,15 @@ public class BossbarCountdownTask extends BukkitRunnable {
             }
 
             for (Player player : GameStart.teamBlue){
-                player.teleport(new ConquestMap(GameStart.map.getName()).getBlueSpawn().toLocation(Bukkit.getWorld(map.getName())));
+                //teleport player
+                player.teleport(new ConquestMap(Game.getInstance().getChosenmap().getName()).getBlueSpawn().toLocation(Bukkit.getWorld(map.getName())));
+                //give class
                 player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
             for (Player player : GameStart.teamRed){
-                player.teleport(new ConquestMap(GameStart.map.getName()).getRedSpawn().toLocation(Bukkit.getWorld(map.getName())));
+                //teleport player
+                player.teleport(new ConquestMap(Game.getInstance().getChosenmap().getName()).getRedSpawn().toLocation(Bukkit.getWorld(map.getName())));
+                //give class
                 player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
 
@@ -102,7 +105,6 @@ public class BossbarCountdownTask extends BukkitRunnable {
 
             Game.getInstance().setState(State.INGAME);
             new GameRunnable().runTaskTimer(Main.get(), 20, 20);
-
             this.cancel();
             return;
 

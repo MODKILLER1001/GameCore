@@ -23,13 +23,10 @@ public class CoreBlock implements Listener {
     private int redCoresBroken = 0;
     private int blueCoresBroken = 0;
 
-    private int coreHP = 20;
-
-    public CoreState coreState = UNBREAKABLE; // UNBREAKABLE = first 10 minutes; BREAKABLE = after first 10 minutes;
+    private CoreState coreState = UNBREAKABLE; // UNBREAKABLE = first 10 minutes; BREAKABLE = after first 10 minutes;
 
     public void setCoreState(CoreState state) {
         coreState = state;
-        return;
     }
 
     @EventHandler
@@ -44,9 +41,7 @@ public class CoreBlock implements Listener {
         if (b.getLocation().equals(new ConquestMap(GameStart.map.getName()).getBlueCore().toLocation(Bukkit.getWorld(GameStart.map.getName()))) || b.getLocation().equals(new ConquestMap(GameStart.map.getName()).getRedCore().toLocation(Bukkit.getWorld(GameStart.map.getName())))){
             e.setCancelled(true);
         }
-        if (new ConquestMap(GameStart.map.getName()).crossCheckCoords(b.getLocation().getX(), b.getLocation().getY(), b.getLocation().getZ())){
-            e.setCancelled(true);
-        }
+        int coreHP = 20;
         if(coreState == UNBREAKABLE) {
 
             return;
@@ -54,40 +49,36 @@ public class CoreBlock implements Listener {
         } else if (coreState == BREAKABLE){
 
             if(b.getLocation().equals(new ConquestMap(GameStart.map.getName()).getBlueCore().toLocation(Bukkit.getWorld(GameStart.map.getName()))) && redteamplayers.contains(p)) {
+                blueCoresBroken = blueCoresBroken + 1;
                 if(blueCoresBroken == coreHP){
                     GameEnd.coreBrokenEnd(Main.getTeams().getRedTeam());
                 }
-
-                blueCoresBroken = blueCoresBroken + 1;
                 p.teleport(new ConquestMap(GameStart.map.getName()).getRedSpawn().toLocation(Bukkit.getWorld(GameStart.map.getName())));
             }
 
             if(b.getLocation().equals(new ConquestMap(GameStart.map.getName()).getRedCore().toLocation(Bukkit.getWorld(GameStart.map.getName()))) && blueteamplayers.contains(p)) {
+                redCoresBroken = redCoresBroken + 1;
                 if(redCoresBroken == coreHP){
                     GameEnd.coreBrokenEnd(Main.getTeams().getBlueTeam());
                 }
-
-                redCoresBroken = redCoresBroken + 1;
                 p.teleport(new ConquestMap(GameStart.map.getName()).getBlueSpawn().toLocation(Bukkit.getWorld(GameStart.map.getName())));
             }
 
         } else if (coreState == SPEED_BREAK){
 
             if(b.getLocation().equals(new ConquestMap(GameStart.map.getName()).getBlueCore().toLocation(Bukkit.getWorld(GameStart.map.getName()))) && redteamplayers.contains(p)) {
+                blueCoresBroken = blueCoresBroken + 2;
                 if(blueCoresBroken >= coreHP){
                     GameEnd.coreBrokenEnd(Main.getTeams().getRedTeam());
                 }
-
-                blueCoresBroken = blueCoresBroken + 2;
                 p.teleport(new ConquestMap(GameStart.map.getName()).getRedSpawn().toLocation(Bukkit.getWorld(GameStart.map.getName())));
             }
 
             if(b.getLocation().equals(new ConquestMap(GameStart.map.getName()).getRedCore().toLocation(Bukkit.getWorld(GameStart.map.getName()))) && blueteamplayers.contains(p)) {
+                redCoresBroken = redCoresBroken + 2;
                 if(redCoresBroken >= coreHP){
                     GameEnd.coreBrokenEnd(Main.getTeams().getBlueTeam());
                 }
-
-                redCoresBroken = redCoresBroken + 2;
                 p.teleport(new ConquestMap(GameStart.map.getName()).getBlueSpawn().toLocation(Bukkit.getWorld(GameStart.map.getName())));
             }
 
