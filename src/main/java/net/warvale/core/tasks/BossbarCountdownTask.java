@@ -49,8 +49,8 @@ public class BossbarCountdownTask extends BukkitRunnable {
         if (countdown == 15){
             TeamBalancing.balanceTeams();
             Game.getInstance().setChosenmap(VoteMenu.calculateMap());
-            map = Game.getInstance().getChosenmap();
-            MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED + Game.getInstance().getChosenmap().getName() + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
+            map = Game.getInstance().getChosenMap();
+            MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED + Game.getInstance().getChosenMap().getName() + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
         }
         if (countdown == 10){
             for (Player player : GameStart.inGame){
@@ -77,35 +77,12 @@ public class BossbarCountdownTask extends BukkitRunnable {
             BarManager.broadcastSound(Sound.BLOCK_NOTE_PLING);
         }
         if (countdown <= 0){
+
+            Game.getInstance().setChosenmap(map);
+
+            new StartGameTask().runTaskTimer(Main.get(), 20, 20);
+
             this.cancel();
-            new Stages().initStages();
-            MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + map.getName() + ChatColor.GRAY + "!");
-            BarManager.getAnnounceBar().setVisible(false);
-            for (Player player : GameStart.inGame){
-                player.removePotionEffect(PotionEffectType.SLOW);
-                player.removePotionEffect(PotionEffectType.JUMP);
-            }
-
-            for (Player player : GameStart.teamBlue){
-                //teleport player
-                player.teleport(new ConquestMap(Game.getInstance().getChosenmap().getName()).getBlueSpawn().toLocation(Bukkit.getWorld(map.getName())));
-                //give class
-                player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
-            }
-            for (Player player : GameStart.teamRed){
-                //teleport player
-                player.teleport(new ConquestMap(Game.getInstance().getChosenmap().getName()).getRedSpawn().toLocation(Bukkit.getWorld(map.getName())));
-                //give class
-                player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
-            }
-
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                LobbyScoreboard.getInstance().removeScoreboard(player);
-                GameScoreboard.getInstance().addScoreboard(player);
-            }
-
-            Game.getInstance().setState(State.INGAME);
-            new GameRunnable().runTaskTimer(Main.get(), 20, 20);
             return;
         }
         BarManager.getAnnounceBar().setTitle(ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + DateUtils.secondsToString(countdown));

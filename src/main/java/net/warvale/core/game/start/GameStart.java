@@ -32,8 +32,6 @@ public class GameStart {
     public void startCountdown() { //runs when there is at least one player on each team (change in TeamSelect lines 113 and 133)
         map = null;
 
-        GameMap.doMaps();
-
         initActive = true;
 
         for (Player player : Bukkit.getServer().getOnlinePlayers()){

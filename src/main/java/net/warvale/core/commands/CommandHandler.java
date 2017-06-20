@@ -9,6 +9,7 @@ import net.warvale.core.commands.admin.BuildCommand;
 import net.warvale.core.commands.admin.SetStateCommand;
 import net.warvale.core.commands.game.*;
 import net.warvale.core.commands.team.JoinCommand;
+import net.warvale.core.exceptions.CommandException;
 import net.warvale.core.game.start.VoteCommand;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
@@ -18,6 +19,7 @@ import net.warvale.core.spec.PreferencesCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
+
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
     private final Main plugin;

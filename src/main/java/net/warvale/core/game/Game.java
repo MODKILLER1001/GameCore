@@ -97,7 +97,7 @@ public class Game {
         this.chosenmap = map;
     }
 
-    public GameMap getChosenmap() {
+    public GameMap getChosenMap() {
         return chosenmap;
     }
 

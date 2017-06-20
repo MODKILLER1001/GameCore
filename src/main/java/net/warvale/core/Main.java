@@ -143,6 +143,7 @@ public class Main extends JavaPlugin implements Listener {
 		GameMap.registerMap(new ConquestMap("Volcano_Island"));
 		GameMap.registerMap(new ConquestMap("Extraterrestrial"));
 		GameMap.registerMap(new ConquestMap("Canyon_Brook"));
+		GameMap.doMaps();
 
 		Bukkit.getPluginManager().registerEvents(new RegionProtection(), this);
 
