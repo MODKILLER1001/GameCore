@@ -17,6 +17,7 @@ import net.warvale.core.connect.PingListener;
 import net.warvale.core.game.CoreBlock;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.BoardManager;
+import net.warvale.core.game.logic.RegionProtection;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.map.ConquestMap;
@@ -147,6 +148,7 @@ public class Main extends JavaPlugin implements Listener {
 		GameMap.registerMap(new ConquestMap("Extraterrestrial"));
 		GameMap.registerMap(new ConquestMap("Canyon_Brook"));
 
+		Bukkit.getPluginManager().registerEvents(new RegionProtection(), this);
 		
 		//Load online players stats if any are on
 		for(Player p : Bukkit.getOnlinePlayers()){
