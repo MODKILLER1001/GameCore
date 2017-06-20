@@ -78,8 +78,6 @@ public class BossbarCountdownTask extends BukkitRunnable {
         }
         if (countdown <= 0){
 
-            Game.getInstance().setChosenmap(map);
-
             new StartGameTask().runTaskTimer(Main.get(), 20, 20);
 
             this.cancel();
