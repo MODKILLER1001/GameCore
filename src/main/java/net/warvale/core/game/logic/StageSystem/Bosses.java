@@ -27,6 +27,7 @@ public class Bosses {
 
     public void initBoss() {
         int chance = randomWithRange(1, 5);
+        //todo: put proper location
         Location bossLocation = new Location(Bukkit.getWorld(world), 0, 50, 0 );
         switch (chance) {
             case 1:

@@ -45,7 +45,6 @@ public class BossbarCountdownTask extends BukkitRunnable {
     public void run(){
         countdown = countdown - 1;
         Game.getInstance().setState(State.COUNTDOWN);
-        BarManager.getAnnounceBar().setVisible(true);
         if (countdown == 15){
             TeamBalancing.balanceTeams();
             Game.getInstance().setChosenmap(VoteMenu.calculateMap());

@@ -55,7 +55,7 @@ public class StartGameTask extends BukkitRunnable {
         } catch (Exception ex) {
             Main.get().getLogger().log(Level.SEVERE, "Could not teleport players to chosen map", ex);
         }
-
+        GameStart.initActive = false;
         //configure scoreboards
         for (Player player : Bukkit.getOnlinePlayers()) {
             LobbyScoreboard.getInstance().removeScoreboard(player);
