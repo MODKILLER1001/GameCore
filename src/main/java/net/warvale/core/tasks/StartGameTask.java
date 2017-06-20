@@ -59,6 +59,13 @@ public class StartGameTask extends BukkitRunnable {
         }
 
         Game.getInstance().setState(State.INGAME);
+
+        //configure scoreboards
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            LobbyScoreboard.getInstance().removeScoreboard(player);
+            GameScoreboard.getInstance().addScoreboard(player);
+        }
+
         new GameRunnable().runTaskTimer(Main.get(), 20, 20);
         this.cancel();
     }

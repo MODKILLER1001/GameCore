@@ -103,7 +103,7 @@ public class GameScoreboard {
             addScoreboard(p, display);
         }
 
-        Objective objective = getScoreboards().get(p.getUniqueId()).getObjective("lobby");
+        Objective objective = getScoreboards().get(p.getUniqueId()).getObjective("game");
 
         if (objective != null) {
             objective.setDisplayName(ChatColor.DARK_GRAY + "» " + display + ChatColor.DARK_GRAY + " «");
