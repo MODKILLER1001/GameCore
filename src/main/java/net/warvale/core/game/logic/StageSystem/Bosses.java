@@ -1,5 +1,8 @@
 package net.warvale.core.game.logic.StageSystem;
 
+import net.warvale.core.game.Game;
+import net.warvale.core.map.LocationType;
+import net.warvale.core.map.MapLocations;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
@@ -23,12 +26,10 @@ public class Bosses {
         int range = (max - min) + 1;
         return (int)(Math.random() * range) + min;
     }
-    private String world = "World";
 
     public void initBoss() {
         int chance = randomWithRange(1, 5);
-        //todo: put proper location
-        Location bossLocation = new Location(Bukkit.getWorld(world), 0, 50, 0 );
+        Location bossLocation = MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "center", LocationType.CENTER);
         switch (chance) {
             case 1:
                 this.BossWizard(bossLocation);

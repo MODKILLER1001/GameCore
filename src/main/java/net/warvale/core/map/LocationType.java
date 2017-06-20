@@ -5,5 +5,6 @@ package net.warvale.core.map;
  */
 public enum LocationType {
     CORE,
-    SPAWN
+    SPAWN,
+    CENTER
 }
