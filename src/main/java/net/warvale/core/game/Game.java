@@ -21,6 +21,7 @@ public class Game {
     private int minPlayers;
     private int gameLength;
     private GameMap chosenmap;
+    private boolean stats;
 
     public static  Game getInstance() {
         if (instance == null) {
@@ -42,6 +43,7 @@ public class Game {
         maxPlayer = ConfigManager.getConfig().getInt("maxPlayers", 50);
         minPlayers = ConfigManager.getConfig().getInt("minPlayers", 8);
         gameLength = ConfigManager.getConfig().getInt("gameLength", 60);
+        stats = ConfigManager.getConfig().getBoolean("stats", true);
     }
 
     /**
@@ -97,6 +99,17 @@ public class Game {
 
     public GameMap getChosenmap() {
         return chosenmap;
+    }
+
+    public boolean isStatsEnabled() {
+        return this.stats;
+    }
+
+    public void setStats(boolean enable) {
+        this.stats = stats;
+
+        ConfigManager.getConfig().set("stats", enable);
+        ConfigManager.getInstance().saveConfig();
     }
 
 }
