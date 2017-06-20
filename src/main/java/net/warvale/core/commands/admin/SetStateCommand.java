@@ -30,7 +30,7 @@ public class SetStateCommand extends AbstractCommand {
         }
 
         try {
-            State state = State.valueOf(args[0]);
+            State state = State.valueOf(args[0].toUpperCase());
 
             Game.getInstance().setState(state);
             MessageManager.broadcast(PrefixType.MAIN, "The state has been set to " + state.toString());

@@ -28,7 +28,7 @@ public class ClassSelect implements Listener {
 
     private static HashMap<Integer, Class> slots = new HashMap<>();
     private static Inventory inv;
-
+    private ArrayList<Inventory> invs = new ArrayList<Inventory>();
 
     public ClassSelect(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -64,6 +64,7 @@ public class ClassSelect implements Listener {
             slots.put(inventoryIndex, clazz);
             inventoryIndex = inventoryIndex + 1;
         }
+        invs.add(inv);
         player.openInventory(inv);
     }
 
@@ -72,14 +73,12 @@ public class ClassSelect implements Listener {
         Action a = event.getAction();
         ItemStack is = event.getItem();
 
-        if (a == Action.PHYSICAL || is == null || is.getType() == Material.AIR)
-            return;
+        if (a == Action.PHYSICAL || is == null || is.getType() == Material.AIR) return;
 
-        if (is.getType() == Material.NETHER_STAR)
-            new ClassSelect(Main.get()).openGUI(event.getPlayer());
-
-        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName()) && is.getType() == Material.NETHER_STAR) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+            new ClassSelect(Main.get()).openGUI(event.getPlayer());
+            event.setCancelled(true);
         }
 
     }
@@ -89,7 +88,7 @@ public class ClassSelect implements Listener {
         Player player = (Player) event.getWhoClicked();
         Class clazz = slots.get(event.getSlot());
 
-        if (!event.getInventory().equals(inv)) {
+        if (!invs.contains(inv)) {
             return;
         }
 

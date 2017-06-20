@@ -1,6 +1,9 @@
 package net.warvale.core.spec;
 
 import net.warvale.core.game.start.GameStart;
+import net.warvale.core.utils.NumberUtils;
+import net.warvale.staffcore.rank.RankManager;
+import net.warvale.staffcore.users.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -64,14 +67,22 @@ public class TeamSelect implements Listener {
         itemtscyanmeta.setDisplayName(ChatColor.DARK_AQUA + "Blue");
         itemtscyan.setItemMeta(itemtscyanmeta);
 
+        Wool wool_auto = new Wool(DyeColor.PURPLE);
+        ItemStack itemtsauto = wool_auto.toItemStack(1);
+
+        ItemMeta itemtsautometa = itemtsauto.getItemMeta();
+        itemtsautometa.setDisplayName(ChatColor.GOLD + "Auto Join");
+        itemtsauto.setItemMeta(itemtsautometa);
+
         ItemStack closemenu = new ItemStack(Material.BARRIER, 1);
         ItemMeta closemenumeta = closemenu.getItemMeta();
         closemenumeta.setDisplayName(ChatColor.DARK_RED + "Close selector");
         closemenu.setItemMeta(closemenumeta);
 
-        inv.setItem(3, itemtsred);
-        inv.setItem(4, closemenu);
-        inv.setItem(5, itemtscyan);
+        inv.setItem(2, itemtsred);
+        inv.setItem(4, itemtsauto);
+        inv.setItem(8, closemenu);
+        inv.setItem(6, itemtscyan);
 
         player.openInventory(inv);
     }
@@ -103,19 +114,27 @@ public class TeamSelect implements Listener {
             }
         }
         switch (event.getSlot()) {
-        case 3: // Join red
+        case 2: // Join red
             if (event.getInventory().equals(inv)) {
+                if (!event.getWhoClicked().hasPermission("warvale.teamSelect")){
+                    event.getWhoClicked().sendMessage(ChatColor.RED + "You must have at least a " + ChatColor.DARK_PURPLE + "mythic" + " rank to select a team. Use Auto Join instead.");
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    break;
+                }
+                if (Main.getTeams().getRedTeam().getSize() - Main.getTeams().getBlueTeam().getSize() >= 2){
+                    event.getWhoClicked().sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "This team is full!");
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    break;
+                }
                 Main.getTeams().getRedTeam().addEntry(event.getWhoClicked().getName());
                 event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
                 for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
                     event.getWhoClicked().removePotionEffect(effect.getType());
                 player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
                 if (GameStart.initActive){
-                    player.sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote #" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!" + org.bukkit.ChatColor.DARK_BLUE +
-                            "\n1: Redwood Forest" +
-                            "\n2: Volcano Island" +
-                            "\n3: Pagoda Everglade" +
-                            "\n4: Extraterrestrial");
+                    event.getWhoClicked().sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
                 }
                 if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive) {
                     new GameStart().startCountdown();
@@ -124,32 +143,144 @@ public class TeamSelect implements Listener {
                 player.closeInventory();
             }
             break;
-        case 4: // Close menu
+        case 8: // Close menu
             if (event.getInventory().equals(inv)) {
                 event.setCancelled(true);
                 player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_CLOSE, 1, 1);
                 player.closeInventory();
             }
             break;
-        case 5: // Join blue
+        case 6: // Join blue
             if (event.getInventory().equals(inv)) {
+                if (!event.getWhoClicked().hasPermission("warvale.teamSelect")){
+                    event.getWhoClicked().sendMessage(ChatColor.RED + "You must have at least a " + ChatColor.DARK_PURPLE + "mythic" + " rank to select a team. Use Auto Join instead.");
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    break;
+                }
+                if (Main.getTeams().getBlueTeam().getSize() - Main.getTeams().getRedTeam().getSize() >= 2){
+                    event.getWhoClicked().sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "This team is full!");
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    break;
+                }
                 Main.getTeams().getBlueTeam().addEntry(event.getWhoClicked().getName());
                 event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
                 for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
                     event.getWhoClicked().removePotionEffect(effect.getType());
                 player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
                 if (GameStart.initActive){
-                    player.sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote #" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!" + org.bukkit.ChatColor.DARK_BLUE +
-                            "\n1: Redwood Forest" +
-                            "\n2: Volcano Island" +
-                            "\n3: Pagoda Everglade" +
-                            "\n4: Extraterrestrial");
+                    event.getWhoClicked().sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
                 }
                 if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){
                     new GameStart().startCountdown();
                 }
                 event.setCancelled(true);
                 player.closeInventory();
+            }
+            break;
+        case 4: //auto join
+            if (event.getInventory().equals(inv)){
+                if (Main.getTeams().getBlueTeam().getSize() > Main.getTeams().getRedTeam().getSize()){
+                    //join blue
+                    Main.getTeams().getBlueTeam().addEntry(event.getWhoClicked().getName());
+                    event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
+                    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
+                        event.getWhoClicked().removePotionEffect(effect.getType());
+                    player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+                    if (GameStart.initActive){
+                        event.getWhoClicked().sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
+                    }
+                    if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){
+                        new GameStart().startCountdown();
+                    }
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    break;
+                } else if (Main.getTeams().getRedTeam().getSize() > Main.getTeams().getBlueTeam().getSize()){
+                    //join red
+                    Main.getTeams().getRedTeam().addEntry(event.getWhoClicked().getName());
+                    event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
+                    for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
+                        event.getWhoClicked().removePotionEffect(effect.getType());
+                    player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+                    if (GameStart.initActive){
+                        event.getWhoClicked().sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
+                    }
+                    if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive) {
+                        new GameStart().startCountdown();
+                    }
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    break;
+                } else if (Main.getTeams().getBlueTeam().getSize() == Main.getTeams().getRedTeam().getSize()){
+                    int team = NumberUtils.random(2,1);
+                    if (team == 1){
+                        Main.getTeams().getRedTeam().addEntry(event.getWhoClicked().getName());
+                        event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
+                        for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
+                            event.getWhoClicked().removePotionEffect(effect.getType());
+                        player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+                        if (GameStart.initActive){
+                            event.getWhoClicked().sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
+                        }
+                        if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive) {
+                            new GameStart().startCountdown();
+                        }
+                        event.setCancelled(true);
+                        player.closeInventory();
+                        break;
+                    } else {
+                        Main.getTeams().getBlueTeam().addEntry(event.getWhoClicked().getName());
+                        event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
+                        for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
+                            event.getWhoClicked().removePotionEffect(effect.getType());
+                        player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+                        if (GameStart.initActive){
+                            event.getWhoClicked().sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
+                        }
+                        if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){
+                            new GameStart().startCountdown();
+                        }
+                        event.setCancelled(true);
+                        player.closeInventory();
+                        break;
+                    }
+                } else {
+                    //join random
+                    int team = NumberUtils.random(2,1);
+                    if (team == 1){
+                        Main.getTeams().getRedTeam().addEntry(event.getWhoClicked().getName());
+                        event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.RED + "red");
+                        for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
+                            event.getWhoClicked().removePotionEffect(effect.getType());
+                        player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+                        if (GameStart.initActive){
+                            event.getWhoClicked().sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
+                        }
+                        if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive) {
+                            new GameStart().startCountdown();
+                        }
+                        event.setCancelled(true);
+                        player.closeInventory();
+                        break;
+                    } else {
+                        Main.getTeams().getBlueTeam().addEntry(event.getWhoClicked().getName());
+                        event.getWhoClicked().sendMessage(ChatColor.GRAY + "You joined team " + ChatColor.DARK_AQUA + "blue");
+                        for (PotionEffect effect : event.getWhoClicked().getActivePotionEffects())
+                            event.getWhoClicked().removePotionEffect(effect.getType());
+                        player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
+                        if (GameStart.initActive){
+                            event.getWhoClicked().sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
+                        }
+                        if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){
+                            new GameStart().startCountdown();
+                        }
+                        event.setCancelled(true);
+                        player.closeInventory();
+                        break;
+                    }
+                }
             }
             break;
 

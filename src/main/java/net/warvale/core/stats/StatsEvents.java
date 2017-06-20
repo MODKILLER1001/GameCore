@@ -17,7 +17,7 @@ public class StatsEvents implements Listener {
     
     @EventHandler
 	public void onJoin(PlayerJoinEvent e){
-		final Player p = (Player) e.getPlayer();
+		final Player p = e.getPlayer();
 		if(StatsManager.getKills(p) == null){
 			StatsManager.setKills(p, 0);
 		}
