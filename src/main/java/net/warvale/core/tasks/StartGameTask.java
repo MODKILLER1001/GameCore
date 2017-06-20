@@ -10,6 +10,8 @@ import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.game.start.GameStart;
 import net.warvale.core.map.ConquestMap;
+import net.warvale.core.map.LocationType;
+import net.warvale.core.map.MapLocations;
 import net.warvale.core.maps.GameMap;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
@@ -39,13 +41,13 @@ public class StartGameTask extends BukkitRunnable {
 
             for (Player player : GameStart.teamBlue) {
                 //teleport player
-                player.teleport(new ConquestMap(Game.getInstance().getChosenMap().getName()).getBlueSpawn().toLocation(Bukkit.getWorld(Game.getInstance().getChosenMap().getName())));
+                player.teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "blue", LocationType.SPAWN));
                 //give class
                 //player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
             for (Player player : GameStart.teamRed) {
                 //teleport player
-                player.teleport(new ConquestMap(Game.getInstance().getChosenMap().getName()).getRedSpawn().toLocation(Bukkit.getWorld(Game.getInstance().getChosenMap().getName())));
+                player.teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "red", LocationType.SPAWN));
                 //give class
                 //player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
