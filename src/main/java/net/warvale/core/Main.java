@@ -221,14 +221,6 @@ public class Main extends JavaPlugin implements Listener {
 			getLogger().log(Level.SEVERE, "Could not close database connection", e);
 		}
 
-		try {
-			if (getFileConnection().isConnected()) {
-				getFileConnection().close();
-			}
-		} catch (Exception ex) {
-			getLogger().log(Level.SEVERE, "Could not close FTP connection", ex);
-		}
-
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "Warvale: Conquest Gamecore " + ChatColor.GRAY + "Reloading plugin...");
 
 		unregisterMenus();
