@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -100,6 +101,18 @@ public class JoinServer implements Listener {
             } else if (slot == KITSLOT) {
                 p.sendMessage("Function not implemented yet");
             }
+        }
+
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onLogin(PlayerLoginEvent event) {
+        //check for debug mode and permissions
+        Player player = event.getPlayer();
+
+        if (Game.getInstance().isDebugEnabled() && !player.hasPermission("warvale.testing")) {
+            event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+            event.setKickMessage("You are not authorized to test games.");
         }
 
     }

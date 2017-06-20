@@ -7,6 +7,7 @@ import net.warvale.core.Main;
 import net.warvale.core.chat.ChatNameColorCommand;
 import net.warvale.core.commands.admin.BuildCommand;
 import net.warvale.core.commands.admin.SetStateCommand;
+import net.warvale.core.commands.admin.SetdebugCommand;
 import net.warvale.core.commands.game.*;
 import net.warvale.core.commands.team.JoinCommand;
 import net.warvale.core.exceptions.CommandException;
@@ -126,6 +127,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
         //admin
         cmds.add(new SetStateCommand());
+        cmds.add(new SetdebugCommand());
         cmds.add(new BuildCommand());
 
         // basic

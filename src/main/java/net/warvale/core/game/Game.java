@@ -22,6 +22,7 @@ public class Game {
     private int gameLength;
     private GameMap chosenmap;
     private boolean stats;
+    private boolean debug;
 
     public static  Game getInstance() {
         if (instance == null) {
@@ -44,6 +45,7 @@ public class Game {
         minPlayers = ConfigManager.getConfig().getInt("minPlayers", 8);
         gameLength = ConfigManager.getConfig().getInt("gameLength", 60);
         stats = ConfigManager.getConfig().getBoolean("stats", true);
+        debug = ConfigManager.getConfig().getBoolean("debug", false);
     }
 
     /**
@@ -109,6 +111,17 @@ public class Game {
         this.stats = stats;
 
         ConfigManager.getConfig().set("stats", enable);
+        ConfigManager.getInstance().saveConfig();
+    }
+
+    public boolean isDebugEnabled() {
+        return this.debug;
+    }
+
+    public void setDebug(boolean enable) {
+        this.debug = enable;
+
+        ConfigManager.getConfig().set("debug", enable);
         ConfigManager.getInstance().saveConfig();
     }
 

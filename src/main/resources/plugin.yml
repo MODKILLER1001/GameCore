@@ -33,3 +33,5 @@ commands:
     description: Opens the preferences menu.
   chatnamecolor:
     description: Change the color that you see your name in chat if it is said.
+  setdebug:
+    description: sets the debug mode
