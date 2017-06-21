@@ -16,7 +16,7 @@ import java.util.List;
 public class SetdebugCommand extends AbstractCommand {
 
     public SetdebugCommand() {
-        super("setstate", "<state>");
+        super("setdebug", "<debug>");
     }
 
     @Override
