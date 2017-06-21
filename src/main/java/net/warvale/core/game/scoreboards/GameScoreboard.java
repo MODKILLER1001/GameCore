@@ -38,7 +38,7 @@ public class GameScoreboard {
 
     public void addScoreboard(Player player) {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("lobby", "dummy");
+        Objective objective = scoreboard.registerNewObjective("game", "dummy");
 
         objective.setDisplayName(ChatColor.DARK_GRAY + "» " + ChatColor.DARK_RED + "Warvale"
                 + ChatColor.DARK_GRAY + " «" );
