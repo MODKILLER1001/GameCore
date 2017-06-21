@@ -32,6 +32,7 @@ public class JoinCommand extends AbstractCommand {
         Player player = (Player) sender;
         if (args.length == 0) {
             new TeamSelect(Main.get()).tsGUI(player);
+            return true;
         }
         String team = args[0];
 
@@ -40,6 +41,14 @@ public class JoinCommand extends AbstractCommand {
                 throw new CommandException(ChatColor.GRAY + "You're already on the " + ChatColor.DARK_AQUA + "blue team");
             } else {
                 // Join the team
+                if (!player.hasPermission("warvale.teamSelect")){
+                    player.sendMessage(net.md_5.bungee.api.ChatColor.RED + "You must have at least a " + net.md_5.bungee.api.ChatColor.DARK_PURPLE + "mythic" + ChatColor.RED + " rank to select a team. Use Auto Join instead.");
+                    return true;
+                }
+                if (Main.getTeams().getBlueTeam().getSize() - Main.getTeams().getRedTeam().getSize() >= 2){
+                    player.sendMessage(net.md_5.bungee.api.ChatColor.DARK_GRAY + "[" + net.md_5.bungee.api.ChatColor.DARK_RED + "Warvale" + net.md_5.bungee.api.ChatColor.DARK_GRAY + "] " + net.md_5.bungee.api.ChatColor.GRAY + "This team is full!");
+                    return true;
+                }
                 if (Main.getTeams().getRedTeam().getEntries().contains(player.getName())) {
                     throw new CommandException(ChatColor.GRAY + "You may not change teams at this time.");
                 }
@@ -64,12 +73,12 @@ public class JoinCommand extends AbstractCommand {
             } else {
                 // Join the team
                 if (!player.hasPermission("warvale.teamSelect")){
-                    player.sendMessage(net.md_5.bungee.api.ChatColor.RED + "You must have at least a " + net.md_5.bungee.api.ChatColor.DARK_PURPLE + "mythic" + " rank to select a team. Use Auto Join instead.");
-                    return false;
+                    player.sendMessage(net.md_5.bungee.api.ChatColor.RED + "You must have at least a " + net.md_5.bungee.api.ChatColor.DARK_PURPLE + "mythic" + ChatColor.RED + " rank to select a team. Use Auto Join instead.");
+                    return true;
                 }
                 if (Main.getTeams().getRedTeam().getSize() - Main.getTeams().getBlueTeam().getSize() >= 2){
                     player.sendMessage(net.md_5.bungee.api.ChatColor.DARK_GRAY + "[" + net.md_5.bungee.api.ChatColor.DARK_RED + "Warvale" + net.md_5.bungee.api.ChatColor.DARK_GRAY + "] " + net.md_5.bungee.api.ChatColor.GRAY + "This team is full!");
-                    return false;
+                    return true;
                 }
                 if (Main.getTeams().getBlueTeam().getEntries().contains(player.getName())) {
                     throw new CommandException(ChatColor.GRAY + "You may not change teams at this time.");

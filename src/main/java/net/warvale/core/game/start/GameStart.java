@@ -125,13 +125,10 @@ public class GameStart {
         new BossbarCountdownTask().runTaskTimer(Main.get(), 0, 20);
     }
 
-
-
-
     public static void stopCountdown(StopReason reason){
         map = null;
         BarManager.getAnnounceBar().setVisible(false);
-
+        resetGame();
         initActive = false;
 
         for (Player player : Bukkit.getServer().getOnlinePlayers()){
@@ -161,6 +158,11 @@ public class GameStart {
         }
 
         new BossbarCountdownTask().cancel();
+    }
+
+    public static void resetGame(){
+        GameMap.doMaps();
+
     }
 
 }

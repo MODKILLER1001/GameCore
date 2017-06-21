@@ -4,6 +4,7 @@ package net.warvale.core.commands.game;
 import net.warvale.core.commands.AbstractCommand;
 import net.warvale.core.exceptions.CommandException;
 import net.warvale.core.game.Game;
+import net.warvale.core.game.start.GameStart;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class StartCommand extends AbstractCommand {
         Player player = (Player) sender;
 
         player.sendMessage(ChatColor.GRAY + "Starting the game automatically..");
-
+        new GameStart().startCountdown();
 
         return true;
     }

@@ -27,8 +27,6 @@ commands:
     description: Use this to vote for which map is played.
   setstate:
     description: Sets the state of the game.
-  allowbuild:
-    description: Allow a specified user to build.
   settings:
     description: Opens the preferences menu.
   chatnamecolor:
@@ -37,3 +35,5 @@ commands:
     description: sets the debug mode
   class:
     description: Opens the class selection menu
+  whereami:
+    description: Shows the player their exact location.

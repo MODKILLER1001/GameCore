@@ -26,7 +26,7 @@ public class PreferencesCommand extends AbstractCommand {
             return true;
         } else {
             sender.sendMessage("This command can only be run by players");
-            return false;
+            return true;
         }
     }
     @Override

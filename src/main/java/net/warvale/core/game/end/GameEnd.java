@@ -2,6 +2,9 @@ package net.warvale.core.game.end;
 
 import net.warvale.core.Main;
 import net.warvale.core.embers.EmberManager;
+import net.warvale.core.game.Game;
+import net.warvale.core.game.start.GameStart;
+import net.warvale.core.map.MapLocations;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.core.stats.PlayerStats;
@@ -51,13 +54,13 @@ public class GameEnd {
                     e.printStackTrace();
                 }
                 new PlayerStats(Bukkit.getPlayer(p).getUniqueId()).addWin();
-                Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
+                Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
                 Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
                 winningTeam.removeEntry(p);
                 spectatorTeam.addEntry(p);
             }
             for (String p : losingTeam.getEntries()) {
-                Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
+                Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
                 Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
                 losingTeam.removeEntry(p);
                 spectatorTeam.addEntry(p);
@@ -65,6 +68,7 @@ public class GameEnd {
         } else {
             System.out.println("Invalid Team Won");
         }
+        restartGame();
     }
 
 
@@ -74,18 +78,30 @@ public class GameEnd {
         BarManager.getAnnounceBar().setVisible(true);
         BarManager.getAnnounceBar().setProgress(1);
         for (String p : blueTeam.getEntries()){
-            Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
+            Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
             Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
             blueTeam.removeEntry(p);
             spectatorTeam.addEntry(p);
         }
         for (String p : redTeam.getEntries()){
-            Bukkit.getPlayer(p).teleport(new Location(Bukkit.getWorld("lobby"), 383, 103, 71, 180, 0));
+            Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
             Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
             redTeam.removeEntry(p);
             spectatorTeam.addEntry(p);
         }
-        //TODO: Reset Map
+        restartGame();
+    }
+
+    private static void restartGame(){
+        GameStart.resetGame();
+        if (Bukkit.getOnlinePlayers().size() >= 8){
+            new GameStart().startCountdown();
+        } else {
+            int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
+            BarManager.broadcast(BarColor.GREEN, net.md_5.bungee.api.ChatColor.RED +
+                    String.valueOf(minPlayers) + net.md_5.bungee.api.ChatColor.DARK_GREEN +
+                    " more players needed to start the game!");
+        }
     }
 
 }

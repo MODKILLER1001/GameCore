@@ -4,6 +4,7 @@ import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
 import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
+import net.warvale.core.map.MapLocations;
 import net.warvale.core.maps.VoteMenu;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
@@ -72,22 +73,18 @@ public class JoinServer implements Listener {
 
         p.setAllowFlight(true);
         p.setGameMode(GameMode.ADVENTURE);
-
+        if (Game.getInstance().isState(State.INGAME)){
+            int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
+            BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
+            BarManager.broadcast(BarColor.GREEN, ChatColor.RED +
+                    String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
+                    " more players needed to start the game!");
+        }
         LobbyScoreboard.getInstance().addScoreboard(event.getPlayer());
         LobbyScoreboard.getInstance().newScoreboard(event.getPlayer());
 
-        BarManager.broadcast(BarColor.GREEN, ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "[+] " + ChatColor.RESET + playerName);
-        BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
-
-        int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
-
-        MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED +
-                String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
-                " more players needed to start the game!");
-
         if (Game.getInstance().isState(State.LOBBY)) {
-            p.teleport(new Location(Bukkit.getWorld("lobby"),
-                    0, 50, 0));
+            p.teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
             p.getInventory().setContents(generateSpawnInventory(4 * 9));
         }
 

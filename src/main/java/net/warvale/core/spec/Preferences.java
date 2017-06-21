@@ -2,7 +2,6 @@ package net.warvale.core.spec;
 
 import net.md_5.bungee.api.ChatColor;
 import net.warvale.core.Main;
-import net.warvale.core.commands.admin.BuildCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -510,7 +509,7 @@ public class Preferences implements Listener {
 
     @EventHandler
     public void onPlaceAttempt(BlockPlaceEvent event) {
-        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName()) && !(BuildCommand.canBuild.contains(event.getPlayer()))) {
+        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.setCancelled(true);
         } else {
             event.setCancelled(false);
