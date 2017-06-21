@@ -47,7 +47,7 @@ public class ClassSelect implements Listener {
         }
     }
 
-    private void openGUI(Player player) {
+    public void openGUI(Player player) {
         inv = Bukkit.createInventory(null, 45, ChatColor.DARK_GRAY + "Select a class: ");
         Integer inventoryIndex = 0;
         for (Map.Entry<String, Class> clazzSet : ClassManager.classes.entrySet()) {
@@ -106,6 +106,7 @@ public class ClassSelect implements Listener {
         // this time.");
         // }
         event.setCancelled(true);
+        player.closeInventory();
     }
 
     @EventHandler

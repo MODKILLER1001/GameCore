@@ -5,6 +5,7 @@ import net.warvale.core.Main;
 import net.warvale.core.commands.AbstractCommand;
 import net.warvale.core.exceptions.CommandException;
 import net.warvale.core.game.start.GameStart;
+import net.warvale.core.spec.TeamSelect;
 import net.warvale.core.utils.NumberUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -24,15 +25,14 @@ public class JoinCommand extends AbstractCommand {
     @Override
     public boolean execute(CommandSender sender, String[] args) throws CommandException {
 
-        if (args.length == 0) {
-            return false;
-        }
-
         if (!(sender instanceof Player)) {
             throw new CommandException("Only players can execute this command.");
         }
 
         Player player = (Player) sender;
+        if (args.length == 0) {
+            new TeamSelect(Main.get()).tsGUI(player);
+        }
         String team = args[0];
 
         if (team.equalsIgnoreCase("blue")) {

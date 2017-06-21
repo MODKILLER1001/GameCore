@@ -2,8 +2,6 @@ package net.warvale.core.spec;
 
 import net.warvale.core.game.start.GameStart;
 import net.warvale.core.utils.NumberUtils;
-import net.warvale.staffcore.rank.RankManager;
-import net.warvale.staffcore.users.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -13,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -34,7 +31,7 @@ public class TeamSelect implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    private static Inventory inv;
+    private static Inventory invTeamSelect;
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
@@ -50,8 +47,8 @@ public class TeamSelect implements Listener {
         }
     }
 
-    private void tsGUI(Player player) {
-        inv = Bukkit.createInventory(null, 9, ChatColor.DARK_GRAY + "Select a team:");
+    public void tsGUI(Player player) {
+        invTeamSelect = Bukkit.createInventory(null, 9, ChatColor.DARK_GRAY + "Select a team:");
 
         Wool wool_red = new Wool(DyeColor.RED);
         ItemStack itemtsred = wool_red.toItemStack(1);
@@ -79,12 +76,12 @@ public class TeamSelect implements Listener {
         closemenumeta.setDisplayName(ChatColor.DARK_RED + "Close selector");
         closemenu.setItemMeta(closemenumeta);
 
-        inv.setItem(2, itemtsred);
-        inv.setItem(4, itemtsauto);
-        inv.setItem(8, closemenu);
-        inv.setItem(6, itemtscyan);
+        invTeamSelect.setItem(2, itemtsred);
+        invTeamSelect.setItem(4, itemtsauto);
+        invTeamSelect.setItem(8, closemenu);
+        invTeamSelect.setItem(6, itemtscyan);
 
-        player.openInventory(inv);
+        player.openInventory(invTeamSelect);
     }
 
     @EventHandler
@@ -107,7 +104,7 @@ public class TeamSelect implements Listener {
     public void onMove(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
-        if (!event.getInventory().equals(inv)) {
+        if (!event.getInventory().equals(invTeamSelect)) {
             if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getWhoClicked().getName())) {
                 event.setCancelled(true);
                 return;
@@ -115,7 +112,7 @@ public class TeamSelect implements Listener {
         }
         switch (event.getSlot()) {
         case 2: // Join red
-            if (event.getInventory().equals(inv)) {
+            if (event.getInventory().equals(invTeamSelect)) {
                 if (!event.getWhoClicked().hasPermission("warvale.teamSelect")){
                     event.getWhoClicked().sendMessage(ChatColor.RED + "You must have at least a " + ChatColor.DARK_PURPLE + "mythic" + " rank to select a team. Use Auto Join instead.");
                     event.setCancelled(true);
@@ -144,14 +141,14 @@ public class TeamSelect implements Listener {
             }
             break;
         case 8: // Close menu
-            if (event.getInventory().equals(inv)) {
+            if (event.getInventory().equals(invTeamSelect)) {
                 event.setCancelled(true);
                 player.playSound(player.getLocation(), Sound.BLOCK_ENDERCHEST_CLOSE, 1, 1);
                 player.closeInventory();
             }
             break;
         case 6: // Join blue
-            if (event.getInventory().equals(inv)) {
+            if (event.getInventory().equals(invTeamSelect)) {
                 if (!event.getWhoClicked().hasPermission("warvale.teamSelect")){
                     event.getWhoClicked().sendMessage(ChatColor.RED + "You must have at least a " + ChatColor.DARK_PURPLE + "mythic" + " rank to select a team. Use Auto Join instead.");
                     event.setCancelled(true);
@@ -180,7 +177,7 @@ public class TeamSelect implements Listener {
             }
             break;
         case 4: //auto join
-            if (event.getInventory().equals(inv)){
+            if (event.getInventory().equals(invTeamSelect)){
                 if (Main.getTeams().getBlueTeam().getEntries().size() > Main.getTeams().getRedTeam().getEntries().size()){
                     //join blue
                     Main.getTeams().getBlueTeam().addEntry(event.getWhoClicked().getName());

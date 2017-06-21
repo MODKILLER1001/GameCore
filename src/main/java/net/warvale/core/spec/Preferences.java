@@ -57,7 +57,7 @@ public class Preferences implements Listener {
 
     public void tsGUI(Player player) {
 
-        Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
+        Inventory invPreferences = Bukkit.createInventory(null, 54, ChatColor.DARK_GRAY + "Preferences Menu:");
 
         // Actual preferences
         List<String> loreJoin = new ArrayList<>();
@@ -175,52 +175,52 @@ public class Preferences implements Listener {
         nextpagemeta.setDisplayName(ChatColor.AQUA + "Next Page");
         nextpage.setItemMeta(nextpagemeta);
 
-        inv.setItem(0, joinpref);
-        inv.setItem(2, leavepref);
-        inv.setItem(4, tipspref);
-        inv.setItem(6, advertisementspref);
-        inv.setItem(8, privatemessagespref);
-        inv.setItem(27, pingmessagespref);
+        invPreferences.setItem(0, joinpref);
+        invPreferences.setItem(2, leavepref);
+        invPreferences.setItem(4, tipspref);
+        invPreferences.setItem(6, advertisementspref);
+        invPreferences.setItem(8, privatemessagespref);
+        invPreferences.setItem(27, pingmessagespref);
 
         if (!noJoinMessages.contains(player.getName())) {
-            inv.setItem(9, prefFalse);
+            invPreferences.setItem(9, prefFalse);
         } else {
-            inv.setItem(9, prefTrue);
+            invPreferences.setItem(9, prefTrue);
         }
         if (!noLeaveMessages.contains(player.getName())){
-            inv.setItem(11, prefFalse);
+            invPreferences.setItem(11, prefFalse);
         } else {
-            inv.setItem(11, prefTrue);
+            invPreferences.setItem(11, prefTrue);
         }
         if (!noTipMessages.contains(player.getName())){
-            inv.setItem(13, prefFalse);
+            invPreferences.setItem(13, prefFalse);
         } else {
-            inv.setItem(13, prefTrue);
+            invPreferences.setItem(13, prefTrue);
         }
         if (!noAdvertisementMessages.contains(player.getName())){
-            inv.setItem(15, prefFalse);
+            invPreferences.setItem(15, prefFalse);
         } else {
-            inv.setItem(15, prefTrue);
+            invPreferences.setItem(15, prefTrue);
         }
         if (!noPrivateMessages.contains(player.getName())){
-            inv.setItem(17, prefFalse);
+            invPreferences.setItem(17, prefFalse);
         } else {
-            inv.setItem(17, prefTrue);
+            invPreferences.setItem(17, prefTrue);
         }
         if (!noChatPings.contains(player.getName())){
-            inv.setItem(36, prefFalse);
+            invPreferences.setItem(36, prefFalse);
         } else {
-            inv.setItem(36, prefTrue);
+            invPreferences.setItem(36, prefTrue);
         }
 
-        inv.setItem(47, forumslink);
-        inv.setItem(48, discordlink);
-        inv.setItem(49, twitterlink);
-        inv.setItem(50, storelink);
-        inv.setItem(51, closemenu);
-        inv.setItem(53, nextpage);
-        invs.add(inv);
-        player.openInventory(inv);
+        invPreferences.setItem(47, forumslink);
+        invPreferences.setItem(48, discordlink);
+        invPreferences.setItem(49, twitterlink);
+        invPreferences.setItem(50, storelink);
+        invPreferences.setItem(51, closemenu);
+        invPreferences.setItem(53, nextpage);
+        invs.add(invPreferences);
+        player.openInventory(invPreferences);
     }
 
     @EventHandler

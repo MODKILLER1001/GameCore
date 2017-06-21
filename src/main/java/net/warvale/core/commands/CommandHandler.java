@@ -143,6 +143,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         cmds.add(new TestStartCommand());
         cmds.add(new VersionCommand());
         cmds.add(new VoteCommand());
+        cmds.add(new ClassSelectCommand());
 
         //team
         cmds.add(new JoinCommand());

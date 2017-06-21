@@ -19,28 +19,30 @@ import java.util.List;
  */
 public class VoteCommand extends AbstractCommand {
     public VoteCommand() {
-        super("vote", "");
+        super("vote", "/vote");
     }
     @Override
     public boolean execute(CommandSender player, String[] args) throws CommandException {
 
-        if (!(player instanceof Player)) {
+        if ((player instanceof Player)) {
+            Player sender = (Player) player;
+            if (GameStart.votingActive) {
+
+                if ((Main.getTeams().getBlueTeam().hasEntry(sender.getName()) || Main.getTeams().getRedTeam().hasEntry(sender.getName()))) {
+                    VoteMenu.getMenu(sender).show(sender);
+                    return false;
+                } else {
+                    sender.sendMessage(ChatColor.RED + "You must be on a team to vote!");
+                    return false;
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "Voting is not currently active!");
+                return false;
+            }
+        } else {
             player.sendMessage("Only players can use this command!");
             return false;
         }
-        Player sender = (Player) player;
-        if (!GameStart.votingActive) {
-            sender.sendMessage(ChatColor.RED + "Voting is not currently active!");
-            return false;
-        }
-
-        if(!(Main.getTeams().getBlueTeam().hasEntry(sender.getName()) || Main.getTeams().getRedTeam().hasEntry(sender.getName()))){
-            sender.sendMessage(ChatColor.RED + "You must be on a team to vote!");
-            return false;
-        }
-        VoteMenu.getMenu(sender).show(sender);
-
-        return false;
     }
 
     @Override
