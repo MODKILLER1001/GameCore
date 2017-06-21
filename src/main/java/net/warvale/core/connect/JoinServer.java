@@ -116,8 +116,10 @@ public class JoinServer implements Listener {
         if (Game.getInstance().isDebugEnabled() && !player.hasPermission("warvale.testing")) {
             event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             event.setKickMessage("You are not authorized to test games.");
+            return;
         }
 
+        event.setResult(PlayerLoginEvent.Result.ALLOWED);
     }
-    
+
 }
