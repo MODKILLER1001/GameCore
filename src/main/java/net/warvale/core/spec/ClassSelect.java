@@ -27,7 +27,7 @@ import net.warvale.core.Main;
 public class ClassSelect implements Listener {
 
     private static HashMap<Integer, Class> slots = new HashMap<>();
-    private static Inventory inv;
+    private static Inventory invClassSelect;
     private ArrayList<Inventory> invs = new ArrayList<Inventory>();
 
     public ClassSelect(Main plugin) {
@@ -48,7 +48,7 @@ public class ClassSelect implements Listener {
     }
 
     public void openGUI(Player player) {
-        inv = Bukkit.createInventory(null, 45, ChatColor.DARK_GRAY + "Select a class: ");
+        invClassSelect = Bukkit.createInventory(null, 45, ChatColor.DARK_GRAY + "Select a class: ");
         Integer inventoryIndex = 0;
         for (Map.Entry<String, Class> clazzSet : ClassManager.classes.entrySet()) {
             Class clazz = clazzSet.getValue();
@@ -60,12 +60,12 @@ public class ClassSelect implements Listener {
             classMeta.setLore(desc);
             classMeta.setDisplayName(ChatColor.AQUA + clazz.getName());
             classStack.setItemMeta(classMeta);
-            inv.setItem(inventoryIndex, classStack);
+            invClassSelect.setItem(inventoryIndex, classStack);
             slots.put(inventoryIndex, clazz);
             inventoryIndex = inventoryIndex + 1;
         }
-        invs.add(inv);
-        player.openInventory(inv);
+        invs.add(invClassSelect);
+        player.openInventory(invClassSelect);
     }
 
     @EventHandler
@@ -88,7 +88,7 @@ public class ClassSelect implements Listener {
         Player player = (Player) event.getWhoClicked();
         Class clazz = slots.get(event.getSlot());
 
-        if (!invs.contains(inv)) {
+        if (!invs.contains(invClassSelect)) {
             return;
         }
 
