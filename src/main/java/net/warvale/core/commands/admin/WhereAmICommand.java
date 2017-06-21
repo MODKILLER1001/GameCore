@@ -27,7 +27,7 @@ public class WhereAmICommand extends AbstractCommand{
             String z = String.valueOf(player.getLocation().getZ());
             String yaw = String.valueOf(player.getLocation().getYaw());
             String pitch = String.valueOf(player.getLocation().getPitch());
-            player.sendMessage(ChatColor.GOLD + "World: " + world + "\n" + ChatColor.GOLD + "X: " + x + "\n" + ChatColor.GOLD + "Y: " + y + "\n" + ChatColor.GOLD + "Z: " + z + "\n" + ChatColor.GOLD + "Yaw: " + yaw + "\n" + ChatColor.GOLD + "Pitch: " + pitch + "\n");
+            player.sendMessage(ChatColor.GOLD + "World: " + ChatColor.RED + world + "\n" + ChatColor.GOLD + "X: " + ChatColor.RED + x + "\n" + ChatColor.GOLD + "Y: " + ChatColor.RED + y + "\n" + ChatColor.GOLD + "Z: " + ChatColor.RED + z + "\n" + ChatColor.GOLD + "Yaw: " + ChatColor.RED + yaw + "\n" + ChatColor.GOLD + "Pitch: " + ChatColor.RED + pitch + "\n");
             return true;
         } else {
             sender.sendMessage("Only players can use this command!");
