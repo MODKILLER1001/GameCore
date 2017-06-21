@@ -22,6 +22,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -112,12 +113,11 @@ public class JoinServer implements Listener {
         //check for debug mode and permissions
         Player player = event.getPlayer();
 
-        User  user = UserManager.getUser(player.getUniqueId());
-
-        if (Game.getInstance().isDebugEnabled() && !user.hasPermission("warvale.testing")) {
+        if (Game.getInstance().isDebugEnabled() && !player.hasPermission("warvale.testing")) {
             event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             event.setKickMessage("You are not authorized to test games.");
         }
 
     }
+    
 }
