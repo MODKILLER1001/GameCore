@@ -10,6 +10,8 @@ import net.warvale.core.message.PrefixType;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.utils.mc.items.ItemStackBuilder;
 import net.warvale.staffcore.bossbar.BarManager;
+import net.warvale.staffcore.users.User;
+import net.warvale.staffcore.users.UserManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.boss.BarColor;
@@ -110,7 +112,9 @@ public class JoinServer implements Listener {
         //check for debug mode and permissions
         Player player = event.getPlayer();
 
-        if (Game.getInstance().isDebugEnabled() && !player.hasPermission("warvale.testing")) {
+        User  user = UserManager.getUser(player.getUniqueId());
+
+        if (Game.getInstance().isDebugEnabled() && !user.hasPermission("warvale.testing")) {
             event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             event.setKickMessage("You are not authorized to test games.");
         }
