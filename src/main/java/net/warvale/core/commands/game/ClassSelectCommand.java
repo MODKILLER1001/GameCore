@@ -9,13 +9,11 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-/**
- * Created by AAces on 6/20/2017.
- */
+
 public class ClassSelectCommand extends AbstractCommand {
 
     public ClassSelectCommand() {
-        super("class", null);
+        super("class", "");
     }
 
     @Override
@@ -25,7 +23,7 @@ public class ClassSelectCommand extends AbstractCommand {
         }
         Player player = (Player) sender;
         new ClassSelect(Main.get()).openGUI(player);
-        return false;
+        return true;
     }
 
     @Override
