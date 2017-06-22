@@ -45,11 +45,12 @@ public class BossbarCountdownTask extends BukkitRunnable {
     public void run(){
         countdown = countdown - 1;
         Game.getInstance().setState(State.COUNTDOWN);
+        BarManager.getAnnounceBar().setVisible(true);
         if (countdown == 15){
             TeamBalancing.balanceTeams();
             Game.getInstance().setChosenmap(VoteMenu.calculateMap());
             map = Game.getInstance().getChosenMap();
-            MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED + Game.getInstance().getChosenMap().getName() + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
+            MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED + map.getName() + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
         }
         if (countdown == 10){
             for (Player player : GameStart.inGame){

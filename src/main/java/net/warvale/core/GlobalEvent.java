@@ -202,12 +202,10 @@ public class GlobalEvent implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event){
-
+        event.setDeathMessage("");
         if(!Game.getInstance().isState(State.INGAME)){
             return;
         }
-
-        event.setDeathMessage("");
         Player vName = event.getEntity();
         Player kName = vName.getKiller();
         ChatColor gray = ChatColor.GRAY;

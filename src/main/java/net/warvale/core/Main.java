@@ -16,6 +16,7 @@ import net.warvale.core.connect.LeaveServer;
 import net.warvale.core.connect.PingListener;
 import net.warvale.core.game.CoreBlock;
 import net.warvale.core.game.Game;
+import net.warvale.core.game.State;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.RegionProtection;
 import net.warvale.core.game.logic.TeamManager;
@@ -94,13 +95,12 @@ public class Main extends JavaPlugin implements Listener {
 
 		board = new BoardManager(this);
 		board.setup();
-		getTeams().getBlueTeam().setPrefix(ChatColor.DARK_AQUA.toString());
-		getTeams().getRedTeam().setPrefix(ChatColor.RED.toString());
-		getTeams().getSpectatorTeam().setPrefix(ChatColor.GRAY.toString());
 		teams = new TeamManager(this, board);
 		teams.setup();
 
 		Game.getInstance().setup();
+
+		Game.getInstance().setState(State.LOBBY);
 
     	new JoinServer(this);
     	new LeaveServer(this);
@@ -208,7 +208,7 @@ public class Main extends JavaPlugin implements Listener {
 	}
     @Override
     public void onDisable() {
-
+		Game.getInstance().setState(State.LOBBY);
 		//unregister teams
 		getTeams().getBlueTeam().unregister();
 		getTeams().getRedTeam().unregister();
