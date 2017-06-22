@@ -24,7 +24,7 @@ public class CoreBlock implements Listener {
 
     private int redCoresBroken = 0;
     private int blueCoresBroken = 0;
-
+    private int coreHP = 20;
     private CoreState coreState = UNBREAKABLE; // UNBREAKABLE = first 10 minutes; BREAKABLE = after first 10 minutes;
 
     public void setCoreState(CoreState state) {
@@ -43,7 +43,7 @@ public class CoreBlock implements Listener {
         if (b.getLocation().equals(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "blue", LocationType.CORE)) || b.getLocation().equals(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "red", LocationType.CORE))){
             e.setCancelled(true);
         }
-        int coreHP = 20;
+
         if(coreState == UNBREAKABLE) {
 
             return;
@@ -99,5 +99,11 @@ public class CoreBlock implements Listener {
                 p.teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "blue", LocationType.SPAWN));
             }
         }
+    }
+    public int getBlueCoreHealth(){
+        return coreHP - blueCoresBroken;
+    }
+    public int getRedCoreHealth(){
+        return coreHP - redCoresBroken;
     }
 }
