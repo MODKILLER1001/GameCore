@@ -208,7 +208,7 @@ public class Main extends JavaPlugin implements Listener {
 		//unregister teams
 		getTeams().getBlueTeam().unregister();
 		getTeams().getRedTeam().unregister();
-		getTeams().getSpectatorTeam().unregister();
+
 
 		//unregister scoreboard specific teams
 		LobbyScoreboard.getInstance().shutdown();
