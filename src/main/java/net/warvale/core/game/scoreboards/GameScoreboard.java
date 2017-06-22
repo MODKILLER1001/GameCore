@@ -2,6 +2,7 @@ package net.warvale.core.game.scoreboards;
 
 import com.google.common.collect.Maps;
 import net.warvale.core.Main;
+import net.warvale.core.game.CoreBlock;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.GameRunnable;
 import org.bukkit.Bukkit;
@@ -38,7 +39,10 @@ public class GameScoreboard {
         return scoreboards;
     }
     String timeSbCache = "";
+    String redSbCache = "";
+    String blueSbCache = "";
     public void addScoreboard(Player player) {
+        // Set up the scoreboard
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective objective = scoreboard.registerNewObjective("game", "dummy");
         double minTime = GameRunnable.getSeconds() / 60;
@@ -52,10 +56,27 @@ public class GameScoreboard {
 
             @Override
             public void run() {
+
+                // Update time
                 scoreboard.resetScores(timeSbCache);
-                String nowGonna = ChatColor.AQUA + "Time: " + ChatColor.BLUE + convert(GameRunnable.getSeconds());
-            objective.getScore(nowGonna).setScore(-1);
-                timeSbCache = nowGonna;
+                String timenow = ChatColor.AQUA + "Time: " + ChatColor.BLUE + convert(GameRunnable.getSeconds());
+            objective.getScore(timenow).setScore(-1);
+                timeSbCache = timenow;
+
+
+                // update red
+
+                scoreboard.resetScores(redSbCache);
+                String redNow = ChatColor.RED + "Red: " + ChatColor.BLUE + new CoreBlock().getRedCoreHealth();
+                objective.getScore(redNow).setScore(-3);
+                redSbCache = redNow;
+
+                // update blue
+
+                scoreboard.resetScores(blueSbCache);
+                String blueNow = ChatColor.BLUE + "Blue: " + ChatColor.GREEN + new CoreBlock().getBlueCoreHealth();
+                objective.getScore(blueNow).setScore(-4);
+                blueSbCache = blueNow;
             }
         }.runTaskTimer(Main.get(), 10, 1);
 
@@ -67,6 +88,7 @@ public class GameScoreboard {
 
     @Deprecated
     public void removeScoreboard(Player player) {
+        // I have no idea if this works, no need for it I think.
         if (scoreboards.containsKey(player.getUniqueId())) {
             scoreboards.get(player.getUniqueId()).clearSlot(DisplaySlot.SIDEBAR);
             scoreboards.remove(player.getUniqueId());
