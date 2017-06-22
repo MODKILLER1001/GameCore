@@ -51,7 +51,7 @@ public class JoinServer implements Listener {
     @EventHandler (priority = EventPriority.HIGH)
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         Player p = event.getPlayer();
-
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1000000, 1, true, false));
     	event.setJoinMessage("");
         String playerName = event.getPlayer().getName();
         p.getInventory().clear();

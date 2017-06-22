@@ -85,16 +85,7 @@ public class VoteMenu extends Menu{
         ItemStack[] is = new ItemStack[9];
 
         ItemStackBuilder grayscale = new ItemStackBuilder(Material.STAINED_GLASS_PANE).withColor(DyeColor.GRAY);
-
-        int i = 2;
-        for (GameMap map : mapList) {
-            ItemStackBuilder builder = VoteMenu.builder.clone().withName(map.getName()).withLore("").withLore(ChatColor.BLUE + "Votes: " + ChatColor.AQUA + votesbymap.get(map)).withLore("");
-            for(String s: map.getAuthors()){
-                builder.withLore(ChatColor.GRAY + ChatColor.ITALIC.toString() + s);
-            }
-            is[i] = builder.build();
-            i++;
-        }
+        int i;
         for(i = 0;i < is.length; i++){
             if(is[i] == null)is[i] = grayscale.build();
         }

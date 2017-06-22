@@ -72,65 +72,71 @@ public class AbilityManager implements Listener {
 
         Class classCheck = ClassManager.getClassForPlayer(p.getName());
 
-        e.setCancelled(true);
-
         switch (classCheck.getName()){
             case "Soldier":
                 if(!e.getItem().equals(new ItemStack(Material.FIREWORK_CHARGE))) return;
                 this.Soldier(p);
+                e.setCancelled(true);
                 break;
-
-
 
             case "Archer":
                 if(!e.getItem().equals(new ItemStack(Material.MAGMA_CREAM))) return;
                 this.Archer(p);
+                e.setCancelled(true);
                 break;
-
 
             case "Assassin":
                 if (!e.getItem().equals(new ItemStack(Material.SULPHUR))) return;
                 this.Assassin(p);
+                e.setCancelled(true);
                 break;
 
             case "Miner":
                 if (!e.getItem().equals(new ItemStack(Material.IRON_PICKAXE))) return;
                 this.Miner(p);
+                e.setCancelled(true);
                 break;
 
             case "Spy":
                 if (!e.getItem().equals(new ItemStack(Material.GLASS_BOTTLE))) return;
                 this.Spy(p);
+                e.setCancelled(true);
                 break;
 
             case "Technician":
                 if (!e.getItem().equals(new ItemStack(Material.REDSTONE_TORCH_ON))) return;
                 this.Technician(p);
+                e.setCancelled(true);
                 break;
 
             case "Musician":
                 if (!e.getItem().equals(new ItemStack(Material.RECORD_8))) return;
                 this.Musician(p);
+                e.setCancelled(true);
                 break;
 
             case "Pyromaniac":
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
                 this.Pyromaniac(p);
+                e.setCancelled(true);
                 break;
 
             case "Necromancer":
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
                 this.Necromancer(p);
+                e.setCancelled(true);
                 break;
 
             case "Earthbender":
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
                 this.Earthbender(p);
+                e.setCancelled(true);
                 break;
 
             case "Medic":
                 if (!e.getItem().equals(new ItemStack(Material.FIREBALL))) return;
                 this.Medic(p);
+                e.setCancelled(true);
                 break;
         }
 

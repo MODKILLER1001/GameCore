@@ -18,7 +18,9 @@ import net.warvale.core.message.PrefixType;
 import net.warvale.staffcore.bossbar.BarManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -37,6 +39,8 @@ public class StartGameTask extends BukkitRunnable {
             for (Player player : GameStart.inGame) {
                 player.removePotionEffect(PotionEffectType.SLOW);
                 player.removePotionEffect(PotionEffectType.JUMP);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1000000, 1, true, false));
+                player.setGameMode(GameMode.SURVIVAL);
             }
 
             for (Player player : GameStart.teamBlue) {

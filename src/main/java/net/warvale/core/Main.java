@@ -94,7 +94,9 @@ public class Main extends JavaPlugin implements Listener {
 
 		board = new BoardManager(this);
 		board.setup();
-
+		getTeams().getBlueTeam().setPrefix(ChatColor.DARK_AQUA.toString());
+		getTeams().getRedTeam().setPrefix(ChatColor.RED.toString());
+		getTeams().getSpectatorTeam().setPrefix(ChatColor.GRAY.toString());
 		teams = new TeamManager(this, board);
 		teams.setup();
 
@@ -201,14 +203,15 @@ public class Main extends JavaPlugin implements Listener {
 		}
 
 	}
-
+	public static TeamManager getTeams() {
+		return teams;
+	}
     @Override
     public void onDisable() {
 
 		//unregister teams
 		getTeams().getBlueTeam().unregister();
 		getTeams().getRedTeam().unregister();
-
 
 		//unregister scoreboard specific teams
 		LobbyScoreboard.getInstance().shutdown();
@@ -322,10 +325,6 @@ public class Main extends JavaPlugin implements Listener {
 
 	public static BoardManager getBoard() {
 		return board;
-	}
-
-	public static TeamManager getTeams() {
-		return teams;
 	}
 
 	public static File getMapDir() {
