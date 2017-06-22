@@ -1,11 +1,13 @@
 package net.warvale.core.game.scoreboards;
 
 import com.google.common.collect.Maps;
+import net.warvale.core.Main;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.logic.GameRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -35,37 +37,35 @@ public class GameScoreboard {
     public Map<UUID, Scoreboard> getScoreboards() {
         return scoreboards;
     }
-
+    String timeSbCache = "";
     public void addScoreboard(Player player) {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective objective = scoreboard.registerNewObjective("game", "dummy");
-
-        objective.setDisplayName(ChatColor.DARK_GRAY + "» " + ChatColor.DARK_RED + "Warvale"
-                + ChatColor.DARK_GRAY + " «" );
+        double minTime = GameRunnable.getSeconds() / 60;
+        objective.setDisplayName(ChatColor.DARK_RED + "Warvale: " + ChatColor.RED + "Conquest");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-        Team time = scoreboard.registerNewTeam("GameTime");
-        time.addEntry("§8» §cTime:");
-        time.setSuffix(" §7");
+        objective.getScore("✊").setScore(-2); // doesnt render in minecraft
+        objective.getScore(ChatColor.DARK_RED + "mc.warvale.net").setScore(-9);
 
         scoreboards.put(player.getUniqueId(), scoreboard);
-    }
+        new BukkitRunnable() {
 
-    public void addScoreboard(Player player, String display) {
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("game", "dummy");
+            @Override
+            public void run() {
+                scoreboard.resetScores(timeSbCache);
+                String nowGonna = ChatColor.AQUA + "Time: " + ChatColor.BLUE + convert(GameRunnable.getSeconds());
+            objective.getScore(nowGonna).setScore(-1);
+                timeSbCache = nowGonna;
+            }
+        }.runTaskTimer(Main.get(), 10, 1);
 
-        objective.setDisplayName(ChatColor.DARK_GRAY + "» " + display + ChatColor.DARK_GRAY + " «" );
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        Team time = scoreboard.registerNewTeam("GameTime");
-        time.addEntry("§8» §cTime:");
-        time.setSuffix(" §7");
 
-        scoreboards.put(player.getUniqueId(), scoreboard);
     }
 
 
+
+    @Deprecated
     public void removeScoreboard(Player player) {
         if (scoreboards.containsKey(player.getUniqueId())) {
             scoreboards.get(player.getUniqueId()).clearSlot(DisplaySlot.SIDEBAR);
@@ -73,66 +73,11 @@ public class GameScoreboard {
         }
     }
 
-    public void shutdown() {
-        for (Scoreboard scoreboard : scoreboards.values()) {
-            for (Objective objective : scoreboard.getObjectives()) {
-                objective.unregister();
-            }
-            scoreboard.clearSlot(DisplaySlot.SIDEBAR);
-        }
-        scoreboards.clear();
-    }
 
-    public void newScoreboard(Player p) {
 
-        //add the user to the scoreboard
-        if (!getScoreboards().containsKey(p.getUniqueId())) {
-            addScoreboard(p);
-        }
 
-        //update the scoreboard
-        updateTime();
 
-        p.setScoreboard(getScoreboards().get(p.getUniqueId()));
-    }
 
-    public void newScoreboard(Player p, String display) {
-
-        //add the user to the scoreboard
-        if (!getScoreboards().containsKey(p.getUniqueId())) {
-            addScoreboard(p, display);
-        }
-
-        Objective objective = getScoreboards().get(p.getUniqueId()).getObjective("game");
-
-        if (objective != null) {
-            objective.setDisplayName(ChatColor.DARK_GRAY + "» " + display + ChatColor.DARK_GRAY + " «");
-        }
-
-        //update the scoreboard
-        updateTime();
-        p.setScoreboard(getScoreboards().get(p.getUniqueId()));
-    }
-
-    public void updateTime() {
-
-        for (Player online : Bukkit.getOnlinePlayers()) {
-
-            Objective objective = getScoreboards().get(online.getUniqueId()).getObjective("game");
-            Team time = getScoreboards().get(online.getUniqueId()).getTeam("GameTime");
-            if (objective != null && time != null) {
-                objective.getScore("    ").setScore(14);
-
-                time.setSuffix(" §7"+ convert(GameRunnable.getSeconds()));
-
-                objective.getScore("§8» §cTime:").setScore(13);
-                objective.getScore("   ").setScore(12);
-
-            }
-
-        }
-
-    }
 
     private String convert(int n) {
         int n2 = n / 3600;
