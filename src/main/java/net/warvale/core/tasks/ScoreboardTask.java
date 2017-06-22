@@ -38,7 +38,7 @@ public class ScoreboardTask extends BukkitRunnable {
                             DateUtils.secondsToString(BossbarCountdownTask.getCountdown()));
                 }
             } else if (Game.getInstance().isState(State.INGAME)) {
-                GameScoreboard.getInstance().newScoreboard(player);
+                GameScoreboard.getInstance().addScoreboard(player);
             } else {
                 LobbyScoreboard.getInstance().newScoreboard(player);
             }
