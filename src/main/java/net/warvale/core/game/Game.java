@@ -110,7 +110,7 @@ public class Game {
     public void setStats(boolean enable) {
         this.stats = stats;
 
-        ConfigManager.getInstqnce().getConfig().set("stats", enable);
+        ConfigManager.getInstance().getConfig().set("stats", enable);
         ConfigManager.getInstance().saveConfig();
     }
 
