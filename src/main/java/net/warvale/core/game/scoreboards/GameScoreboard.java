@@ -43,17 +43,26 @@ public class GameScoreboard {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective objective = scoreboard.registerNewObjective("game", "dummy");
 
-        objective.setDisplayName(ChatColor.DARK_GRAY + "» " + ChatColor.DARK_RED + "Warvale"
+        objective.setDisplayName(ChatColor.DARK_GRAY + "» " + ChatColor.DARK_RED + "Warvale: Conquest"
                 + ChatColor.DARK_GRAY + " «" );
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Team time = scoreboard.registerNewTeam("GameTime");
-        time.addEntry("§cTime:");
+        time.addEntry(ChatColor.AQUA + "Time:");
         time.setSuffix(" §7");
 
         Team playerCount = scoreboard.registerNewTeam("PlayerCount");
-        playerCount.addEntry("§cPlayers:");
+        playerCount.addEntry(ChatColor.AQUA + "Players:");
         playerCount.setSuffix(" §7");
+
+        Team redHealth = scoreboard.registerNewTeam("redHealth");
+        redHealth.addEntry(ChatColor.AQUA + "Red:");
+        redHealth.setSuffix(" §7");
+
+        Team blueHealth = scoreboard.registerNewTeam("blueHealth");
+        blueHealth.addEntry(ChatColor.AQUA + "Blue:");
+        blueHealth.setSuffix(" §7");
+
 
         scoreboards.put(player.getUniqueId(), scoreboard);
     }
@@ -87,6 +96,13 @@ public class GameScoreboard {
         updateTime();
         updatePlayerCount();
 
+        //update health
+        updateRedHealth();
+        updateBlueHealth();
+
+        //update website
+        updateWebsite();
+
         p.setScoreboard(getScoreboards().get(p.getUniqueId()));
     }
 
@@ -97,13 +113,13 @@ public class GameScoreboard {
             Objective objective = getScoreboards().get(online.getUniqueId()).getObjective("game");
             Team time = getScoreboards().get(online.getUniqueId()).getTeam("GameTime");
             if (objective != null && time != null) {
-                objective.getScore("    ").setScore(14);
+                objective.getScore("    ").setScore(9);
                 //objective.getScore("§8» §cTime:").setScore(7);
 
                 time.setSuffix(" §7"+ convert(GameRunnable.getSeconds()));
 
-                objective.getScore("§cTime:").setScore(13);
-                objective.getScore("   ").setScore(12);
+                objective.getScore(ChatColor.AQUA + "Time:").setScore(8);
+                objective.getScore("   ").setScore(7);
 
             }
 
@@ -121,8 +137,57 @@ public class GameScoreboard {
 
                 playerCount.setSuffix(" §7"+ Bukkit.getOnlinePlayers().size() + "/" + Game.getInstance().getMaxPlayer());
 
-                objective.getScore("§cPlayers:").setScore(11);
-                objective.getScore("  ").setScore(10);
+                objective.getScore(ChatColor.AQUA + "Players:").setScore(6);
+                objective.getScore("  ").setScore(5);
+            }
+
+        }
+
+    }
+
+    public void updateRedHealth() {
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+
+            Objective objective = getScoreboards().get(online.getUniqueId()).getObjective("game");
+            Team redHealth = getScoreboards().get(online.getUniqueId()).getTeam("redHealth");
+            if (objective != null && redHealth != null) {
+
+                redHealth.setSuffix(" §7" + new CoreBlock().getRedCoreHealth());
+
+                objective.getScore(ChatColor.AQUA + "Red:").setScore(4);
+            }
+
+        }
+
+    }
+
+    public void updateBlueHealth() {
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+
+            Objective objective = getScoreboards().get(online.getUniqueId()).getObjective("game");
+            Team blueHealth = getScoreboards().get(online.getUniqueId()).getTeam("blueHealth");
+            if (objective != null && blueHealth != null) {
+
+                blueHealth.setSuffix(" §7" + new CoreBlock().getBlueCoreHealth());
+
+                objective.getScore(ChatColor.AQUA + "Blue:").setScore(3);
+                objective.getScore(" ").setScore(2);
+            }
+
+        }
+
+    }
+
+    public void updateWebsite() {
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+
+            Objective objective = getScoreboards().get(online.getUniqueId()).getObjective("game");
+            if (objective != null) {
+
+                objective.getScore(ChatColor.AQUA + "warvale.net").setScore(1);
             }
 
         }
