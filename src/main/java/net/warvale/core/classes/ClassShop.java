@@ -1,8 +1,6 @@
 package net.warvale.core.classes;
 
 import net.warvale.core.Main;
-import net.warvale.core.embers.EmberManager;
-import net.warvale.core.utils.sql.SQLConnection;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -10,28 +8,42 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by CommandFox on 6/20/2017.
- */
 public class ClassShop {
-    public static void purchase(Player player, Class clazz) throws SQLException, ClassNotFoundException {
-        EmberManager.takeEmbers(player, clazz.getPrice());
 
-        SQLConnection connection = Main.getDB();
-        connection.executeSQL(
-                "INSERT INTO `classes` (`uuid`, `class`) VALUES ('" + player.getUniqueId().toString() + "', '" + clazz.getName() + "')");
+    public static void purchase(Player player, Class clazz) {
+        try {
+            Connection connection = Main.getDB().getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO `classes` (`uuid`, `class`) VALUES (?, ?);");
+
+            stmt.setString(1, player.getUniqueId().toString());
+            stmt.setString(2, clazz.getName());
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public static boolean hasPurchased(Player player, Class clazz) throws SQLException, ClassNotFoundException {
-        Connection connection = Main.getDB().getConnection();
-        PreparedStatement stmt = connection.prepareStatement(
-                "SELECT * FROM `classes` where `uuid` = " + player.getUniqueId().toString() + " AND  `class` = " + clazz.getName());
+    public static boolean hasPurchased(Player player, Class clazz) {
 
-        ResultSet rs = stmt.executeQuery();
-        if(!rs.next()){
+        try {
+            Connection connection = Main.getDB().getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM `classes` WHERE `uuid` = ? AND `class` = ? LIMIT 1; ");
+
+            stmt.setString(1, player.getUniqueId().toString());
+            stmt.setString(2, clazz.getName());
+
+            ResultSet rs = stmt.getResultSet();
+            if (rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
             return false;
         }
-        return true;
+
+        return false;
     }
 }
 

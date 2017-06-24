@@ -70,7 +70,7 @@ public class AbilityManager implements Listener {
         if (!(e.getAction() == RIGHT_CLICK_AIR || e.getAction() == RIGHT_CLICK_BLOCK)) return;
         if (cooldown.contains(p.getName())) return;
 
-        Class classCheck = ClassManager.getClassForPlayer(p.getName());
+        Class classCheck = ClassManager.getClassForPlayer(p);
 
         switch (classCheck.getName()){
             case "Soldier":

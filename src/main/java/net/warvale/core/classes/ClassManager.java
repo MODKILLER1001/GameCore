@@ -46,10 +46,10 @@ public class ClassManager {
         return null;
     }
 
-    public static Class getClassForPlayer(String name) {
-        if (hasClass(Bukkit.getPlayer(name))) {
+    public static Class getClassForPlayer(Player player) {
+        if (hasClass(player)) {
             for (Map.Entry<String, Class> entry : classes.entrySet()) {
-                if (entry.getValue().getMembers().contains(Bukkit.getPlayer(name))) {
+                if (entry.getValue().getMembers().contains(player.getUniqueId())) {
                     return entry.getValue();
                 }
             }

@@ -43,17 +43,19 @@ public class StartGameTask extends BukkitRunnable {
                 player.setGameMode(GameMode.SURVIVAL);
             }
 
+            //clear inventories
+            for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+                online.getInventory().clear();
+                online.getInventory().addItem(ClassManager.getClassForPlayer(online).getItem());
+            }
+
             for (Player player : GameStart.teamBlue) {
                 //teleport player
                 player.teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "blue", LocationType.SPAWN));
-                //give class
-                //player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
             for (Player player : GameStart.teamRed) {
                 //teleport player
                 player.teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "red", LocationType.SPAWN));
-                //give class
-                //player.getInventory().addItem(ClassManager.getClassForPlayer(player.getName()).getItem());
             }
 
         } catch (Exception ex) {

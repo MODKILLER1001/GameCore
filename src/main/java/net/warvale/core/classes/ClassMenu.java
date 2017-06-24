@@ -6,6 +6,8 @@ import net.warvale.core.Main;
 import net.warvale.core.utils.mc.chat.MessageUtil;
 import net.warvale.core.utils.mc.items.ItemStackBuilder;
 import net.warvale.core.utils.mc.menu.Menu;
+import net.warvale.staffcore.users.User;
+import net.warvale.staffcore.users.UserManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -13,6 +15,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +41,19 @@ public class ClassMenu extends Menu {
         if (clazz == null) {
             return;
         }
+
+        /*if (!ClassShop.hasPurchased(player, clazz)) {
+            User user = UserManager.getUser(player);
+
+            if (user.getEmbers() < clazz.getPrice()) {
+                player.sendMessage(ChatColor.RED + "You can not afford that class at this time.");
+            } else if (user.getEmbers() >= clazz.getPrice()) {
+                user.setEmbers(user.getEmbers() - clazz.getPrice());
+                ClassShop.purchase(player, clazz);
+                player.sendMessage(ChatColor.GREEN + "You have bought the " + clazz.getName() + " class!");
+            }
+
+        }*/
 
         clazz.addMember(player);
 
