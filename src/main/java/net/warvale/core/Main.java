@@ -8,6 +8,7 @@ import java.util.logging.Level;
 
 import net.warvale.core.chat.BroadcastType;
 import net.warvale.core.classes.Class;
+import net.warvale.core.classes.ClassMenu;
 import net.warvale.core.classes.abilities.AbilityManager;
 import net.warvale.core.commands.CommandHandler;
 import net.warvale.core.config.ConfigManager;
@@ -84,6 +85,7 @@ public class Main extends JavaPlugin implements Listener {
 
 	//menus
 	private Set<Menu> registeredMenus = new HashSet<>();
+	private ClassMenu classMenu;
 
 	@Override
     public void onEnable() {
@@ -150,6 +152,9 @@ public class Main extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new RegionProtection(), this);
 
 		EnchantGlow.getGlow();
+
+		//register any needed menus
+		classMenu = new ClassMenu();
 
     }
 
@@ -392,5 +397,9 @@ public class Main extends JavaPlugin implements Listener {
 
 		}
 
+	}
+
+	public ClassMenu getClassMenu() {
+		return classMenu;
 	}
 }

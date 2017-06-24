@@ -1,5 +1,6 @@
 package net.warvale.core.connect;
 
+import net.warvale.core.classes.ClassMenu;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.State;
 import net.warvale.core.game.scoreboards.GameScoreboard;
@@ -8,6 +9,7 @@ import net.warvale.core.map.MapLocations;
 import net.warvale.core.maps.VoteMenu;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
+import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.utils.LobbyUtils;
 import net.warvale.core.utils.mc.items.ItemStackBuilder;
@@ -38,12 +40,14 @@ public class JoinServer implements Listener {
     public static ItemStack[] generateSpawnInventory(int inventorysize) {
         ItemStack[] is = new ItemStack[inventorysize];
         is[MAPSLOT] = mapselection.build();
+        is[CLASS_SLOT] = classSelector.build();
         return is;
     }
 
  
     private static ItemStackBuilder mapselection = new ItemStackBuilder(Material.PAPER).withName(ChatColor.DARK_AQUA + "Maps").withLore(ChatColor.GRAY + "Click to vote for a map");
-    private static int KITSLOT = 0, MAPSLOT = 1;
+    private static ItemStackBuilder classSelector = new ItemStackBuilder(Material.NETHER_STAR).withName(ChatColor.DARK_AQUA + "Class Selector").withLore(ChatColor.GRAY + "Click to choose a class");
+    private static int KITSLOT = 0, MAPSLOT = 1, CLASS_SLOT = 3;
 
     public JoinServer(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -70,13 +74,6 @@ public class JoinServer implements Listener {
 				onlinePlayer.sendMessage(ChatColor.GRAY + playerName + ChatColor.GRAY + " joined.");
 			}
 		}
-        
-
-        /*if (Main.getTeams().getSpectatorTeam().getEntries().contains(p.getName())) {
-            p.setAllowFlight(true);
-            p.setGameMode(GameMode.ADVENTURE);
-        }*/
-
 
         p.setAllowFlight(true);
         p.setGameMode(GameMode.ADVENTURE);
@@ -99,12 +96,17 @@ public class JoinServer implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent e) {
+        if (!Game.getInstance().isState(State.LOBBY)) {
+            return;
+        }
         Player p = e.getPlayer();
         if (Game.getInstance().getState() == State.LOBBY &&
                 e.getAction() != Action.LEFT_CLICK_AIR && e.getAction() != Action.LEFT_CLICK_BLOCK) {
             int slot = p.getInventory().getHeldItemSlot();
             if (slot == MAPSLOT) {
                 VoteMenu.getMenu(p).show(p);
+            } else if (slot == CLASS_SLOT) {
+                Main.get().getClassMenu().show(p);
             }
         }
 
