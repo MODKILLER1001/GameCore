@@ -37,3 +37,5 @@ commands:
     description: Opens the class selection menu
   whereami:
     description: Shows the player their exact location.
+  setlobby:
+    description: sets the lobby spawn

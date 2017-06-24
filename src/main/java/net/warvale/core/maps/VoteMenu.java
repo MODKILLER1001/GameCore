@@ -76,19 +76,32 @@ public class VoteMenu extends Menu{
         //If it has been reset we can add
         if(mapList.isEmpty()){
             Collections.shuffle(GameMap.getMaps());
-            mapList.addAll(new VoteRandomMap().getRandomMaps(4));
+            int size = GameMap.getMaps().size() > 5 ? 5 : GameMap.getMaps().size();
+            for(int i = 0; i < size; i++){
+                mapList.add(GameMap.getMaps().get(i));
+            }
             for(GameMap map: mapList){
                 votesbymap.put(map, 0);
             }
         }
 
+
         ItemStack[] is = new ItemStack[9];
 
         ItemStackBuilder grayscale = new ItemStackBuilder(Material.STAINED_GLASS_PANE).withColor(DyeColor.GRAY);
-        int i;
+
+        int i = 2;
+
+        for (GameMap map : mapList) {
+            ItemStackBuilder builder = VoteMenu.builder.clone().withName(map.getName()).withLore("").withLore(ChatColor.BLUE + "Votes: " + ChatColor.AQUA + votesbymap.get(map)).withLore("");
+            is[i] = builder.build();
+            i++;
+        }
+
         for(i = 0;i < is.length; i++){
             if(is[i] == null)is[i] = grayscale.build();
         }
+
         return is;
     }
 

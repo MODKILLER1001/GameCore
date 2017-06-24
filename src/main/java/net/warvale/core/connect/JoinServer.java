@@ -9,6 +9,7 @@ import net.warvale.core.maps.VoteMenu;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
 import net.warvale.core.spec.Preferences;
+import net.warvale.core.utils.LobbyUtils;
 import net.warvale.core.utils.mc.items.ItemStackBuilder;
 import net.warvale.staffcore.bossbar.BarManager;
 import net.warvale.staffcore.users.User;
@@ -90,7 +91,7 @@ public class JoinServer implements Listener {
         LobbyScoreboard.getInstance().newScoreboard(event.getPlayer());
 
         if (Game.getInstance().isState(State.LOBBY)) {
-            p.teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
+            p.teleport(LobbyUtils.getSpawn()); //having null in all three returns the lobby center
             p.getInventory().setContents(generateSpawnInventory(4 * 9));
         }
 
@@ -104,8 +105,6 @@ public class JoinServer implements Listener {
             int slot = p.getInventory().getHeldItemSlot();
             if (slot == MAPSLOT) {
                 VoteMenu.getMenu(p).show(p);
-            } else if (slot == KITSLOT) {
-                p.sendMessage("Function not implemented yet");
             }
         }
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.warvale.core.Main;
 import net.warvale.core.chat.ChatNameColorCommand;
+import net.warvale.core.commands.admin.SetLobbyCommand;
 import net.warvale.core.commands.admin.SetStateCommand;
 import net.warvale.core.commands.admin.SetdebugCommand;
 import net.warvale.core.commands.admin.WhereAmICommand;
@@ -128,6 +129,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         cmds.add(new SetStateCommand());
         cmds.add(new SetdebugCommand());
         cmds.add(new WhereAmICommand());
+        cmds.add(new SetLobbyCommand());
 
         // basic
         cmds.add(new PrivateMessages());

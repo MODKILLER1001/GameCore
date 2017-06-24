@@ -21,6 +21,7 @@ import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.RegionProtection;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
+import net.warvale.core.items.MenuListener;
 import net.warvale.core.map.ConquestMap;
 import net.warvale.core.maps.GameMap;
 import net.warvale.core.message.MessageManager;
@@ -111,8 +112,7 @@ public class Main extends JavaPlugin implements Listener {
     	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
     	Bukkit.getPluginManager().registerEvents(new StatsEvents(), this);
     	Bukkit.getPluginManager().registerEvents(new CoreBlock(), this);
-
-
+    	Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
 
     	for (BroadcastType type : BroadcastType.values()) {
     		switch (type) {
