@@ -48,8 +48,8 @@ public class SetdebugCommand extends AbstractCommand {
         List<String> toReturn = new ArrayList<>();
 
         if (args.length == 1) {
-            toReturn.add("enable");
-            toReturn.add("disable");
+            toReturn.add("true");
+            toReturn.add("false");
         }
 
         return toReturn;
