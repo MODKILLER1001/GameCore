@@ -85,6 +85,11 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
 
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -135,10 +140,17 @@
             <version>0.1.53</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>net.warvale.staffcore</groupId>
             <artifactId>StaffCore</artifactId>
             <version>1.0-DEV</version>
+            <scope>provided</scope>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.github.Warvale</groupId>
+            <artifactId>StaffCore</artifactId>
+            <version>master-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
