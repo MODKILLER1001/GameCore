@@ -1,7 +1,7 @@
 checkout:
   post:
     - mvn clean install
-    - cp -R ./target/nukkit-1.0-SNAPSHOT.jar $CIRCLE_ARTIFACTS
+    - cp -R ./target/GameCore.jar $CIRCLE_ARTIFACTS
 
 machine:
   java:
