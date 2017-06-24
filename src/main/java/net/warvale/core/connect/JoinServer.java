@@ -51,6 +51,12 @@ public class JoinServer implements Listener {
     @EventHandler (priority = EventPriority.HIGH)
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         Player p = event.getPlayer();
+
+        if (Game.getInstance().isDebugEnabled() && !p.hasPermission("warvale.testing")) {
+            p.kickPlayer("You are not authorized to test games.");
+            return;
+        }
+
         p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1000000, 1, true, false));
     	event.setJoinMessage("");
         String playerName = event.getPlayer().getName();
@@ -105,7 +111,8 @@ public class JoinServer implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    //todo: fix onLogin perms if possible
+    /*@EventHandler(priority = EventPriority.HIGH)
     public void onLogin(PlayerLoginEvent event) {
         //check for debug mode and permissions
         Player player = event.getPlayer();
@@ -117,6 +124,7 @@ public class JoinServer implements Listener {
         }
 
         event.setResult(PlayerLoginEvent.Result.ALLOWED);
-    }
+    }*/
+
 
 }
