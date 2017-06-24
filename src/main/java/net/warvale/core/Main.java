@@ -21,6 +21,7 @@ import net.warvale.core.game.State;
 import net.warvale.core.game.logic.BoardManager;
 import net.warvale.core.game.logic.RegionProtection;
 import net.warvale.core.game.logic.TeamManager;
+import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.items.MenuListener;
 import net.warvale.core.map.ConquestMap;
@@ -220,6 +221,7 @@ public class Main extends JavaPlugin implements Listener {
 
 		//unregister scoreboard specific teams
 		LobbyScoreboard.getInstance().shutdown();
+		GameScoreboard.getInstance().shutdown();
 
 		getLogger().log(Level.INFO, "Closing connection to database...");
 
