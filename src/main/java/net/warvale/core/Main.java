@@ -240,7 +240,7 @@ public class Main extends JavaPlugin implements Listener {
 		return instance;
 	}
 
-
+	public String getVersion() { return getDescription().getVersion(); }
 
 	private static void setupClasses() {
 		new Class("Soldier", 0,
