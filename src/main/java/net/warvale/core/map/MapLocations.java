@@ -44,7 +44,7 @@ public class MapLocations {
 
 
     public static Location getObjectLocation(GameMap map, String team, LocationType type){
-        if (map == null){
+        if (type.isLobby()){
             return lobby;
         }
         if (map == GameMap.getMap("Redwood_Forest")){
