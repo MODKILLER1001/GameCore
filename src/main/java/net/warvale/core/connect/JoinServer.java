@@ -45,7 +45,7 @@ public class JoinServer implements Listener {
     }
 
  
-    private static ItemStackBuilder mapselection = new ItemStackBuilder(Material.PAPER).withName(ChatColor.DARK_AQUA + "Maps").withLore(ChatColor.GRAY + "Click to vote for a map");
+    private static ItemStackBuilder mapselection = new ItemStackBuilder(Material.PAPER).withName(ChatColor.DARK_AQUA + "Map Voting").withLore(ChatColor.GRAY + "Click to vote for a map");
     private static ItemStackBuilder classSelector = new ItemStackBuilder(Material.NETHER_STAR).withName(ChatColor.DARK_AQUA + "Class Selector").withLore(ChatColor.GRAY + "Click to choose a class");
     private static int KITSLOT = 0, MAPSLOT = 1, CLASS_SLOT = 3;
 

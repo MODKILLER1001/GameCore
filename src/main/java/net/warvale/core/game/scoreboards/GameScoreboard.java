@@ -56,11 +56,11 @@ public class GameScoreboard {
         playerCount.setSuffix(" §7");
 
         Team redHealth = scoreboard.registerNewTeam("redHealth");
-        redHealth.addEntry(ChatColor.AQUA + "Red:");
+        redHealth.addEntry(ChatColor.AQUA + "Red Core:");
         redHealth.setSuffix(" §7");
 
         Team blueHealth = scoreboard.registerNewTeam("blueHealth");
-        blueHealth.addEntry(ChatColor.AQUA + "Blue:");
+        blueHealth.addEntry(ChatColor.AQUA + "Blue Core:");
         blueHealth.setSuffix(" §7");
 
 
