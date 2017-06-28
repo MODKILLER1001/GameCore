@@ -28,7 +28,6 @@ import net.warvale.core.items.MenuListener;
 import net.warvale.core.map.ConquestMap;
 import net.warvale.core.maps.GameMap;
 import net.warvale.core.message.MessageManager;
-import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.spec.TeamSelect;
 import net.warvale.core.stats.StatsEvents;
@@ -111,7 +110,6 @@ public class Main extends JavaPlugin implements Listener {
     	new LeaveServer(this);
     	new GlobalEvent(this);
     	new TeamSelect(this);
-    	new ClassSelect(this);
     	new Preferences(this);
     	Bukkit.getPluginManager().registerEvents(new PingListener(), this);
     	Bukkit.getPluginManager().registerEvents(new StatsEvents(), this);

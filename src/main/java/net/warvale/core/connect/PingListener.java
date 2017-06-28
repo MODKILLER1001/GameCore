@@ -23,15 +23,15 @@ public class PingListener implements Listener {
 
             int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
 
-            /*e.setMotd(ChatColor.DARK_RED + "Warvale: " + ChatColor.YELLOW +
+            e.setMotd(ChatColor.DARK_RED + "Warvale: " + ChatColor.YELLOW +
                     String.valueOf(minPlayers) + ChatColor.GRAY +
                     " more players needed to start the game!\n" + ChatColor.AQUA + ChatColor.BOLD + "News " + ChatColor.DARK_GRAY + ":" + ChatColor.GRAY + "5 maps made, Game system WIP!");
-*/
+
         }
 
-        if (Game.getInstance().isState(State.COUNTDOWN)) {
+        /*if (Game.getInstance().isState(State.COUNTDOWN)) {
             //e.setMotd(MessageManager.getPrefix(PrefixType.MAIN) + ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + DateUtils.secondsToString(BossbarCountdownTask.getCountdown()));
-        }
+        }*/
 
     }
 
