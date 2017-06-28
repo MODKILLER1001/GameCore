@@ -19,6 +19,7 @@ public class Stages {
     private Plugin pl = Main.get();
     private void quickStageAnnounce() {
         String stagestring = CurrentStage.toString().toLowerCase();
+        stagestring = stagestring.replaceAll("_", " ");
         MessageManager.broadcast(PrefixType.MAIN, "Stage is now: " + stagestring.substring(0, 1).toUpperCase() + stagestring.substring(1) + ".");
     }
     public void initStages() {
