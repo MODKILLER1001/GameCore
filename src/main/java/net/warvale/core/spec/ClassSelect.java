@@ -4,6 +4,7 @@ import java.util.*;
 
 import net.warvale.core.classes.Class;
 import net.warvale.core.classes.ClassManager;
+import net.warvale.core.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -75,7 +76,7 @@ public class ClassSelect implements Listener {
 
         if (a == Action.PHYSICAL || is == null || is.getType() == Material.AIR) return;
 
-        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName()) && is.getType() == Material.NETHER_STAR) {
+        if (!Game.isRunning() && is.getType() == Material.NETHER_STAR) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
             new ClassSelect(Main.get()).openGUI(event.getPlayer());
             event.setCancelled(true);

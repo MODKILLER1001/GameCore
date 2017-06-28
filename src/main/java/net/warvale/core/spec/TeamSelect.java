@@ -1,5 +1,6 @@
 package net.warvale.core.spec;
 
+import net.warvale.core.game.Game;
 import net.warvale.core.game.start.GameStart;
 import net.warvale.core.utils.NumberUtils;
 import org.bukkit.Bukkit;
@@ -92,12 +93,9 @@ public class TeamSelect implements Listener {
         if (a == Action.PHYSICAL || is == null || is.getType() == Material.AIR)
             return;
 
-        if (is.getType() == Material.ENCHANTED_BOOK)
+        if (!Game.isRunning() && is.getType() == Material.ENCHANTED_BOOK)
             tsGUI(event.getPlayer());
-
-        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName())) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
-        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

@@ -2,6 +2,7 @@ package net.warvale.core.spec;
 
 import net.md_5.bungee.api.ChatColor;
 import net.warvale.core.Main;
+import net.warvale.core.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -232,7 +233,7 @@ public class Preferences implements Listener {
 
 
 
-        if (Main.getTeams().getSpectatorTeam().getEntries().contains(event.getPlayer().getName()) && is.getType() == Material.REDSTONE_COMPARATOR) {
+        if (!Game.isRunning() && is.getType() == Material.REDSTONE_COMPARATOR) {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
             new Preferences(Main.get()).tsGUI(event.getPlayer());
             event.setCancelled(true);
