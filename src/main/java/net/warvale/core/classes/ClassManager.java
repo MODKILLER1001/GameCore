@@ -57,4 +57,13 @@ public class ClassManager {
         return null;
     }
 
+    public static Class getDefaultClass(){
+        for (Map.Entry<String, Class> entry : classes.entrySet()) {
+            if (entry.getValue().isDefaultClass()) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
 }

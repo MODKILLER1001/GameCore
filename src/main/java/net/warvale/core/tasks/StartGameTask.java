@@ -65,6 +65,9 @@ public class StartGameTask extends BukkitRunnable {
         for (Player player : Bukkit.getOnlinePlayers()) {
             LobbyScoreboard.getInstance().removeScoreboard(player);
             GameScoreboard.getInstance().addScoreboard(player);
+            if(!ClassManager.hasClass(player)){
+                ClassManager.getDefaultClass().addMember(player);
+            }
         }
 
         Game.getInstance().setState(State.INGAME);

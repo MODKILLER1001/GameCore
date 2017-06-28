@@ -17,15 +17,17 @@ public class Class {
     private List<String> description;
     private ItemStack item;
     private String ability;
+    private Boolean defaultClass;
 
     private List<UUID> players;
 
-    public Class(String name, Integer price, List<String> description, ItemStack item, String ability) {
+    public Class(String name, Integer price, List<String> description, ItemStack item, String ability, Boolean defaultClass) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.item = item;
         this.ability = ability;
+        this.defaultClass = defaultClass;
 
         this.players = new ArrayList<>();
 
@@ -78,6 +80,14 @@ public class Class {
             return true;
         }
         return false;
+    }
+
+    public void setDefaultClass(boolean value){
+        this.defaultClass = value;
+    }
+
+    public Boolean isDefaultClass(){
+        return this.defaultClass;
     }
 
     public List<UUID> getMembers() {

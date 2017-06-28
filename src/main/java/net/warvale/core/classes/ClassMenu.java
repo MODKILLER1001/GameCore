@@ -42,18 +42,19 @@ public class ClassMenu extends Menu {
             return;
         }
 
-        /*if (!ClassShop.hasPurchased(player, clazz)) {
+        if (!ClassShop.hasPurchased(player, clazz)) {
             User user = UserManager.getUser(player);
 
             if (user.getEmbers() < clazz.getPrice()) {
                 player.sendMessage(ChatColor.RED + "You can not afford that class at this time.");
+                return;
             } else if (user.getEmbers() >= clazz.getPrice()) {
                 user.setEmbers(user.getEmbers() - clazz.getPrice());
                 ClassShop.purchase(player, clazz);
                 player.sendMessage(ChatColor.GREEN + "You have bought the " + clazz.getName() + " class!");
             }
 
-        }*/
+        }
 
         clazz.addMember(player);
 

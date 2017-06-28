@@ -248,65 +248,65 @@ public class Main extends JavaPlugin implements Listener {
 						ChatColor.translateAlternateColorCodes('&',
 								"&aDefault class. &7Charges forward and deals extra"),
 						ChatColor.translateAlternateColorCodes('&', "&7damage to enemies.")),
-				new ItemStack(Material.FIREWORK_CHARGE), "Charge");
+				new ItemStack(Material.FIREWORK_CHARGE), "Charge", true);
 		new Class("Archer", 0,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Shoot explosive arrows towards"),
 						ChatColor.translateAlternateColorCodes('&', "&7enemies to deal extra damage.")),
-				new ItemStack(Material.MAGMA_CREAM), "Volley");
+				new ItemStack(Material.MAGMA_CREAM), "Volley", false);
 		new Class("Assassin", 0,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&', "&aDefault class. &7Hide in the shadows with your"),
 						ChatColor.translateAlternateColorCodes('&', "&7sneaky invisibility.")),
-				new ItemStack(Material.SULPHUR), "Sneak");
+				new ItemStack(Material.SULPHUR), "Sneak", false);
 		new Class("Miner", 100,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&',
 								"&aPurchasable class. &7Chance to deal double damage"),
 						ChatColor.translateAlternateColorCodes('&', "&7when mining the core.")),
-				new ItemStack(Material.IRON_PICKAXE), "Superswing");
+				new ItemStack(Material.IRON_PICKAXE), "Superswing", false);
 		new Class("Spy", 500,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&',
 								"&aPurchasable class. &7Appear as if you are on the other team"),
 						ChatColor.translateAlternateColorCodes('&', "&7 by transforming your name color!")),
-				new ItemStack(Material.GLASS_BOTTLE), "Undercover");
+				new ItemStack(Material.GLASS_BOTTLE), "Undercover", false);
 		new Class("Technician", 1000,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&',
 								"&aPurchasable class. &7Paralyze your enemy with your stunning "),
 						ChatColor.translateAlternateColorCodes('&', "&7electrocution powers.")),
-				new ItemStack(Material.REDSTONE_TORCH_ON), "Electrocute");
+				new ItemStack(Material.REDSTONE_TORCH_ON), "Electrocute", false);
 		new Class("Musician", 1000,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&',
 								"&aPurchasable class. &7Play your music and gain healing powers"),
 						ChatColor.translateAlternateColorCodes('&', "&7when near it!")),
-				new ItemStack(Material.RECORD_8), "Jukebox");
+				new ItemStack(Material.RECORD_8), "Jukebox", false);
 		new Class("Pyromaniac", 1000,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&',
 								"&aPurchasable class. &7Use the power of fire to light your"),
 						ChatColor.translateAlternateColorCodes('&', "&7target aflame.")),
-				new ItemStack(Material.FIREBALL), "Ignite");
+				new ItemStack(Material.FIREBALL), "Ignite", false);
 		new Class("Necromancer", 5000,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&',
 								"&aPurchasable class. &7Raise evil mobs from the dead to attack"),
 						ChatColor.translateAlternateColorCodes('&', "&7enemies.")),
-				new ItemStack(Material.BONE), "Reincarnate");
+				new ItemStack(Material.BONE), "Reincarnate", false);
 		new Class("Earthbender", 5000,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&',
 								"&aPurchasable class. &7Harness the powers of the Earth to control"),
 						ChatColor.translateAlternateColorCodes('&', "&7the environment.")),
-				new ItemStack(Material.GRASS), "Terraform");
+				new ItemStack(Material.GRASS), "Terraform", false);
 		new Class("Medic", 7000,
 				Arrays.asList(
 						ChatColor.translateAlternateColorCodes('&',
 								"&aPurchasable class. &7Take on the role of a support class by "),
 						ChatColor.translateAlternateColorCodes('&', "&7healing your teammates around you!")),
-				new ItemStack(Material.BLAZE_ROD), "Trainquility");
+				new ItemStack(Material.BLAZE_ROD), "Trainquility", false);
 	}
 
 	public static SQLConnection getDB() {
