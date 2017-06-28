@@ -73,6 +73,7 @@ public class StartGameTask extends BukkitRunnable {
                 }
                 player.getInventory().addItem(ClassManager.getClassForPlayer(player).getItem());
                 player.teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "blue", LocationType.SPAWN));
+                player.setBedSpawnLocation(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "blue", LocationType.SPAWN));
             }
             for (Player player : GameStart.teamRed) {
                 //teleport player
@@ -81,12 +82,13 @@ public class StartGameTask extends BukkitRunnable {
                 }
                 player.getInventory().addItem(ClassManager.getClassForPlayer(player).getItem());
                 player.teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "red", LocationType.SPAWN));
+                player.setBedSpawnLocation(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "red", LocationType.SPAWN));
             }
 
         } catch (Exception ex) {
             Main.get().getLogger().log(Level.SEVERE, "Could not teleport players to chosen map", ex);
         }
-        GameStart.initActive = false;
+        GameStart.setInitActive(false);
         //configure scoreboards
         for (Player player : Bukkit.getOnlinePlayers()) {
             LobbyScoreboard.getInstance().removeScoreboard(player);

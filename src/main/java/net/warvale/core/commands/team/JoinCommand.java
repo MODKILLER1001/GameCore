@@ -87,7 +87,7 @@ public class JoinCommand extends AbstractCommand {
                 for (PotionEffect effect : player.getActivePotionEffects()) {
                     player.removePotionEffect(effect.getType());
                 }
-                if (GameStart.initActive){
+                if (GameStart.getInitActive()){
                     player.sendMessage(org.bukkit.ChatColor.RED.toString() + org.bukkit.ChatColor.BOLD + "/vote" + org.bukkit.ChatColor.BLUE.toString() + org.bukkit.ChatColor.BOLD + " to vote for a map!");
                 }
                 if (Main.getTeams().getRedTeam().getSize() >= 1 && Main.getTeams().getBlueTeam().getSize() >= 1 && !GameStart.initActive){

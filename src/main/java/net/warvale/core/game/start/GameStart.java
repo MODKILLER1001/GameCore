@@ -91,7 +91,7 @@ public class GameStart {
 
         map = null;
 
-        initActive = true;
+        setInitActive(true);
 
         for (Player player : Bukkit.getServer().getOnlinePlayers()){
             if (player.isOp()){
@@ -99,7 +99,7 @@ public class GameStart {
             }
         }
 
-        votingActive = true;
+        setVotingActive(true);
         voted.clear();
 
         //Get team players
@@ -129,7 +129,7 @@ public class GameStart {
         map = null;
         BarManager.getAnnounceBar().setVisible(false);
         resetGame();
-        initActive = false;
+        setInitActive(false);
 
         for (Player player : Bukkit.getServer().getOnlinePlayers()){
             if (player.isOp()){
@@ -137,7 +137,7 @@ public class GameStart {
             }
         }
 
-        votingActive = false;
+        setVotingActive(false);
         voted.clear();
 
         for (int i = 0; i < teamBlue.size(); i++) {
@@ -163,6 +163,22 @@ public class GameStart {
     public static void resetGame(){
         GameMap.doMaps();
 
+    }
+
+    public static void setInitActive(boolean value){
+        initActive = value;
+    }
+
+    public static boolean getInitActive(){
+        return initActive;
+    }
+
+    public static void setVotingActive(boolean value){
+        votingActive = value;
+    }
+
+    public static boolean getVotingActive(){
+        return votingActive;
     }
 
 }

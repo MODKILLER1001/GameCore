@@ -26,7 +26,7 @@ public class VoteCommand extends AbstractCommand {
 
         if ((player instanceof Player)) {
             Player sender = (Player) player;
-            if (GameStart.votingActive) {
+            if (GameStart.getVotingActive()) {
 
                 if ((Main.getTeams().getBlueTeam().hasEntry(sender.getName()) || Main.getTeams().getRedTeam().hasEntry(sender.getName()))) {
                     VoteMenu.getMenu(sender).show(sender);
