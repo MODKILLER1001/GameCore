@@ -36,17 +36,6 @@ public class StartGameTask extends BukkitRunnable {
     public void run() {
 
         try {
-            //disguise before teleporting
-            if (DisguiseHook.getInstance().isEnabled()) {
-
-                DisguiseHook.getInstance().getAPI().undisguiseAll();
-
-                for (Player online : Bukkit.getServer().getOnlinePlayers()) {
-                    online.sendMessage(MessageManager.getPrefix(PrefixType.MAIN) + "You are now undisguised");
-                }
-
-            }
-
             new Stages().initStages();
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + BossbarCountdownTask.map.getName() + ChatColor.GRAY + "!");
             BarManager.getAnnounceBar().setVisible(false);
@@ -81,6 +70,7 @@ public class StartGameTask extends BukkitRunnable {
                 player.teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "red", LocationType.SPAWN));
                 player.setBedSpawnLocation(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "red", LocationType.SPAWN));
             }
+
 
         } catch (Exception ex) {
             Main.get().getLogger().log(Level.SEVERE, "Could not teleport players to chosen map", ex);
