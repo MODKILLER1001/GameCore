@@ -155,7 +155,7 @@ public class GameScoreboard {
 
                 redHealth.setSuffix(" §7" + new CoreBlock().getRedCoreHealth());
 
-                objective.getScore(ChatColor.AQUA + "Red:").setScore(4);
+                objective.getScore(ChatColor.AQUA + "Red Core:").setScore(4);
             }
 
         }
@@ -172,7 +172,7 @@ public class GameScoreboard {
 
                 blueHealth.setSuffix(" §7" + new CoreBlock().getBlueCoreHealth());
 
-                objective.getScore(ChatColor.AQUA + "Blue:").setScore(3);
+                objective.getScore(ChatColor.AQUA + "Blue Core:").setScore(3);
                 objective.getScore(" ").setScore(2);
             }
 
