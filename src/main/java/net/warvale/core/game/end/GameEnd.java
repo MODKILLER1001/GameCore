@@ -81,13 +81,15 @@ public class GameEnd {
         BarManager.getAnnounceBar().setVisible(true);
         BarManager.getAnnounceBar().setProgress(1);
         for (String p : blueTeam.getEntries()){
-            Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
+            Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "lobby", LocationType.LOBBY));
+            Bukkit.getPlayer(p).setBedSpawnLocation(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "lobby", LocationType.LOBBY)); //having null in all three returns the lobby center
             Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
             blueTeam.removeEntry(p);
             spectatorTeam.addEntry(p);
         }
         for (String p : redTeam.getEntries()){
-            Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
+            Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "lobby", LocationType.LOBBY));
+            Bukkit.getPlayer(p).setBedSpawnLocation(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "lobby", LocationType.LOBBY)); //having null in all three returns the lobby center
             Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
             redTeam.removeEntry(p);
             spectatorTeam.addEntry(p);
