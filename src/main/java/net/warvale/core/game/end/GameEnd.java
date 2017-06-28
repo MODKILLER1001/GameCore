@@ -4,6 +4,7 @@ import net.warvale.core.Main;
 import net.warvale.core.embers.EmberManager;
 import net.warvale.core.game.Game;
 import net.warvale.core.game.start.GameStart;
+import net.warvale.core.map.LocationType;
 import net.warvale.core.map.MapLocations;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
@@ -54,13 +55,15 @@ public class GameEnd {
                     e.printStackTrace();
                 }
                 new PlayerStats(Bukkit.getPlayer(p).getUniqueId()).addWin();
-                Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
+                Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "lobby", LocationType.LOBBY));
+                Bukkit.getPlayer(p).setBedSpawnLocation(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "lobby", LocationType.LOBBY));
                 Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
                 winningTeam.removeEntry(p);
                 spectatorTeam.addEntry(p);
             }
             for (String p : losingTeam.getEntries()) {
-                Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(null, null, null)); //having null in all three returns the lobby center
+                Bukkit.getPlayer(p).teleport(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "lobby", LocationType.LOBBY));
+                Bukkit.getPlayer(p).setBedSpawnLocation(MapLocations.getObjectLocation(Game.getInstance().getChosenMap(), "lobby", LocationType.LOBBY));
                 Bukkit.getPlayer(p).sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "Warvale" + ChatColor.DARK_GRAY + "] " + ChatColor.GRAY + "You hae been moved to the spectators team. Use " + ChatColor.RED + "/join <team>" + ChatColor.GRAY + " to play again!");
                 losingTeam.removeEntry(p);
                 spectatorTeam.addEntry(p);

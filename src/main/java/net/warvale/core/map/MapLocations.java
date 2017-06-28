@@ -9,7 +9,7 @@ import org.bukkit.Location;
  */
 public class MapLocations {
     //lobby
-    private static Location lobby = new Location(Bukkit.getWorld("lobby"), 306.5, 64, 189.5, 180, 0);
+    private static Location lobby = new Location(Bukkit.getWorld("void"), 128, 48, 67, 180, 0);
     //Redwood Forest
     private static Location redwoodRedSpawn = new Location(Bukkit.getWorld("Redwood_Forest"), -87, 38, -79);
     private static Location redwoodBlueSpawn = new Location(Bukkit.getWorld("Redwood_Forest"), 109, 38, 101);
