@@ -116,6 +116,7 @@ public class Main extends JavaPlugin implements Listener {
     	Bukkit.getPluginManager().registerEvents(new CoreBlock(), this);
     	Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
 
+
     	for (BroadcastType type : BroadcastType.values()) {
     		switch (type) {
 				case TIP:

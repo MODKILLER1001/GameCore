@@ -223,22 +223,7 @@ public class Preferences implements Listener {
         player.openInventory(invPreferences);
     }
 
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        Action a = event.getAction();
-        ItemStack is = event.getItem();
 
-        if (a == Action.PHYSICAL || is == null || is.getType() == Material.AIR)
-            return;
-
-
-
-        if (!Game.isRunning() && is.getType() == Material.REDSTONE_COMPARATOR) {
-            event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ENDERCHEST_OPEN, 1, 1);
-            new Preferences(Main.get()).tsGUI(event.getPlayer());
-            event.setCancelled(true);
-        }
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void guiClick(InventoryClickEvent event) {
