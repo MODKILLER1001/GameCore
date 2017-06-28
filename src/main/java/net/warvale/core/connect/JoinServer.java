@@ -77,19 +77,18 @@ public class JoinServer implements Listener {
 
         p.setAllowFlight(true);
         p.setGameMode(GameMode.ADVENTURE);
-        if (Game.getInstance().isState(State.INGAME)){
-            int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
-           BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
-            BarManager.broadcast(BarColor.GREEN, ChatColor.RED +
-                   String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
-                    " more players needed to start the game!");
-        }
+
         LobbyScoreboard.getInstance().addScoreboard(event.getPlayer());
         LobbyScoreboard.getInstance().newScoreboard(event.getPlayer());
 
         if (Game.getInstance().isState(State.LOBBY)) {
             p.teleport(LobbyUtils.getSpawn()); //having null in all three returns the lobby center
             p.getInventory().setContents(generateSpawnInventory(4 * 9));
+            int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
+            BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
+            BarManager.broadcast(BarColor.GREEN, ChatColor.RED +
+                    String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
+                    " more players needed to start the game!");
         }
 
     }

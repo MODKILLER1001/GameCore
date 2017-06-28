@@ -48,7 +48,7 @@ public class LeaveServer implements Listener {
 
         LobbyScoreboard.getInstance().removeScoreboard(event.getPlayer());
 
-        if (Game.getInstance().isState(State.INGAME)) {
+        if (Game.getInstance().isState(State.LOBBY)) {
             BarManager.broadcast(BarColor.RED, ChatColor.DARK_RED + ChatColor.BOLD.toString() + "[-] " + ChatColor.RESET + playerName);
             BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
 
