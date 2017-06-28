@@ -9,7 +9,6 @@ import net.warvale.core.map.MapLocations;
 import net.warvale.core.maps.VoteMenu;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
-import net.warvale.core.spec.ClassSelect;
 import net.warvale.core.spec.Preferences;
 import net.warvale.core.utils.LobbyUtils;
 import net.warvale.core.utils.mc.items.ItemStackBuilder;

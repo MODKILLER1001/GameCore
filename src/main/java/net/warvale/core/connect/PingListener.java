@@ -29,9 +29,9 @@ public class PingListener implements Listener {
 
         }
 
-        if (Game.getInstance().isState(State.COUNTDOWN)) {
+        /*if (Game.getInstance().isState(State.COUNTDOWN)) {
             //e.setMotd(MessageManager.getPrefix(PrefixType.MAIN) + ChatColor.DARK_RED + "Conquest " + ChatColor.GRAY + "starts in " + DateUtils.secondsToString(BossbarCountdownTask.getCountdown()));
-        }
+        }*/
 
     }
 
