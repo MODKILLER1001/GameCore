@@ -98,7 +98,7 @@ public class JoinServer implements Listener {
             return;
         }
         Player p = e.getPlayer();
-        if (Game.getInstance().getState() == State.LOBBY &&
+        if (!Game.isRunning() &&
                 e.getAction() != Action.LEFT_CLICK_AIR && e.getAction() != Action.LEFT_CLICK_BLOCK) {
             int slot = p.getInventory().getHeldItemSlot();
             if (slot == MAPSLOT) {
