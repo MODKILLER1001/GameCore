@@ -1,6 +1,7 @@
 package net.warvale.core.connect;
 
 import net.warvale.core.game.Game;
+import net.warvale.core.game.State;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.message.MessageManager;
 import net.warvale.core.message.PrefixType;
@@ -47,14 +48,15 @@ public class LeaveServer implements Listener {
 
         LobbyScoreboard.getInstance().removeScoreboard(event.getPlayer());
 
-       // BarManager.broadcast(BarColor.RED, ChatColor.DARK_RED + ChatColor.BOLD.toString() + "[-] " + ChatColor.RESET + playerName);
-       // BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
+        if (Game.getInstance().isState(State.INGAME)) {
+            BarManager.broadcast(BarColor.RED, ChatColor.DARK_RED + ChatColor.BOLD.toString() + "[-] " + ChatColor.RESET + playerName);
+            BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
 
-        int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
+            int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
 
-        //MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED +
-                //String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
-               // " more players needed to start the game!");
-
+            MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED +
+                    String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
+                    " more players needed to start the game!");
+        }
     }
 }

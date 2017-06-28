@@ -23,6 +23,7 @@ import net.warvale.core.game.logic.RegionProtection;
 import net.warvale.core.game.logic.TeamManager;
 import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
+import net.warvale.core.hooks.DisguiseHook;
 import net.warvale.core.items.MenuListener;
 import net.warvale.core.map.ConquestMap;
 import net.warvale.core.maps.GameMap;
@@ -156,6 +157,9 @@ public class Main extends JavaPlugin implements Listener {
 
 		//register any needed menus
 		classMenu = new ClassMenu();
+
+		//setup any hooks
+		DisguiseHook.getInstance().setup();
 
     }
 

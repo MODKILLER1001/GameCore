@@ -1,5 +1,7 @@
 package net.warvale.core.tasks;
 
+import de.robingrether.idisguise.disguise.DisguiseType;
+import de.robingrether.idisguise.disguise.PlayerDisguise;
 import net.warvale.core.Main;
 import net.warvale.core.classes.ClassManager;
 import net.warvale.core.game.Game;
@@ -9,6 +11,7 @@ import net.warvale.core.game.logic.StageSystem.Stages;
 import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.game.start.GameStart;
+import net.warvale.core.hooks.DisguiseHook;
 import net.warvale.core.map.ConquestMap;
 import net.warvale.core.map.LocationType;
 import net.warvale.core.map.MapLocations;
@@ -24,6 +27,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Random;
 import java.util.logging.Level;
 
 public class StartGameTask extends BukkitRunnable {
@@ -40,6 +44,21 @@ public class StartGameTask extends BukkitRunnable {
                 player.removePotionEffect(PotionEffectType.JUMP);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1000000, 1, true, false));
                 player.setGameMode(GameMode.SURVIVAL);
+            }
+
+            //disguise before teleporting
+            if (DisguiseHook.getInstance().isEnabled()) {
+
+                Random r = new Random();
+
+                for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+                    PlayerDisguise disguise = new PlayerDisguise(
+                            DisguiseHook.getInstance().getRandomPlayers()
+                                    .get(r.nextInt(DisguiseHook.getInstance().getRandomPlayers().size())),
+                            false);
+
+                    DisguiseHook.getInstance().getAPI().disguise(online, disguise);
+                }
             }
 
             //clear inventories
