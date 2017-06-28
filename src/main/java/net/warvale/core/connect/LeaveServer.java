@@ -52,9 +52,9 @@ public class LeaveServer implements Listener {
 
         int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
 
-        MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED +
-                String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
-                " more players needed to start the game!");
+        //MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED +
+                //String.valueOf(minPlayers) + ChatColor.DARK_GREEN +
+               // " more players needed to start the game!");
 
     }
 }
