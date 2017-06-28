@@ -33,7 +33,7 @@ public class StartGameTask extends BukkitRunnable {
 
         try {
             new Stages().initStages();
-            MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + Game.getInstance().getChosenMap().getName() + ChatColor.GRAY + "!");
+            MessageManager.broadcast(PrefixType.MAIN, ChatColor.GRAY + "The game has begun on " + ChatColor.RED + BossbarCountdownTask.map.getName() + ChatColor.GRAY + "!");
             BarManager.getAnnounceBar().setVisible(false);
             for (Player player : GameStart.inGame) {
                 player.removePotionEffect(PotionEffectType.SLOW);

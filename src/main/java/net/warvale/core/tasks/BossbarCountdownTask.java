@@ -35,7 +35,7 @@ import java.util.Arrays;
 public class BossbarCountdownTask extends BukkitRunnable {
 
     private static int countdown = 1 * 60 + 1;
-    private GameMap map;
+    public static GameMap map = GameMap.getMap("Redwood_Forest"); //this shouldn't always get called (voting should work). this is just incase to prevent a nullpointerexception
 
     public BossbarCountdownTask() {
         countdown = 1 * 60 + 1;
@@ -48,9 +48,9 @@ public class BossbarCountdownTask extends BukkitRunnable {
         BarManager.getAnnounceBar().setVisible(true);
         if (countdown == 15){
             TeamBalancing.balanceTeams();
-            Game.getInstance().setChosenmap(VoteMenu.calculateMap());
-            map = Game.getInstance().getChosenMap();
-            MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED + map.getName() + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
+            map = VoteMenu.calculateMap();
+            Game.getInstance().setChosenmap(map);
+            MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED + (map != null ? map.getName() : "ERROR GETTING MAP NAME") + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
         }
         if (countdown == 10){
             for (Player player : GameStart.inGame){
