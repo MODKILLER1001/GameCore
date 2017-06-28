@@ -1,5 +1,6 @@
 package net.warvale.core.tasks;
 
+import de.robingrether.idisguise.disguise.PlayerDisguise;
 import net.warvale.core.Main;
 import net.warvale.core.classes.Class;
 import net.warvale.core.classes.ClassManager;
@@ -11,6 +12,7 @@ import net.warvale.core.game.logic.TeamBalancing;
 import net.warvale.core.game.scoreboards.GameScoreboard;
 import net.warvale.core.game.scoreboards.LobbyScoreboard;
 import net.warvale.core.game.start.GameStart;
+import net.warvale.core.hooks.DisguiseHook;
 import net.warvale.core.map.ConquestMap;
 import net.warvale.core.maps.GameMap;
 import net.warvale.core.maps.VoteMenu;
@@ -30,6 +32,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
+import java.util.Random;
 
 
 public class BossbarCountdownTask extends BukkitRunnable {
@@ -53,6 +56,7 @@ public class BossbarCountdownTask extends BukkitRunnable {
             MessageManager.broadcast(PrefixType.MAIN, ChatColor.RED + (map != null ? map.getName() : "ERROR GETTING MAP NAME") + ChatColor.GRAY + " has been chosen as the map you will be playing on!");
         }
         if (countdown == 10){
+
             for (Player player : GameStart.inGame){
                 player.addPotionEffects(
                         Arrays.asList(
@@ -70,6 +74,23 @@ public class BossbarCountdownTask extends BukkitRunnable {
                         ChatUtils.yellow + "5." + ChatUtils.gray + " During the last stage of the game, cores will be broken instantly!",
                         "\n",
                         ChatUtils.divider).toArray());
+            }
+
+            //disguise before teleporting
+            if (DisguiseHook.getInstance().isEnabled()) {
+
+                Random r = new Random();
+
+                for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+                    PlayerDisguise disguise = new PlayerDisguise(
+                            DisguiseHook.getInstance().getRandomPlayers()
+                                    .get(r.nextInt(DisguiseHook.getInstance().getRandomPlayers().size())),
+                            false);
+
+                    DisguiseHook.getInstance().getAPI().disguise(online, disguise);
+
+                    online.sendMessage(MessageManager.getPrefix(PrefixType.MAIN) + "You are now disguised");
+                }
             }
         }
         if (countdown <= 10 && countdown >= 1){

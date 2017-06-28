@@ -1,5 +1,7 @@
 package net.warvale.core.game.logic;
 
+import net.warvale.core.hooks.DisguiseHook;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameRunnable extends BukkitRunnable {
@@ -13,7 +15,6 @@ public class GameRunnable extends BukkitRunnable {
     @Override
     public void run() {
         ++seconds;
-
 
     }
 

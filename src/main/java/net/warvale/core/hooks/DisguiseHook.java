@@ -16,8 +16,7 @@ public class DisguiseHook {
     private DisguiseAPI api = null;
 
     //temp for testing
-    private List<String> randomPlayers = Arrays.asList("Draem", "archybot", "Fruitified", "MODKILLER1001",
-            "Pixelific", "rxwrr", "Reesb", "Alihsoccer", "lenavision", "Bluesnowflakes");
+    private ArrayList<String> randomPlayers = new ArrayList<>();
 
     public static DisguiseHook getInstance() {
         if (instance == null) {
@@ -45,6 +44,10 @@ public class DisguiseHook {
         }
 
         Main.get().getLogger().log(Level.INFO, "Successfully hooked into iDisguise.");
+
+        //setup our disguises
+        randomPlayers.addAll(Arrays.asList("Draem", "archybot", "Fruitified", "MODKILLER1001",
+                "Pixelific", "rxwrr", "Reesb", "Alihsoccer", "lenavision", "Bluesnowflakes"));
     }
 
     public boolean isEnabled()
@@ -56,7 +59,7 @@ public class DisguiseHook {
         return this.api;
     }
 
-    public List<String> getRandomPlayers() {
+    public ArrayList<String> getRandomPlayers() {
         return randomPlayers;
     }
 
