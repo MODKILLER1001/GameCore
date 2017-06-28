@@ -98,9 +98,8 @@ public class GameEnd {
             new GameStart().startCountdown();
         } else {
             int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
-          //  BarManager.broadcast(BarColor.GREEN, net.md_5.bungee.api.ChatColor.RED +
-                  //  String.valueOf(minPlayers) + net.md_5.bungee.api.ChatColor.DARK_GREEN +
-                  //  " more players needed to start the game!");
+           BarManager.broadcast(BarColor.GREEN, net.md_5.bungee.api.ChatColor.RED +
+                   String.valueOf(minPlayers) + net.md_5.bungee.api.ChatColor.DARK_GREEN + " more players needed to start the game!");
         }
     }
 
