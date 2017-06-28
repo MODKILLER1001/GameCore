@@ -47,8 +47,8 @@ public class LeaveServer implements Listener {
 
         LobbyScoreboard.getInstance().removeScoreboard(event.getPlayer());
 
-        BarManager.broadcast(BarColor.RED, ChatColor.DARK_RED + ChatColor.BOLD.toString() + "[-] " + ChatColor.RESET + playerName);
-        BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
+       // BarManager.broadcast(BarColor.RED, ChatColor.DARK_RED + ChatColor.BOLD.toString() + "[-] " + ChatColor.RESET + playerName);
+       // BarManager.broadcastSound(Sound.BLOCK_NOTE_BASS);
 
         int minPlayers = Game.getInstance().getMinPlayers() - Bukkit.getOnlinePlayers().size();
 
